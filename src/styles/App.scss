@@ -1,3 +1,5 @@
+// @import "./long-shadow.less";
+
 .App {
   text-align: center;
 }
@@ -36,3 +38,7 @@
     transform: rotate(360deg);
   }
 }
+
+// .long-shadow {
+//   #long-shadow.inline(@color, @angle, @size);
+// }
