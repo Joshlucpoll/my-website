@@ -1,44 +1,72 @@
-// @import "./long-shadow.less";
+@import './long-shadow.scss';
 
-.App {
+:root {
+  // Colours
+  @media (prefers-color-scheme: dark) 
+  {
+    --background-color: #3d3e3f;
+    --header-color: #585858;
+    --text-color: white;
+    --shadow-color: #202020;
+  }
+  
+  @media (prefers-color-scheme: light) 
+  {
+    --background-color: #dfdfdf;
+    --text-color: black;
+    --shadow-color: #c2c1c0;
+  }
+  
+}
+
+.app {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-header {
+  height: 10vh;
+  background-color: var(--background-color);
+  position: relative;
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.menu-icon {
+  padding: 0 2%;
+  float: right;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
+.app-body {
+  height: 90vh;
+  width: 100vw;
+  background-color: var(--background-color);
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+#headline-title {
+  font-size: 100px;
+  color: var(--text-color);
+  font-family: 'Raleway', sans-serif;
+  animation-name: floating;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.long-shadow {
+    text-shadow: long-shadow(
+      $direction: 45deg,
+      $length: 1000px,
+      $shadow-count: 1000,
+      $color: var(--shadow-color),
+    );
 }
 
-// .long-shadow {
-//   #long-shadow.inline(@color, @angle, @size);
-// }
+@keyframes floating {
+  from { transform: translate(0,  0px); }
+  65%  { transform: translate(0, 15px); }
+  to   { transform: translate(0, -0px); }    
+}
