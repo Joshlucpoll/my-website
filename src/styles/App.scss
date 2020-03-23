@@ -1,4 +1,3 @@
-@import './long-shadow.scss';
 
 :root {
   // Colours
@@ -53,16 +52,6 @@
   animation-duration: 3s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
-}
-
-
-.long-shadow {
-    text-shadow: long-shadow(
-      $direction: 45deg,
-      $length: 1000px,
-      $shadow-count: 1000,
-      $color: var(--shadow-color),
-    );
 }
 
 @keyframes floating {
