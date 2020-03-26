@@ -12,7 +12,7 @@
   @media (prefers-color-scheme: light) 
   {
     --background-color: #dfdfdf;
-    --text-color: black;
+    --text-color: white;
     --shadow-color: #c2c1c0;
   }
   
@@ -44,18 +44,32 @@
   justify-content: center;
 }
 
+#title-container {
+  animation: 2s ease 0s 1 entrance;
+  position: relative;
+  transition: top, left 100ms ease-out;
+}
+
 #headline-title {
+  z-index: 1;
   font-size: 100px;
   color: var(--text-color);
   font-family: 'Raleway', sans-serif;
-  animation-name: floating;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
+  position: relative;
+  transition: text-shadow 300ms ease-out;
 }
 
-@keyframes floating {
-  from { transform: translate(0,  0px); }
-  65%  { transform: translate(0, 15px); }
-  to   { transform: translate(0, -0px); }    
+@keyframes entrance {
+  0% {
+    opacity: 0;
+    top: 0;
+    left: 0;
+    transform: translateY(300%);
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+    left: 0;
+    transform: translateY(0%);
+  }
 }

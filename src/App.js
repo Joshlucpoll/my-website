@@ -17,7 +17,7 @@ class LongShadow extends React.Component {
     this.state = {
       id: props.id,
       text: props.text,
-      angle: props.angle
+      angle: props.angle,
     };
   }
   
@@ -25,8 +25,8 @@ class LongShadow extends React.Component {
     let shadows = "";
     let i;
     for(i=1; i<length; i++) {
-      let xLength = Math.sin(direction);
-      let yLength = Math.cos(direction);
+      let xLength = Math.round(Math.sin(direction)*100)/100; 
+      let yLength = Math.round(Math.cos(direction)*100)/100;
   
       shadows = (shadows + xLength*i + "px " + yLength*i + "px " + color + ", ");
     }
@@ -35,8 +35,11 @@ class LongShadow extends React.Component {
   }
   
   render() {
+    let styles = {
+      textShadow: this.longShadowCalculator(this.state.angle, 300, "#202020"),
+    }
     return (
-      <div style={{textShadow: this.longShadowCalculator(this.state.angle, 1000, "#202020")}} id={this.state.id} className="long-shadow">{this.state.text}</div>
+      <div style={styles} id={this.state.id} className="long-shadow">{this.state.text}</div>
       );
     }
   }
@@ -51,7 +54,9 @@ class LongShadow extends React.Component {
       yMouse: 0,
       xTitle: 0,
       yTitle: 0,
-      angle: 45
+      xVector: 0,
+      yVector: 0,
+      angle: 45,
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
@@ -71,15 +76,15 @@ class LongShadow extends React.Component {
   }
 
   shadowShapeCalculator() {
-    const xVector = this.state.xTitle - this.state.xMouse;
-    const yVector = this.state.yTitle - this.state.yMouse;
-    let angle = Math.atan(yVector/xVector) - Math.PI / 2;
+    this.setState({xVector: this.state.xTitle - this.state.xMouse});
+    this.setState({yVector: this.state.yTitle - this.state.yMouse});
+    let angle = Math.round((Math.atan(this.state.yVector/this.state.xVector) - Math.PI / 2)*50)/50;
 
-    if (xVector < 0 && yVector > 0) {
-      angle += Math.PI
+    if (this.state.xVector < 0 && this.state.yVector > 0) {
+      angle += Math.PI;
     }
-    if (xVector < 0 && yVector < 0) {
-      angle += Math.PI
+    if (this.state.xVector < 0 && this.state.yVector < 0) {
+      angle += Math.PI;
     }
 
     this.setState({angle: -angle});
@@ -109,8 +114,8 @@ class LongShadow extends React.Component {
             <img scr={Logo} alt="Logo"/> */}
           </header>
           <div className="app-body">
-            <div id="title-container">
-              <LongShadow id={"headline-title"} text={"Josh Pollard"} angle={this.state.angle}/>
+            <div id="title-container" style={{top: this.state.yVector/50, left: this.state.xVector/50}}>
+              <LongShadow id={"headline-title"} text={"Josh Pollard"} angle={this.state.angle} xVector={this.state.xVector} yVector={this.state.yVector}/>
             </div>
           </div>
       </div>
