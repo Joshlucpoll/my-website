@@ -2,22 +2,33 @@ import React from 'react';
 import './styles/App.scss';
 import Logo from './img/JP-Logo-v1.png';
 
+class Cursor extends React.Component {
+
+  render() {
+    const styles = {
+      top: (this.props.yMouse - 15),
+      left: (this.props.xMouse - 15),
+    }
+    return(
+      <div style={styles} className="cursor">
+      <div className="cursor-light"></div>
+      <div className="cursor-ring"></div>
+    </div>
+    )
+  }
+}
+
+function Console(props) {
+
+}
 
 class LongShadow extends React.Component {
-  
-  static getDerivedStateFromProps(props, state) {
-    if (props.angle !== state.angle) {
-      return { angle: props.angle };
-    }
-    return null;
-  }
 
   constructor(props) {
     super(props);
     this.state = {
       id: props.id,
       text: props.text,
-      angle: props.angle,
     };
   }
   
@@ -36,7 +47,7 @@ class LongShadow extends React.Component {
   
   render() {
     let styles = {
-      textShadow: this.longShadowCalculator(this.state.angle, 300, "#202020"),
+      textShadow: this.longShadowCalculator(this.props.angle, 300, "#202020"),
     }
     return (
       <div style={styles} id={this.state.id} className="long-shadow">{this.state.text}</div>
@@ -50,8 +61,8 @@ class LongShadow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      xMouse: 0,
-      yMouse: 0,
+      xMouse: -50,
+      yMouse: -50 ,
       xTitle: 0,
       yTitle: 0,
       xVector: 0,
@@ -75,19 +86,21 @@ class LongShadow extends React.Component {
     this.setState({ xTitle: (window.innerWidth/2), yTitle: (window.innerHeight/2) });
   }
 
-  shadowShapeCalculator() {
-    this.setState({xVector: this.state.xTitle - this.state.xMouse});
-    this.setState({yVector: this.state.yTitle - this.state.yMouse});
-    let angle = Math.round((Math.atan(this.state.yVector/this.state.xVector) - Math.PI / 2)*50)/50;
+  shadowAngleCalculator(xMouse, yMouse) {
+    const xVector = this.state.xTitle - xMouse;
+    const yVector = this.state.yTitle - yMouse;
+    this.setState({xVector: xVector});
+    this.setState({yVector: yVector});
+    let angle = -(Math.round((Math.atan(yVector/xVector) - Math.PI / 2)*50)/50);
 
-    if (this.state.xVector < 0 && this.state.yVector > 0) {
+    if (xVector < 0 && yVector > 0) {
       angle += Math.PI;
     }
-    if (this.state.xVector < 0 && this.state.yVector < 0) {
+    if (xVector < 0 && yVector < 0) {
       angle += Math.PI;
     }
 
-    this.setState({angle: -angle});
+    this.setState({angle: angle});
   }
 
   handleMouseMove(e) {
@@ -100,24 +113,25 @@ class LongShadow extends React.Component {
     };
 
     this.setState( {
-      xMouse: xPosition, 
+      xMouse: xPosition,
       yMouse: yPosition
     });
-    this.shadowShapeCalculator()
+    this.shadowAngleCalculator(xPosition, yPosition);
   }
 
   render() {
     return (
-      <div className="app" onMouseMove={this.handleMouseMove.bind(this)} onTouchMove={this.handleMouseMove.bind(this)}>
-          <header className="app-header">
-            {/* <i class="fas fa-ellipsis-h fa-3x menu-icon"></i>
-            <img scr={Logo} alt="Logo"/> */}
-          </header>
-          <div className="app-body">
-            <div id="title-container" style={{top: this.state.yVector/50, left: this.state.xVector/50}}>
-              <LongShadow id={"headline-title"} text={"Josh Pollard"} angle={this.state.angle} xVector={this.state.xVector} yVector={this.state.yVector}/>
-            </div>
+      <div className="app" onMouseMove={(e) => this.handleMouseMove(e)} onTouchMove={(e) => this.handleMouseMove(e)}>
+        <Cursor xMouse={this.state.xMouse} yMouse={this.state.yMouse}></Cursor>
+        <header className="app-header">
+          {/* <i class="fas fa-ellipsis-h fa-3x menu-icon"></i>
+          <img scr={Logo} alt="Logo"/> */}
+        </header>
+        <div className="app-body">
+          <div id="title-container" style={{top: this.state.yVector/50, left: this.state.xVector/50}}>
+            <LongShadow id={"headline-title"} text={"Josh Pollard"} angle={this.state.angle} xVector={this.state.xVector} yVector={this.state.yVector}/>
           </div>
+        </div>
       </div>
     );
   }

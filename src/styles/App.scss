@@ -22,6 +22,70 @@
   text-align: center;
 }
 
+.cursor {
+  position: absolute;
+  transition: 300ms ease-out;
+  z-index: 100;
+
+}
+
+.cursor-light {
+  height: 30px;
+  width: 30px;
+  opacity: 1;
+  background-color: white;
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(5px);
+  border-radius: 50%;
+  position: absolute;
+  z-index: 100;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+.cursor-ring {
+  position: absolute;
+  z-index: 100;
+  opacity: 1;
+  height: 30px;
+  width: 30px;
+  top: -1px;
+  left: -2px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid white;
+  border-radius: 50%;
+  animation: cursorClick 1.5s 1s ease-in-out infinite; 
+}
+
+@keyframes cursorClick {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(3);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.7);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .app-header {
   height: 10vh;
   background-color: var(--background-color);
@@ -47,7 +111,7 @@
 #title-container {
   animation: 2s ease 0s 1 entrance;
   position: relative;
-  transition: top, left 100ms ease-out;
+  transition: top, left 300ms ease-out;
 }
 
 #headline-title {
@@ -56,7 +120,7 @@
   color: var(--text-color);
   font-family: 'Raleway', sans-serif;
   position: relative;
-  transition: text-shadow 300ms ease-out;
+  transition: text-shadow 300ms ease-out; 
 }
 
 @keyframes entrance {
