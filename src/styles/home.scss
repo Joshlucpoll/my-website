@@ -1,0 +1,68 @@
+:root {
+  // Colours
+  @media (prefers-color-scheme: dark) {
+    --background-color: #3d3e3f;
+    --header-color: #585858;
+    --text-color: white;
+    --shadow-color: #202020;
+  }
+
+  @media (prefers-color-scheme: light) {
+    --background-color: #dfdfdf;
+    --text-color: white;
+    --shadow-color: #c2c1c0;
+  }
+}
+
+.home-body {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--background-color);
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#title-container {
+  animation: 2s ease 0s 1 title-entrance;
+  position: relative;
+  transition: 300ms ease-out;
+
+  #headline-title {
+    font-size: 100px;
+    color: var(--text-color);
+    font-family: 'Work Sans', sans-serif;
+    position: relative;
+    transition: 300ms ease-out;
+  }
+}
+
+@keyframes title-entrance {
+  0% {
+    opacity: 0;
+    top: 40%;
+    left: 0;
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+    left: 0;
+  }
+}
+
+@keyframes gradient {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}

@@ -54,148 +54,113 @@
   }
 }
 
-.app-body {
-  height: 100vh;
-  width: 100vw;
-  background-color: var(--background-color);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.console-container {
+  width: 100%;
+  text-align: center;
 
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-#title-container {
-  animation: 2s ease 0s 1 title-entrance;
-  position: relative;
-  transition: 300ms ease-out;
-
-  #headline-title {
-    font-size: 100px;
-    color: var(--text-color);
-    font-family: "Raleway", sans-serif;
+  .console {
+    display: inline-block;
+    z-index: 140;
     position: relative;
-    transition: 300ms ease-out;
-  }
-}
-
-.console {
-  z-index: 140;
-  position: absolute;
-  bottom: 5vh;
-  
-  .console-body {
-    width: 90vw;
-    height: 7vh;
-    padding-left: 20px;
-    z-index: 150;
-    border-radius: 5px;
-    line-height: 7vh;
-    text-align: left;
-    background-color: rgba(27, 27, 27, 0.623);
-    backdrop-filter: blur(5px);
-    animation: 3s ease console-entrance;
-
-    .console-text-long {
-      color:green;
-      font-family: 'Ubuntu Mono', monospace;
-      font-size: 3vh;
-      display:inline;
-      
-      .console-white {
-        color: white;
-        font-family: 'Ubuntu Mono', monospace;
-        font-size: 3vh;
-      }
+    bottom: 10vh;
     
-      .current-directory {
-        color: rgb(59, 59, 255);
-        font-family: 'Ubuntu Mono', monospace;
-        font-size: 3vh;
-      }
-    }
-
-    .console-text-short {
-      color:green;
-      font-family: 'Ubuntu Mono', monospace;
-      font-size: 3vh;
-      display:inline;
-    }
-    
-    .console-input {
-      padding-left: 10px;
-      display:inline;
-      
-      input {
-        position: relative;
-        height: 80%;
-        width: 50%;
-        font-family: 'Ubuntu Mono', monospace;
-        font-size: 3vh;
-        color: white;
-        background-color: rgba(0, 0, 0, 0);
-        border: none;
-        outline: none;
-      }
-    }
-  }
-
-  .console-output {
-    opacity: 0;
-    position: absolute;
-    bottom: 8vh;
-    width: 90vw;
-    height: 82vh;
-    z-index: 145;
-    padding-left: 20px;
-    border-radius: 5px;
-    background-color: rgba(27, 27, 27, 0.623);
-    backdrop-filter: blur(5px);
-    transition: 500ms ease;
-    
-    ol {
-      height: 76vh;
-      width: 89vw;
-      position: absolute;
-      bottom: 0;
+    .console-body {
+      width: 90vw;
+      height: 7vh;
+      padding-left: 20px;
+      z-index: 150;
+      border-radius: 5px;
+      line-height: 7vh;
       text-align: left;
-      overflow: hidden; 
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column-reverse;
-      padding: 0 0;
-      list-style-type: none;
-      transition: 500ms ease;
+      background-color: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      animation: 3s ease console-entrance;
+
+      .console-text-long {
+        color:green;
+        font-family: 'Ubuntu Mono', monospace;
+        font-size: 3vh;
+        display:inline;
+        
+        .console-white {
+          color: white;
+          font-family: 'Ubuntu Mono', monospace;
+          font-size: 3vh;
+        }
+      
+        .current-directory {
+          color: rgb(59, 59, 255);
+          font-family: 'Ubuntu Mono', monospace;
+          font-size: 3vh;
+        }
+      }
+
+      .console-text-short {
+        color:green;
+        font-family: 'Ubuntu Mono', monospace;
+        font-size: 3vh;
+        display:inline;
+      }
+      
+      .console-input {
+        padding-left: 10px;
+        display:inline;
+        
+        input {
+          position: relative;
+          height: 80%;
+          width: 50%;
+          font-family: 'Ubuntu Mono', monospace;
+          font-size: 3vh;
+          color: white;
+          background-color: rgba(0, 0, 0, 0);
+          border: none;
+          outline: none;
+        }
+      }
     }
 
-    li {
-      flex: 0 0 auto;
-      color:white;
-      font-family: 'Ubuntu Mono', monospace;
-      font-size: 3vh;
+    .console-output {
+      opacity: 0;
+      position: absolute;
+      bottom: 8vh;
+      width: 90vw;
+      height: 82vh;
+      z-index: 145;
+      padding-left: 20px;
+      border-radius: 5px;
+      background-color: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      transition: 500ms ease;
       
+      ol {
+        height: 76vh;
+        width: 89vw;
+        position: absolute;
+        bottom: 0;
+        text-align: left;
+        overflow: hidden; 
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 0 0;
+        list-style-type: none;
+        transition: 500ms ease;
+      }
+
+      li {
+        flex: 0 0 auto;
+        color:white;
+        font-family: 'Ubuntu Mono', monospace;
+        font-size: 3vh;
+        
+      }
     }
   }
 }
 
 .console-body:hover {
   cursor: text;
-}
-
-@keyframes title-entrance {
-  0% {
-    opacity: 0;
-    top: 40%;
-    left: 0;
-  }
-  100% {
-    opacity: 1;
-    top: 0;
-    left: 0;
-  }
 }
 
 @keyframes console-entrance {
