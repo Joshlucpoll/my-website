@@ -1,4 +1,5 @@
 import React from "react";
+import {isBrowser} from "react-device-detect";
 
 // Components
 import LongShadow from "../components/longShadow";
@@ -10,18 +11,27 @@ class Home extends React.Component {
   render() {
     let xVector = this.props.xMiddle - this.props.xMouse;
     let yVector = this.props.yMiddle - this.props.yMouse;
+    let styles
+
+    if (isBrowser) {
+      styles = {
+        top: yVector / 50,
+        left: xVector / 50
+      }
+    }
+    else {
+      styles = {}
+    }
     return (
       <div className="home-body">
         <div
           id="title-container"
-          style={{
-            top: yVector / 50,
-            left: xVector / 50
-          }}
+          style={styles}
         >
           <LongShadow
             id={"headline-title"}
-            text={"JOSH POLLARD"}
+            textOne={"JOSH"}
+            textTwo={"POLLARD"}
             xVector={xVector}
             yVector={yVector}
           />

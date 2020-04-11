@@ -125,21 +125,23 @@ class Console extends React.Component {
         <div className="console">
           <div className="console-body" onClick={(e) => this.handleClick(e)}>
             {this.consoleText}
-            <form
-              className="console-input"
-              onSubmit={(e) => this.handleSubmit(e)}
-            >
-              <input
-                ref={(input) => {
-                  this.consoleInput = input;
-                }}
-                type="text"
-                value={this.state.value}
-                onChange={(e) => this.handleChange(e)}
-                onFocus={() => this.openOutput()}
-                onBlur={() => this.closeOutput()}
-              />
-            </form>
+            {/* <div className="console-input-container"> */}
+              <form
+                className="console-input"
+                onSubmit={(e) => this.handleSubmit(e)}
+              >
+                <input
+                  ref={(input) => {
+                    this.consoleInput = input;
+                  }}
+                  type="text"
+                  value={this.state.value}
+                  onChange={(e) => this.handleChange(e)}
+                  onFocus={() => this.openOutput()}
+                  onBlur={() => this.closeOutput()}
+                />
+              </form>
+            {/* </div> */}
           </div>
           <div
             className="console-output"

@@ -1,11 +1,20 @@
 import React from "react";
+import { 
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link 
+} from "react-router-dom";
+
 // Pages
 import Home from "./pages/home";
+import LostPage from "./pages/404";
 
 // Components
 import Console from "./components/console";
 
 import "./styles/App.scss";
+import "./styles/console.scss";
 
 class Cursor extends React.Component {
   render() {
@@ -67,20 +76,29 @@ class App extends React.Component {
 
   render() {
     return (
-      <div
-        className="app"
-        onMouseMove={e => this.handleMouseMove(e)}
-        onTouchMove={e => this.handleMouseMove(e)}
-      >
-        <Cursor xMouse={this.state.xMouse} yMouse={this.state.yMouse}></Cursor>
-        <Home 
-          xMouse={this.state.xMouse} 
-          yMouse={this.state.yMouse} 
-          xMiddle={this.state.xMiddle} 
-          yMiddle={this.state.yMiddle}
-        ></Home>
-        <Console></Console>
-      </div>
+      <Router>
+        <div
+          className="app"
+          onMouseMove={e => this.handleMouseMove(e)}
+          onTouchMove={e => this.handleMouseMove(e)}
+        >
+          <Cursor xMouse={this.state.xMouse} yMouse={this.state.yMouse}></Cursor>
+          <Switch>
+            <Route exact path="/">
+              <Home 
+                xMouse={this.state.xMouse} 
+                yMouse={this.state.yMouse} 
+                xMiddle={this.state.xMiddle} 
+                yMiddle={this.state.yMiddle}
+              ></Home>
+            </Route>
+            <Route>
+              <LostPage></LostPage>
+            </Route>
+          </Switch>
+          <Console></Console>
+        </div>
+      </Router>
     );
   }
 }
