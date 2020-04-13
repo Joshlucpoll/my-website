@@ -1,6 +1,6 @@
 import React from "react";
 import {isBrowser} from "react-device-detect";
-import styled, {keyframes, ThemeConsumer} from "styled-components";
+import styled, {keyframes} from "styled-components";
 import {fadeInDownBig} from "react-animations";
 
 // Components
