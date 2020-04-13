@@ -3,12 +3,13 @@
   text-align: center;
   display: flex;
   justify-content: space-around;
+  bottom: 10vh;
+  animation: 3s ease-out console-entrance;
+  position: relative;
   
   .console {
     z-index: 140;
-    position: relative;
-    bottom: 10vh;
-    animation: 3s ease-out console-entrance;
+    // position: relative;
     
     .console-body {
       display: flex;
