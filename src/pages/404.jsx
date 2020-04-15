@@ -5,6 +5,11 @@ import "../styles/404.scss";
 import "../styles/console.scss";
 
 class LostPage extends React.Component {
+
+  componentDidMount() {
+    document.title = "Josh Pollard | Lost";
+  }
+
   render() {
     return (
       <div className="lost-body">

@@ -9,7 +9,6 @@ class LongShadow extends React.Component {
       textTwo: props.textTwo,
       color: "#000000",
     };
-    this.getRandomColor = this.getRandomColor.bind(this);
   }
 
   longShadowCalculator(direction, length, color) {
@@ -38,26 +37,6 @@ class LongShadow extends React.Component {
       angle += Math.PI;
     }
     return angle;
-  }
-
-  getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-
-  setColor() {
-    this.setState({
-      color: this.getRandomColor(),
-    });
-    setTimeout(() => this.setColor(), 1000);
-  }
-  
-  componentDidMount() {
-    this.setColor()
   }
   
   render() {

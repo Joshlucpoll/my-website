@@ -18,6 +18,7 @@ class Home extends React.Component {
     this.state = {
       subTitle: "",
       cursor: "",
+      space: ""
     }
   }
   
@@ -36,9 +37,15 @@ class Home extends React.Component {
 
   subTitleCursor() {
     if (this.state.cursor === "") {
-      this.setState({ cursor: "|"});
+      this.setState({
+        space: "‎‎‎‎‎‎‎‎‎‎‎‎ ",
+        cursor: "|",
+      });
     } else {
-      this.setState({ cursor: ""});
+      this.setState({
+        space: "",
+        cursor: "",
+      });
     }
     setTimeout(() => {
       this.subTitleCursor();
@@ -46,6 +53,8 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    document.title = "Josh Pollard | Home";
+
     setTimeout(() => {
       this.subTitleCursor();
     }, 2000);
@@ -84,7 +93,7 @@ class Home extends React.Component {
             xVector={xVector}
             yVector={yVector}
           />
-          <div className="sub-title">{this.state.subTitle}{this.state.cursor}</div>
+          <div className="sub-title">{this.state.space}{this.state.subTitle}{this.state.cursor}</div>
         </div></FadeIn>
       </div>
     );
