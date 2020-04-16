@@ -29,7 +29,6 @@
 }
 
 #title-container {
-  // animation: 2s ease 0s 1 title-entrance;
   position: relative;
   transition: 300ms ease-out;
 
@@ -37,7 +36,6 @@
     line-height: 12vh;
     font-size: 12vh;
     color: white;
-    z-index: 10;
     font-family: 'Roboto Condensed', sans-serif;
     font-weight: 200;
     position: relative;
@@ -46,7 +44,6 @@
     span {
       font-size: 12vh;
       color: white;
-      z-index: 10;
       font-family: 'Roboto Condensed', sans-serif;
       font-weight: 500;
       position: relative;
@@ -56,7 +53,6 @@
   }
 
   .sub-title {
-    // float: left;
     height: 3vh;
     font-size: 3vh;
     color: white;
@@ -64,19 +60,6 @@
     font-weight: 300;
     margin: 10px;
     text-shadow:black 0.5px 0.5px;
-  }
-}
-
-@keyframes title-entrance {
-  0% {
-    opacity: 0;
-    top: 40%;
-    left: 0;
-  }
-  100% {
-    opacity: 1;
-    top: 0;
-    left: 0;
   }
 }
 

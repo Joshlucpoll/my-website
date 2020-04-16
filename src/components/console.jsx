@@ -8,8 +8,9 @@ class Console extends React.Component {
       outputList: [],
       currentDirectory: "~",
       value: "",
-      outputView: false,
+      consoleOpen: false,
     };
+    this.consoleInput = React.createRef();
   }
 
   commandProcessor(commandLine) {
@@ -50,37 +51,36 @@ class Console extends React.Component {
     // Updating history array
     let newHistory = this.state.history;
     newHistory.push(this.state.value);
-
+    
     this.setState({
       history: newHistory,
       value: "",
     });
     e.preventDefault();
   }
-
-  openOutput() {
-    this.consoleOutput.style = "opacity: 1;";
-    this.list.style = "opacity: 1;";
+  
+  openConsole() {
+    this.setState({consoleOpen: true});
+    this.forceUpdate(() => {this.consoleInput.current.focus();});
   }
-
-  closeOutput() {
-    this.consoleOutput.style = "opacity: 0;";
-    this.list.style = "opacity: 0;";
+  
+  closeConsole() {
+    this.consoleInput.current.blur();
+    this.setState({consoleOpen: false});
+    this.forceUpdate();
   }
 
   handleKey(e) {
     // esc (close output)
     if (e.keyCode === 27) {
-      this.closeOutput();
-      this.consoleInput.blur();
+      this.closeConsole();
     }
     // ctrl (open output)
     if (e.keyCode === 17) {
-      this.openOutput();
-      this.consoleInput.focus();
+      this.openConsole();
     }
   }
-
+  
   // Event listeners for keys
   componentDidMount() {
     document.addEventListener("keydown", (e) => this.handleKey(e), false);
@@ -88,9 +88,13 @@ class Console extends React.Component {
   componentWillUnmount() {
     document.removeEventListener("keydown", (e) => this.handleKey(e), false);
   }
-
+  
   handleClick(e) {
-    this.consoleInput.focus();
+    if (this.state.consoleOpen === true) {
+      this.closeConsole();
+    } else {
+      this.openConsole();
+    }
   }
 
   handleChange(e) {
@@ -102,62 +106,53 @@ class Console extends React.Component {
       this.outputItems = null;
     } else {
       this.outputItems = this.state.outputList.map(function (item) {
-        return <li> {item} </li>;
+        return <div className="item"> {item} </div>;
       });
     }
-    if (window.matchMedia("(max-width: 600px)").matches === false) {
-      this.consoleText = (
-        <div className="console-text-long">
-          client@joshlucpoll.com
-          <span className="console-white">:</span>
-          <span className="current-directory">
-            {this.state.currentDirectory}
-          </span>
-          <span className="console-white">$</span>
-        </div>
-      );
-    } else {
-      this.consoleText = <div className="console-text-short">></div>;
-    }
-
+    
     return (
       <div className="console-container">
-        <div className="console">
-          <div className="console-body" onClick={(e) => this.handleClick(e)}>
-            {this.consoleText}
-            {/* <div className="console-input-container"> */}
-              <form
-                className="console-input"
-                onSubmit={(e) => this.handleSubmit(e)}
-              >
-                <input
-                  ref={(input) => {
-                    this.consoleInput = input;
-                  }}
-                  type="text"
-                  value={this.state.value}
-                  onChange={(e) => this.handleChange(e)}
-                  onFocus={() => this.openOutput()}
-                  onBlur={() => this.closeOutput()}
-                />
-              </form>
-            {/* </div> */}
-          </div>
-          <div
-            className="console-output"
+        <div
+          className="console-tab"
+          onClick={(e) => this.handleClick(e)}
+        ></div>
+          {this.state.consoleOpen === true && 
+            <div
+            className="console"
             ref={(div) => {
-              this.consoleOutput = div;
+              this.console = div;
             }}
-          >
-            <ol
-              ref={(list) => {
-                this.list = list;
-              }}
             >
-              {this.outputItems}
-            </ol>
-          </div>
-        </div>
+              <div className="console-body">
+                <div className="console-text-short">></div>
+                  <form
+                    className="console-input"
+                    onSubmit={(e) => this.handleSubmit(e)}
+                  >
+                    <input
+                      ref={this.consoleInput}
+                      type="text"
+                      value={this.state.value}
+                      onChange={(e) => this.handleChange(e)}
+                      // onFocus={() => this.openConsole()}
+                      // onBlur={() => this.closeConsole()}
+                    />
+                  </form>
+              </div>
+              <div
+                className="console-output">
+                <div className="output-list-container">
+                  <div className="output-list"
+                    ref={(list) => {
+                      this.list = list;
+                    }}
+                  >
+                    {this.outputItems}
+                  </div>
+                </div> 
+              </div>
+            </div>
+          }
       </div>
     );
   }

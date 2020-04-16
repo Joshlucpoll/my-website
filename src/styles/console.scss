@@ -3,13 +3,23 @@
   text-align: center;
   display: flex;
   justify-content: space-around;
-  bottom: 10vh;
-  animation: 3s ease-out console-entrance;
-  position: relative;
+  bottom: 7vh;
+  position: fixed;
   
+  .console-tab {
+    height: 5vh;
+    width: 5vh;
+    position: fixed;
+    bottom: 1vh;
+    // z-index: 150;
+    border-radius: 50%;
+    box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
+
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
   .console {
-    z-index: 140;
-    // position: relative;
+    // z-index: 140;
     
     .console-body {
       display: flex;
@@ -17,34 +27,17 @@
       width: 90vw;
       height: 7vh;
       padding-left: 20px;
-      z-index: 150;
-      border-radius: 5px;
+      // z-index: 150;
+      border-bottom-left-radius: 2vh;
+      border-bottom-right-radius: 2vh;
       line-height: 7vh;
       text-align: left;
-      background-color: rgba(0, 0, 0, 0.1);
+      box-shadow: 0px -3px 3px 0px rgba(50, 50, 50, 0.75);
+      background-color: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(5px);
 
-      .console-text-long {
-        color:green;
-        font-family: 'Ubuntu Mono', monospace;
-        font-size: 3vh;
-        display: inline-flex;
-        
-        .console-white {
-          color: white;
-          font-family: 'Ubuntu Mono', monospace;
-          font-size: 3vh;
-        }
-      
-        .current-directory {
-          color: rgb(59, 59, 255);
-          font-family: 'Ubuntu Mono', monospace;
-          font-size: 3vh;
-        }
-      }
-
       .console-text-short {
-        color:green;
+        color:white;
         font-family: 'Ubuntu Mono', monospace;
         font-size: 3vh;
         display: inline-flex;
@@ -70,39 +63,44 @@
     }
 
     .console-output {
-      opacity: 0;
+      opacity: 1;
       position: absolute;
-      bottom: 8vh;
+      bottom: 7vh;
       width: 90vw;
-      height: 82vh;
-      z-index: 145;
+      height: 80vh;
+      // z-index: 145;
       padding-left: 20px;
-      border-radius: 5px;
-      background-color: rgba(0, 0, 0, 0.1);
+      border-top-left-radius: 2vh;
+      border-top-right-radius: 2vh;
+      background-color: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(5px);
       transition: 500ms ease;
       
-      ol {
-        height: 76vh;
-        width: 89vw;
-        position: absolute;
-        bottom: 0;
-        text-align: left;
-        overflow: hidden; 
-        overflow-y: auto;
+      .output-list-container {
         display: flex;
-        flex-direction: column-reverse;
-        padding: 0 0;
-        list-style-type: none;
-        transition: 500ms ease;
-      }
-
-      li {
-        flex: 0 0 auto;
-        color:white;
-        font-family: 'Ubuntu Mono', monospace;
-        font-size: 3vh;
+        flex-direction: column;
+        // flex-flow: column-reverse;
+        overflow-y: auto;
+        // scrollbar-width: none;
+        height: 100%;
         
+        .output-list {
+          display: flex;
+          flex-direction: column-reverse;
+          text-align: left;
+          padding: 0 0;
+          list-style-type: none;
+          transition: 500ms ease;
+          
+          .item {
+            display: flex;
+            flex: 0 0 auto;
+            color:white;
+            font-family: 'Ubuntu Mono', monospace;
+            font-size: 3vh;
+            line-height: 3vh;
+          }
+        }
       }
     }
   }
@@ -110,19 +108,4 @@
 
 .console-body:hover {
   cursor: text;
-}
-
-@keyframes console-entrance {
-  0% {
-    opacity: 0;
-    bottom: -10vh
-  }
-  50% {
-    opacity: 0;
-    bottom: -10vh
-  }
-  100% {
-    opacity: 1;
-    bottom: 10vh;
-  }
 }
