@@ -1,76 +1,79 @@
 import React from "react";
 import SimpleStorage from "react-simple-storage";
-// import styled, {keyframes, css} from "styled-components";
-// import {bounceInLeft} from "react-animations";
+import styled, {keyframes} from "styled-components";
+import {bounceInLeft} from "react-animations";
 
 import "../styles/console.scss";
 
-// const bouceInStyle = {
-//   animation: 2s ${keyframes${bounceInLeft}}
-// }
-
+const BounceIn = styled.div`animation: .5s ${keyframes`${bounceInLeft}`}`;
 
 class Console extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      history: [],
       outputList: [],
+      commandList: [],
       currentDirectory: "~",
       value: "",
       consoleOpen: false,
     };
+    this.baseState = this.state;
     this.consoleInput = React.createRef();
+  }
+
+  addToConsole(string) {
+    let newOutputList = this.state.outputList;
+    newOutputList.unshift(string);
+
+    this.setState({outputList: newOutputList});
   }
 
   commandProcessor(commandLine) {
     // Updating output array
-    let newOutput = this.state.outputList;
-    newOutput.unshift(commandLine);
-    this.setState({ outputList: newOutput });
+    this.addToConsole("> " + commandLine);
+    
+    let newCommandList = this.state.commandList;
+    newCommandList.unshift(commandLine);
+    this.setState({commandList: newCommandList})
 
     // Splitting command line into command + arguments
     const words = commandLine.split(" ");
     const command = words[0];
     const value = words[1];
 
-    if (command === "cd") {
-      this.setState({ currentDirectory: value });
-    }
-    if (command === "history") {
-      // Needs fixing
-      const newOutput = this.state.outputList;
-      const history = this.state.history;
-
-      for (let i = 1; i < history.length; i++) {
-        let value = history[i - 1];
-        value = i + " " + value;
-        history[i - 1] = value;
-      }
-
-      Array.prototype.push.apply(newOutput, history);
-      this.setState({ outputList: newOutput });
-    }
-    if (command === "rm") {
-      this.clearStorage();
-    }
-    if (command === "clear") {
-      this.setState({ outputList: [] });
+    switch(command) {
+      case "cd":
+        this.setState({ currentDirectory: value });
+        this.addToConsole("⠀‎");
+        break;
+      
+      case "history":
+        // Needs fixing
+        let history = this.state.commandList;
+        let count = 1;
+        for (let i = history.length; i > 0; i--) {
+          let value = history[i - 1];
+          value = count + " " + value;
+          this.addToConsole(value);
+          count++;
+        }
+        this.addToConsole("⠀‎");
+        break;
+      
+      case "rm":
+        this.setState(this.baseState);
+        break;
+        
+      case "clear":
+        this.setState({ outputList: [] });
+        break;
+      
+        default:
+          this.addToConsole(commandLine + ": command not found");
+          this.addToConsole("⠀‎");
     }
   }
-
-  handleSubmit(e) {
-    this.commandProcessor(this.state.value);
-    // Updating history array
-    let newHistory = this.state.history;
-    newHistory.push(this.state.value);
-    
-    this.setState({
-      history: newHistory,
-      value: "",
-    });
-    e.preventDefault();
-  }
+  
   
   openConsole() {
     this.setState({consoleOpen: true});
@@ -82,7 +85,15 @@ class Console extends React.Component {
     this.setState({consoleOpen: false});
     this.forceUpdate();
   }
-
+  
+  // Event listeners for key presses
+  componentDidMount() {
+    document.addEventListener("keydown", (e) => this.handleKey(e), false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("keydown", (e) => this.handleKey(e), false);
+  }
+  
   handleKey(e) {
     // esc (close output)
     if (e.keyCode === 27) {
@@ -93,15 +104,7 @@ class Console extends React.Component {
       this.openConsole();
     }
   }
-  
-  // Event listeners for key presses
-  componentDidMount() {
-    document.addEventListener("keydown", (e) => this.handleKey(e), false);
-  }
-  componentWillUnmount() {
-    document.removeEventListener("keydown", (e) => this.handleKey(e), false);
-  }
-  
+
   handleClick(e) {
     if (this.state.consoleOpen === true) {
       this.closeConsole();
@@ -110,6 +113,12 @@ class Console extends React.Component {
     }
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    this.commandProcessor(this.state.value);
+    this.setState({value: ""});
+  }
+  
   handleChange(e) {
     this.setState({ value: e.target.value });
   }
@@ -131,41 +140,35 @@ class Console extends React.Component {
           onClick={(e) => this.handleClick(e)}
         ></div>
           {this.state.consoleOpen === true && 
-            <div
-            className="console"
-            ref={(div) => {
-              this.console = div;
-            }}
-            >
-              <div className="console-body">
-                <div className="console-text-short">></div>
-                  <form
-                    className="console-input"
-                    onSubmit={(e) => this.handleSubmit(e)}
-                  >
-                    <input
-                      ref={this.consoleInput}
-                      type="text"
-                      value={this.state.value}
-                      onChange={(e) => this.handleChange(e)}
-                      // onFocus={() => this.openConsole()}
-                      // onBlur={() => this.closeConsole()}
-                    />
-                  </form>
-              </div>
+            <BounceIn>
               <div
-                className="console-output">
-                <div className="output-list-container">
-                  <div className="output-list"
-                    ref={(list) => {
-                      this.list = list;
-                    }}
-                  >
-                    {this.outputItems}
-                  </div>
-                </div> 
+              className="console">
+                <div className="console-body">
+                  <div className="console-text-short">></div>
+                    <form
+                      className="console-input"
+                      onSubmit={(e) => this.handleSubmit(e)}
+                    >
+                      <input
+                        ref={this.consoleInput}
+                        type="text"
+                        value={this.state.value}
+                        onChange={(e) => this.handleChange(e)}
+                        // onFocus={() => this.openConsole()}
+                        // onBlur={() => this.closeConsole()}
+                      />
+                    </form>
+                </div>
+                <div
+                  className="console-output">
+                  <div className="output-list-container">
+                    <div className="output-list">
+                      {this.outputItems}
+                    </div>
+                  </div> 
+                </div>
               </div>
-            </div>
+            </BounceIn>
           }
       </div>
     );
