@@ -13,6 +13,7 @@
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
+    "react-simple-storage": "^1.4.2",
     "styled-components": "^5.1.0"
   },
   "scripts": {

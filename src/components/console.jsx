@@ -1,4 +1,14 @@
 import React from "react";
+import SimpleStorage from "react-simple-storage";
+// import styled, {keyframes, css} from "styled-components";
+// import {bounceInLeft} from "react-animations";
+
+import "../styles/console.scss";
+
+// const bouceInStyle = {
+//   animation: 2s ${keyframes${bounceInLeft}}
+// }
+
 
 class Console extends React.Component {
   constructor(props) {
@@ -41,6 +51,9 @@ class Console extends React.Component {
       Array.prototype.push.apply(newOutput, history);
       this.setState({ outputList: newOutput });
     }
+    if (command === "rm") {
+      this.clearStorage();
+    }
     if (command === "clear") {
       this.setState({ outputList: [] });
     }
@@ -81,7 +94,7 @@ class Console extends React.Component {
     }
   }
   
-  // Event listeners for keys
+  // Event listeners for key presses
   componentDidMount() {
     document.addEventListener("keydown", (e) => this.handleKey(e), false);
   }
@@ -112,6 +125,7 @@ class Console extends React.Component {
     
     return (
       <div className="console-container">
+        <SimpleStorage parent={this} />
         <div
           className="console-tab"
           onClick={(e) => this.handleClick(e)}
