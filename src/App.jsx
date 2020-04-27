@@ -11,6 +11,7 @@ import LostPage from "./pages/404";
 
 // Components
 import Console from "./components/console";
+import SocialBar from "./components/socialBar"
 
 import "./styles/App.scss";
 import "./styles/console.scss";
@@ -82,6 +83,7 @@ class App extends React.Component {
           onTouchMove={e => this.handleMouseMove(e)}
         >
           <Cursor xMouse={this.state.xMouse} yMouse={this.state.yMouse}></Cursor>
+          <SocialBar/>
           <Switch>
             <Route exact path="/">
               <Home 

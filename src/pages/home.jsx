@@ -10,7 +10,7 @@ import BackgroundVideo from "../assets/Retro_Stripes_Monitor_Overlay.mp4"
 import "../styles/home.scss";
 
 const FadeIn = styled.div`animation: 2s ${keyframes`${fadeInDownBig}`}`;
-const string = "<Software-Developer/>";
+const string = "<software-developer/>";
 let i = 0, howManyTimes = 21;
 
 class Home extends React.Component {
@@ -19,7 +19,6 @@ class Home extends React.Component {
     this.state = {
       subTitle: "",
       cursor: "",
-      space: ""
     }
   }
   
@@ -39,12 +38,10 @@ class Home extends React.Component {
   subTitleCursor() {
     if (this.state.cursor === "") {
       this.setState({
-        space: "‎‎‎‎‎‎‎‎‎‎‎‎ ",
         cursor: "|",
       });
     } else {
       this.setState({
-        space: "",
         cursor: "",
       });
     }
@@ -97,7 +94,7 @@ class Home extends React.Component {
             xVector={xVector}
             yVector={yVector}
           />
-          <div className="sub-title">{this.state.space}{this.state.subTitle}{this.state.cursor}</div>
+          <div className="sub-title">{this.state.subTitle}{this.state.cursor}</div>
         </div></FadeIn>
       </div>
     );

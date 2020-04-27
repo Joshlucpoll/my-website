@@ -3,6 +3,7 @@ import SimpleStorage from "react-simple-storage";
 import styled, {keyframes} from "styled-components";
 import {bounceInLeft} from "react-animations";
 
+import ConsoleIcon from "../assets/console_icon.svg"
 import "../styles/console.scss";
 
 const BounceIn = styled.div`animation: .5s ${keyframes`${bounceInLeft}`}`;
@@ -95,12 +96,13 @@ class Console extends React.Component {
   }
   
   handleKey(e) {
+    console.log("Key")
     // esc (close output)
     if (e.keyCode === 27) {
       this.closeConsole();
     }
-    // ctrl (open output)
-    if (e.keyCode === 17) {
+    // shift (open output)
+    if (e.keyCode === 16) {
       this.openConsole();
     }
   }
@@ -138,7 +140,9 @@ class Console extends React.Component {
         <div
           className="console-tab"
           onClick={(e) => this.handleClick(e)}
-        ></div>
+        >
+          <img src={ConsoleIcon} alt="Terminal"/>
+        </div>
           {this.state.consoleOpen === true && 
             <BounceIn>
               <div
