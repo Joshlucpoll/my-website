@@ -6,6 +6,7 @@ import {fadeInDownBig} from "react-animations";
 // Components
 import LongShadow from "../components/longShadow";
 
+import BackgroundVideo from "../assets/Retro_Stripes_Monitor_Overlay.mp4"
 import "../styles/home.scss";
 
 const FadeIn = styled.div`animation: 2s ${keyframes`${fadeInDownBig}`}`;
@@ -81,7 +82,10 @@ class Home extends React.Component {
 
     return (
       <div className="home-body">
-        
+        <video autoPlay muted loop className="background-video">
+          <source src={BackgroundVideo} type="video/mp4"/>
+        </video>
+
         <FadeIn><div
           id="title-container"
           style={styles}
