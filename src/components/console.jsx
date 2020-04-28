@@ -1,12 +1,9 @@
 import React from "react";
 import SimpleStorage from "react-simple-storage";
-import styled, {keyframes} from "styled-components";
-import {bounceInLeft} from "react-animations";
+import { CSSTransition } from "react-transition-group";
 
 import ConsoleIcon from "../assets/console_icon.svg"
 import "../styles/console.scss";
-
-const BounceIn = styled.div`animation: .5s ${keyframes`${bounceInLeft}`}`;
 
 class Console extends React.Component {
   constructor(props) {
@@ -143,37 +140,40 @@ class Console extends React.Component {
         >
           <img src={ConsoleIcon} alt="Terminal"/>
         </div>
-          {this.state.consoleOpen === true && 
-            <BounceIn>
-              <div
-              className="console">
-                <div className="console-body">
-                  <div className="console-text-short">></div>
-                    <form
-                      className="console-input"
-                      onSubmit={(e) => this.handleSubmit(e)}
-                    >
-                      <input
-                        ref={this.consoleInput}
-                        type="text"
-                        value={this.state.value}
-                        onChange={(e) => this.handleChange(e)}
-                        // onFocus={() => this.openConsole()}
-                        // onBlur={() => this.closeConsole()}
-                      />
-                    </form>
-                </div>
-                <div
-                  className="console-output">
-                  <div className="output-list-container">
-                    <div className="output-list">
-                      {this.outputItems}
-                    </div>
-                  </div> 
-                </div>
+          <CSSTransition
+            in={this.state.consoleOpen}
+            timeout={300}
+            classNames="slide"
+            unmountOnExit
+            appear
+          >
+            <div className="console">
+              <div className="console-body">
+                <div className="console-text-short">></div>
+                  <form
+                    className="console-input"
+                    onSubmit={(e) => this.handleSubmit(e)}
+                  >
+                    <input
+                      ref={this.consoleInput}
+                      type="text"
+                      value={this.state.value}
+                      onChange={(e) => this.handleChange(e)}
+                      // onFocus={() => this.openConsole()}
+                      // onBlur={() => this.closeConsole()}
+                    />
+                  </form>
               </div>
-            </BounceIn>
-          }
+              <div
+                className="console-output">
+                <div className="output-list-container">
+                  <div className="output-list">
+                    {this.outputItems}
+                  </div>
+                </div> 
+              </div>
+            </div>
+          </CSSTransition>
       </div>
     );
   }

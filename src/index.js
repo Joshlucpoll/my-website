@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles//index.css';
 import App from './App';
-import * as firebase from "firebase";
+import * as firebase from "firebase/app";
+import "firebase/analytics";
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyDwMViQImZb2if43NInF2sriqHa-8KLOkc",
@@ -15,5 +17,6 @@ const firebaseConfig = {
     measurementId: "G-W5WR0MZ00B"
 };
 firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
 ReactDOM.render(<App />, document.getElementById('root'));

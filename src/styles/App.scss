@@ -22,6 +22,7 @@
 }
 
 .cursor {
+  z-index: 1;
   position: fixed;
   transition: 300ms ease-out;
   // pointer-events: none;
@@ -56,6 +57,30 @@
     animation: cursorClick 1.5s 1s ease-in-out infinite;
   }
 }
+
+.fade-enter {
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  transform: translateX(-100vw);
+  transition: 0.6s ease-out;
+}
+.fade-exit {
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  transform: translateX(0);
+  transition: 0.6s ease-out;
+}
+.fade-exit-active {
+  transform: translateX(100vw);
+  opacity: 0;
+}
+.fade-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
 
 @keyframes cursorClick {
   0% {

@@ -119,3 +119,26 @@
 .console-body:hover {
   cursor: text;
 }
+
+.slide-enter {
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  transform: translateX(-100vw);
+  transition: 300ms ease-out;
+}
+.slide-exit {
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  transform: translateX(0);
+  transition: 300ms ease-out;
+}
+.slide-exit-active {
+  transform: translateX(100vw);
+  opacity: 0;
+}
+.slide-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+}
