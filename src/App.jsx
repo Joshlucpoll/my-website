@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from "react-router-dom";
 import { TransitionGroup, CSSTransition} from "react-transition-group";
 
@@ -32,6 +33,9 @@ function App() {
               >
                 <Switch location={location}>
                   <Route exact path="/">
+                    <Redirect to="/home"/>
+                  </Route>
+                  <Route exact path="/home">
                     <Home/>
                   </Route>
                   <Route>

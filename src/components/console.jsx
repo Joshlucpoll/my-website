@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom"
 import SimpleStorage from "react-simple-storage";
 import { CSSTransition } from "react-transition-group";
 
@@ -11,7 +12,7 @@ class Console extends React.Component {
     this.state = {
       outputList: [],
       commandList: [],
-      currentDirectory: "~",
+      currentDirectory: window.location.pathname,
       value: "",
       consoleOpen: false,
     };
@@ -105,6 +106,7 @@ class Console extends React.Component {
   }
 
   handleClick(e) {
+    console.log(window.location.pathname)
     if (this.state.consoleOpen === true) {
       this.closeConsole();
     } else {
@@ -159,8 +161,6 @@ class Console extends React.Component {
                       type="text"
                       value={this.state.value}
                       onChange={(e) => this.handleChange(e)}
-                      // onFocus={() => this.openConsole()}
-                      // onBlur={() => this.closeConsole()}
                     />
                   </form>
               </div>
@@ -174,6 +174,10 @@ class Console extends React.Component {
               </div>
             </div>
           </CSSTransition>
+          
+          {this.state.currentDirectory !== window.location.pathname &&
+            <Redirect to={this.state.currentDirectory}/>
+          }
       </div>
     );
   }
