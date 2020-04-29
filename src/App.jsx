@@ -33,9 +33,6 @@ function App() {
               >
                 <Switch location={location}>
                   <Route exact path="/">
-                    <Redirect to="/home"/>
-                  </Route>
-                  <Route exact path="/home">
                     <Home/>
                   </Route>
                   <Route>
