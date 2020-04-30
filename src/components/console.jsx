@@ -73,7 +73,6 @@ class Console extends React.Component {
     }
   }
   
-  
   openConsole() {
     this.setState({consoleOpen: true});
     this.forceUpdate(() => {this.consoleInput.current.focus();});
