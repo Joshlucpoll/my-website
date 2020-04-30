@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom"
-import SimpleStorage from "react-simple-storage";
+// import SimpleStorage from "react-simple-storage";
 import { CSSTransition } from "react-transition-group";
 
 import ConsoleIcon from "../assets/console_icon.svg"
@@ -135,7 +135,7 @@ class Console extends React.Component {
     
     return (
       <div className="console-container">
-        <SimpleStorage parent={this} />
+        {/* <SimpleStorage parent={this} blacklist={ ["currentDirectory"] }/> */}
         <div
           className="console-tab"
           onClick={(e) => this.handleClick(e)}
