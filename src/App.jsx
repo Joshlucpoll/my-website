@@ -8,6 +8,7 @@ import { TransitionGroup, CSSTransition} from "react-transition-group";
 
 // Pages
 import Home from "./pages/home";
+import Projects from "./pages/projects";
 import LostPage from "./pages/404";
 
 // Components
@@ -33,6 +34,9 @@ function App() {
                 <Switch location={location}>
                   <Route exact path="/">
                     <Home/>
+                  </Route>
+                  <Route exact path="/projects">
+                    <Projects/>
                   </Route>
                   <Route>
                     <LostPage/>
