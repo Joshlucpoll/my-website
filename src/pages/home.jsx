@@ -3,10 +3,6 @@ import {isBrowser} from "react-device-detect";
 import styled, {keyframes} from "styled-components";
 import {fadeInDownBig} from "react-animations";
 
-import { 
-  Link
-} from "react-router-dom";
-
 // Components
 import LongShadow from "../components/longShadow";
 
@@ -26,6 +22,7 @@ class Home extends React.Component {
       xMiddle: 0,
       yMiddle: 0,
     }
+    this._isMounted = false;
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.string = "<software-developer/>";
     this.i = 0
@@ -33,31 +30,36 @@ class Home extends React.Component {
   }
   
   typeSubTitle() {
-    this.setState({
-      subTitle: this.state.subTitle + this.string.split("")[this.i] 
-    })
-    this.i++;
-    if( this.i < this.howManyTimes ){
-      setTimeout(() => {
-        this.typeSubTitle();
-      }, 100);
-
+    if (this._isMounted === true) {
+      
+      this.setState({
+        subTitle: this.state.subTitle + this.string.split("")[this.i] 
+      })
+      this.i++;
+      if( this.i < this.howManyTimes ){
+        setTimeout(() => {
+          this.typeSubTitle();
+        }, 100);
+      }
     }
   }
 
   subTitleCursor() {
-    if (this.state.cursor === "") {
-      this.setState({
-        cursor: "|",
-      });
-    } else {
-      this.setState({
-        cursor: "",
-      });
+    if (this._isMounted === true) {
+      
+      if (this.state.cursor === "") {
+        this.setState({
+          cursor: "|",
+        });
+      } else {
+        this.setState({
+          cursor: "",
+        });
+      }
+      setTimeout(() => {
+        this.subTitleCursor();
+      }, 530);
     }
-    setTimeout(() => {
-      this.subTitleCursor();
-    }, 530);
   }
 
   updateWindowDimensions() {
@@ -84,6 +86,7 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     document.title = "Josh Pollard | Home";
     
     this.updateWindowDimensions();
@@ -99,6 +102,7 @@ class Home extends React.Component {
   }
   
   componentWillUnmount() {
+    this._isMounted = false;
     window.removeEventListener("resize", this.updateWindowDimensions);
   }
 
@@ -131,15 +135,13 @@ class Home extends React.Component {
           id="title-container"
           style={styles}
         >
-          <Link to="/sdfg">
-            <LongShadow
-              id={"headline-title"}
-              textOne={"JOSH"}
-              textTwo={"POLLARD"}
-              xVector={xVector}
-              yVector={yVector}
-          />
-          </Link>
+          <LongShadow
+            id={"headline-title"}
+            textOne={"JOSH"}
+            textTwo={"POLLARD"}
+            xVector={xVector}
+            yVector={yVector}
+        />
           <div className="sub-title">{this.state.subTitle}{this.state.cursor}</div>
         </div></FadeIn>
       </div>

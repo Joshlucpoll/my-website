@@ -29,6 +29,7 @@ class Console extends React.Component {
 
   commandProcessor(commandLine) {
     // Updating output array
+    this.addToConsole("⠀‎");
     this.addToConsole("> " + commandLine);
     
     let newCommandList = this.state.commandList;
@@ -42,12 +43,15 @@ class Console extends React.Component {
 
     switch(command) {
       case "cd":
-        this.setState({ currentDirectory: value });
-        this.addToConsole("⠀‎");
+        if (value === "~") {
+          this.setState({ currentDirectory: "/" });
+        }
+        else {
+          this.setState({ currentDirectory: value });
+        }
         break;
       
       case "history":
-        // Needs fixing
         let history = this.state.commandList;
         let count = 1;
         for (let i = history.length; i > 0; i--) {
@@ -56,7 +60,6 @@ class Console extends React.Component {
           this.addToConsole(value);
           count++;
         }
-        this.addToConsole("⠀‎");
         break;
       
       case "rm":
@@ -72,9 +75,6 @@ class Console extends React.Component {
         break;
       
       case "help":
-        if (value === undefined || value === "") {
-          this.addToConsole("This website uses UNIX commands to navigate through pages. If you need help with commands type 'help commands'");
-        }
         if (value === "commands") {
           this.addToConsole("ls -- Used to list pages in current directory (WIP)")
           this.addToConsole("cd -- Used to change directory")
@@ -82,12 +82,13 @@ class Console extends React.Component {
           this.addToConsole("clear -- Used clear the console view")
           this.addToConsole("exit -- Used to close the console view")
         }
-        this.addToConsole(" ");
+        else {
+          this.addToConsole("This website uses UNIX commands to navigate through pages. If you need help with commands type 'help commands'");
+        }
         break;
         
       default:
         this.addToConsole(commandLine + ": command not found");
-        this.addToConsole("⠀‎");
     }
   }
   
@@ -146,8 +147,8 @@ class Console extends React.Component {
     if (this.state.outputList.length === 0) {
       this.outputItems = null;
     } else {
-      this.outputItems = this.state.outputList.map(function (item) {
-        return <div className="item"> {item} </div>;
+      this.outputItems = this.state.outputList.map(function (item, index) {
+        return <div className="item" key={index}> {item} </div>;
       });
     }
     

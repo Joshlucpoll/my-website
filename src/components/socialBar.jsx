@@ -28,7 +28,7 @@ function SocialBar() {
         </a>
         <a href="https://www.linkedin.com/in/joshlucpoll" target="_blank" rel="noopener noreferrer">
           <div className="linkedin">
-            <img src={LinkedIn} alt="CodeSandbox"/>
+            <img src={LinkedIn} alt="LinkedIn"/>
           </div>
         </a>
         <a href="mailto:info@joshlucpoll.com" target="_blank" rel="noopener noreferrer">
