@@ -66,14 +66,28 @@ class Console extends React.Component {
       case "clear":
         this.setState({ outputList: [] });
         break;
+    
+      case "exit":
+        this.closeConsole();
+        break;
       
-        case "exit":
-          this.closeConsole();
-          break;
-      
-        default:
-          this.addToConsole(commandLine + ": command not found");
-          this.addToConsole("⠀‎");
+      case "help":
+        if (value === undefined || value === "") {
+          this.addToConsole("This website uses UNIX commands to navigate through pages. If you need help with commands type 'help commands'");
+        }
+        if (value === "commands") {
+          this.addToConsole("ls -- Used to list pages in current directory (WIP)")
+          this.addToConsole("cd -- Used to change directory")
+          this.addToConsole("history -- Used to view command history")
+          this.addToConsole("clear -- Used clear the console view")
+          this.addToConsole("exit -- Used to close the console view")
+        }
+        this.addToConsole(" ");
+        break;
+        
+      default:
+        this.addToConsole(commandLine + ": command not found");
+        this.addToConsole("⠀‎");
     }
   }
   
@@ -100,7 +114,6 @@ class Console extends React.Component {
   }
   
   handleKey(e) {
-    console.log("Key")
     // esc (close output)
     if (e.keyCode === 27) {
       this.closeConsole();
@@ -112,7 +125,6 @@ class Console extends React.Component {
   }
 
   handleClick(e) {
-    console.log(window.location.pathname)
     if (this.state.consoleOpen === true) {
       this.closeConsole();
     } else {
