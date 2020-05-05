@@ -3,26 +3,27 @@
   text-align: center;
   display: flex;
   justify-content: space-around;
-  bottom: 7vh;
+  bottom: 10vh;
   position: fixed;
   
   .console-tab {
     height: 6vh;
     width: 6vh;
+    margin: 2vh;
     position: fixed;
     bottom: 0;
-    left: 0;
+    right: 0;
     z-index: 150;
-    opacity: 0.5;
-    transition: 400ms ease-in;
-    // transition: opacity 100ms ease-in-out;
+    background-color: rgb(54, 54, 54);
+    border-radius: 50%;
     
-    &:hover {
+    &:hover img {
       opacity: 1;
-      transform: scale(1.2);
     }
-
+    
     img {
+      transition: opacity 200ms ease-in;
+      opacity: 0.5;
       padding: 20% 0;
       width: 60%;
     }

@@ -67,6 +67,10 @@ class Console extends React.Component {
         this.setState({ outputList: [] });
         break;
       
+        case "exit":
+          this.closeConsole();
+          break;
+      
         default:
           this.addToConsole(commandLine + ": command not found");
           this.addToConsole("⠀‎");
@@ -74,7 +78,10 @@ class Console extends React.Component {
   }
   
   openConsole() {
-    this.setState({consoleOpen: true});
+    this.setState({
+      consoleOpen: true,
+      currentDirectory: window.location.pathname
+    });
     this.forceUpdate(() => {this.consoleInput.current.focus();});
   }
   
@@ -120,10 +127,7 @@ class Console extends React.Component {
   }
   
   handleChange(e) {
-    this.setState({
-      value: e.target.value,
-      currentDirectory: window.location.pathname,
-    });
+    this.setState({ value: e.target.value });
   }
 
   render() {
