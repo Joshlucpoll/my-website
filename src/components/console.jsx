@@ -49,6 +49,7 @@ class Console extends React.Component {
         else {
           this.setState({ currentDirectory: value });
         }
+        this.closeConsole();
         break;
       
       case "history":
