@@ -27,7 +27,10 @@ class Console extends React.Component {
     this.setState({outputList: newOutputList});
   }
 
-  commandProcessor(commandLine) {
+  commandProcessor(commandLineRaw) {
+    // Converts command line to lowercase
+    const commandLine = commandLineRaw.toLowerCase();
+
     // Updating output array
     this.addToConsole("⠀‎");
     this.addToConsole("> " + commandLine);
