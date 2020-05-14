@@ -3,7 +3,7 @@
 This repository contains all the code used to produce [https://joshlucpoll.com](https://joshlucpoll.com).  
 It was created using [React JS](https://reactjs.org) and hosted with [Firebase](https://firebase.google.com)
 
-##Console
+#Console
 Navigation for joshlucpoll.com is achieved with **UNIX** commands - instead of the traditional navigation bar/dropdown. Typing:
 
     help
