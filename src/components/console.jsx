@@ -165,7 +165,7 @@ class Console extends React.Component {
           <CSSTransition
             in={this.state.consoleOpen}
             timeout={300}
-            classNames="slide"
+            classNames="window"
             unmountOnExit
             appear
           >

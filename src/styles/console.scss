@@ -14,7 +14,7 @@
     bottom: 0;
     right: 0;
     z-index: 150;
-    background-color: rgb(54, 54, 54);
+    background-color: rgba(54, 54, 54, 0.75);
     border-radius: 50%;
     
     &:hover img {
@@ -31,7 +31,7 @@
   }
 
   .console {
-    // z-index: 140;
+    transform-origin: bottom right;
     
     .console-body {
       display: flex;
@@ -39,14 +39,12 @@
       width: 90vw;
       height: 7vh;
       padding-left: 20px;
-      // z-index: 150;
       border-bottom-left-radius: 2vh;
       border-bottom-right-radius: 2vh;
       line-height: 7vh;
       text-align: left;
       box-shadow: 0px -3px 3px 0px rgba(0, 0, 0, 0.75);
       background-color: rgba(54, 54, 54, 0.5);
-      backdrop-filter: blur(5px);
       
       .console-text-short {
         color:white;
@@ -80,12 +78,10 @@
       bottom: 7vh;
       width: 90vw;
       height: 75vh;
-      // z-index: 145;
       padding-left: 20px;
       border-top-left-radius: 2vh;
       border-top-right-radius: 2vh;
       background-color: rgba(54, 54, 54, 0.5);
-      backdrop-filter: blur(5px);
       
       .output-list-container {
         display: flex;
@@ -121,25 +117,22 @@
   cursor: text;
 }
 
-.slide-enter {
-  // position: absolute;
-  // top: 0;
-  // left: 0;
-  transform: translateX(-100vw);
-  transition: 300ms ease-out;
+
+.window-enter {
+  transform: scale(0);
+  transition: 300ms ease-in-out;
 }
-.slide-exit {
-  // position: absolute;
-  // top: 0;
-  // left: 0;
-  transform: translateX(0);
-  transition: 300ms ease-out;
-}
-.slide-exit-active {
-  transform: translateX(100vw);
-  opacity: 0;
-}
-.slide-enter-active {
-  transform: translateX(0);
+
+.window-enter-active {
+  transform: scale(1);
   opacity: 1;
+}
+
+.window-exit {
+  transform: scale(1);
+  transition: 300ms ease-in-out;
+}
+.window-exit-active {
+  transform: scale(0);
+  opacity: 0;
 }
