@@ -12,6 +12,7 @@ class Console extends React.Component {
     this.state = {
       outputList: [],
       commandList: [],
+      historyLocation: null,
       currentDirectory: window.location.pathname,
       value: "",
       consoleOpen: false,
@@ -117,6 +118,39 @@ class Console extends React.Component {
   componentWillUnmount() {
     document.removeEventListener("keydown", (e) => this.handleKey(e), false);
   }
+
+  previousCommand(direction) {
+    if (this.state.commandList.length !== 0) {
+      if (direction === "up") {
+        if (this.state.historyLocation === null) {
+          this.setState({
+            value: this.state.commandList[0],
+            historyLocation: 0,
+          });
+        }
+        else {
+          if (this.state.historyLocation !== (this.state.commandList.length - 1)) {
+            this.setState({
+              value: this.state.commandList[(this.state.historyLocation + 1)],
+              historyLocation: this.state.historyLocation + 1,
+            });
+          }
+        }
+      }
+      else if (direction === "down") {
+        if (this.state.historyLocation !== null) {
+          if (this.state.historyLocation !== 0) {
+            this.setState({
+              value: this.state.commandList[(this.state.historyLocation - 1)],
+              historyLocation: this.state.historyLocation - 1,
+            });
+          }
+        }
+      }
+    }
+    this.consoleInput.current.selectionStart = this.consoleInput.current.value.length;
+    this.consoleInput.current.selectionEnd = this.consoleInput.current.value.length;
+  }
   
   handleKey(e) {
     // esc (close output)
@@ -126,6 +160,14 @@ class Console extends React.Component {
     // shift (open output)
     if (e.keyCode === 16) {
       this.openConsole();
+    }
+    // up arrow (cycle previous commands)
+    if (e.keyCode === 38) {
+      this.previousCommand("up");
+    }
+    // down arrow (cycle previous commands)
+    if (e.keyCode === 40) {
+      this.previousCommand("down");
     }
   }
 
@@ -144,7 +186,17 @@ class Console extends React.Component {
   }
   
   handleChange(e) {
-    this.setState({ value: e.target.value });
+    this.setState({
+      value: e.target.value,
+      historyLocation: null,
+    });
+  }
+
+  handleKeyDown(e) {
+    // Prevents cursor change with up/down arrows
+    if(e.keyCode === 38 || e.keyCode === 40) {
+      e.preventDefault();
+    }
   }
 
   render() {
@@ -184,6 +236,7 @@ class Console extends React.Component {
                       type="text"
                       value={this.state.value}
                       onChange={(e) => this.handleChange(e)}
+                      onKeyDown={(e) => this.handleKeyDown(e)}
                     />
                   </form>
               </div>
