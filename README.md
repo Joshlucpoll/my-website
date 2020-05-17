@@ -1,4 +1,4 @@
-![](https://github.com/joshlucpoll/my-website/workflows/build/badge.svg) [![Known Vulnerabilities]
+![](https://github.com/joshlucpoll/my-website/workflows/build/badge.svg)
 
 # [Portfolio for Josh Pollard](https://joshlucpoll.com) *(WIP)*
 
