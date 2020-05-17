@@ -29,7 +29,7 @@ function App() {
               <CSSTransition
                 key={location.pathname}
                 classNames="fade"
-                timeout={600}
+                timeout={2000}
               >
                 <Switch location={location}>
                   <Route exact path="/">
