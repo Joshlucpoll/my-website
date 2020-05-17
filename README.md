@@ -1,3 +1,5 @@
+![](https://github.com/joshlucpoll/my-website/workflows/build/badge.svg) [![Known Vulnerabilities]
+
 # [Portfolio for Josh Pollard](https://joshlucpoll.com) *(WIP)*
 
 This repository contains all the code used to produce [https://joshlucpoll.com](https://joshlucpoll.com).  
