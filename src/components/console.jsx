@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom"
-// import SimpleStorage from "react-simple-storage";
+import SimpleStorage from "react-simple-storage";
 import { CSSTransition } from "react-transition-group";
 
 import ConsoleIcon from "../assets/console_icon.svg"
@@ -13,7 +13,6 @@ class Console extends React.Component {
       outputList: [],
       commandList: [],
       historyLocation: null,
-      currentDirectory: window.location.pathname,
       value: "",
       consoleOpen: false,
     };
@@ -48,10 +47,10 @@ class Console extends React.Component {
     switch(command) {
       case "cd":
         if (value === "~") {
-          this.setState({ currentDirectory: "/" });
+          this.props.changeDirectory("/");
         }
         else {
-          this.setState({ currentDirectory: value });
+          this.props.changeDirectory(value);
         }
         this.closeConsole();
         break;
@@ -98,17 +97,21 @@ class Console extends React.Component {
   }
   
   openConsole() {
-    this.setState({
-      consoleOpen: true,
-      currentDirectory: window.location.pathname
-    });
-    this.forceUpdate(() => {this.consoleInput.current.focus();});
+    if (this.state.consoleOpen === false) {
+      this.props.changeDirectory(window.location.pathname);
+      this.setState({
+        consoleOpen: true,
+      });
+      this.forceUpdate(() => {this.consoleInput.current.focus()});
+    }
   }
   
   closeConsole() {
-    this.consoleInput.current.blur();
-    this.setState({consoleOpen: false});
-    this.forceUpdate();
+    if (this.state.consoleOpen === true) {
+      this.consoleInput.current.blur();
+      this.setState({consoleOpen: false});
+      this.forceUpdate();
+    }
   }
   
   // Event listeners for key presses
@@ -210,7 +213,7 @@ class Console extends React.Component {
     
     return (
       <div className="console-container">
-        {/* <SimpleStorage parent={this} blacklist={ ["currentDirectory"] }/> */}
+        <SimpleStorage parent={this}/>
         <div
           className="console-tab"
           onClick={(e) => this.handleClick(e)}
@@ -251,8 +254,8 @@ class Console extends React.Component {
             </div>
           </CSSTransition>
           
-          {this.state.currentDirectory !== window.location.pathname &&
-            <Redirect to={this.state.currentDirectory}/>
+          {this.props.currentDirectory !== window.location.pathname &&
+            <Redirect to={this.props.currentDirectory}/>
           }
       </div>
     );

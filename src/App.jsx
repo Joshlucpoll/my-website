@@ -18,38 +18,58 @@ import SocialBar from "./components/socialBar"
 import "./styles/App.scss";
 import "./styles/console.scss";
 
-function App() {
-  return (
-    <Router>
-      <div className="app">
-        <SocialBar/>
-        <Route 
-          render={({ location }) => (
-            <TransitionGroup>
-              <CSSTransition
-                key={location.pathname}
-                classNames="fade"
-                timeout={2000}
-              >
-                <Switch location={location}>
-                  <Route exact path="/">
-                    <Home/>
-                  </Route>
-                  <Route exact path="/projects">
-                    <Projects/>
-                  </Route>
-                  <Route>
-                    <LostPage/>
-                  </Route>
-                </Switch>
-              </CSSTransition>
-            </TransitionGroup>
-          )}
-        />
-        <Console/>
-      </div>
-    </Router>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentDirectory: window.location.pathname,
+      // directoryChange: 
+    }
+  }
+
+  changeDirectory(path) {
+    this.setState({ currentDirectory: path })
+  }
+  
+  render() {
+    if (window.location.pathname !== this.state.currentDirectory) {
+
+    }
+    return (
+      <Router>
+        <div className="app">
+          <SocialBar/>
+          <Route 
+            render={({ location }) => (
+              <TransitionGroup>
+                <CSSTransition
+                  key={location.pathname}
+                  classNames="fade"
+                  timeout={2000}
+                >
+                  <Switch location={location}>
+                    <Route exact path="/">
+                      <Home/>
+                    </Route>
+                    <Route exact path="/projects">
+                      <Projects/>
+                    </Route>
+                    <Route>
+                      <LostPage/>
+                    </Route>
+                  </Switch>
+                </CSSTransition>
+              </TransitionGroup>
+            )}
+          />
+          <Console
+            currentDirectory={this.state.currentDirectory}
+            changeDirectory={(path) => this.changeDirectory(path)}
+          />
+        </div>
+      </Router>
+    );
+  }
 }
 
 export default App;
