@@ -1,5 +1,6 @@
 [![](https://github.com/joshlucpoll/my-website/workflows/build/badge.svg)](https://github.com/Joshlucpoll/my-website/actions?query=workflow%3Abuild)
 [![Known Vulnerabilities](https://snyk.io/test/npm/my-website/0.1.0/badge.svg)](https://snyk.io/test/npm/my-website/0.1.0)
+[![time tracker](https://wakatime.com/badge/github/Joshlucpoll/my-website.svg)](https://wakatime.com/badge/github/Joshlucpoll/my-website)
 
 # [Portfolio for Josh Pollard](https://joshlucpoll.com) *(WIP)*
 
