@@ -15,6 +15,7 @@ class Console extends React.Component {
       historyLocation: null,
       value: "",
       consoleOpen: false,
+      placeHolderText: "",
     };
     this.baseState = this.state;
     this.consoleInput = React.createRef();
@@ -84,6 +85,7 @@ class Console extends React.Component {
           this.addToConsole("cd -- Used to change directory")
           this.addToConsole("history -- Used to view command history")
           this.addToConsole("clear -- Used clear the console view")
+          this.addToConsole("rm -- Used to reset console to default")
           this.addToConsole("exit -- Used to close the console view")
         }
         else {
@@ -102,7 +104,13 @@ class Console extends React.Component {
       this.setState({
         consoleOpen: true,
       });
-      this.forceUpdate(() => {this.consoleInput.current.focus()});
+      this.forceUpdate(() => {this.consoleInput.current.focus();});
+      setTimeout(() => {
+          if (this.state.consoleOpen === true) {
+            this.setState({ placeHolderText: '🤔 ⌨️"help"' }, this.forceUpdate());
+          }
+        }
+      ,3000)
     }
   }
   
@@ -110,7 +118,7 @@ class Console extends React.Component {
     if (this.state.consoleOpen === true) {
       this.consoleInput.current.blur();
       this.setState({consoleOpen: false});
-      this.forceUpdate();
+      this.setState({ placeHolderText: "" }, this.forceUpdate());
     }
   }
   
@@ -192,6 +200,7 @@ class Console extends React.Component {
     this.setState({
       value: e.target.value,
       historyLocation: null,
+      placeHolderText: "",
     });
   }
 
@@ -210,7 +219,6 @@ class Console extends React.Component {
         return <div className="item" key={index}> {item} </div>;
       });
     }
-    
     return (
       <div className="console-container">
         <SimpleStorage parent={this}/>
@@ -237,6 +245,7 @@ class Console extends React.Component {
                     <input
                       ref={this.consoleInput}
                       type="text"
+                      placeholder={this.state.placeHolderText}
                       value={this.state.value}
                       onChange={(e) => this.handleChange(e)}
                       onKeyDown={(e) => this.handleKeyDown(e)}
