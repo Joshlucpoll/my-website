@@ -81,12 +81,12 @@ class Console extends React.Component {
       
       case "help":
         if (value === "commands") {
-          this.addToConsole("ls -- Used to list pages in current directory (WIP)")
-          this.addToConsole("cd -- Used to change directory")
+          this.addToConsole("ls ------- Used to list pages in current directory (WIP)")
+          this.addToConsole("cd ------- Used to change directory")
           this.addToConsole("history -- Used to view command history")
-          this.addToConsole("clear -- Used clear the console view")
-          this.addToConsole("rm -- Used to reset console to default")
-          this.addToConsole("exit -- Used to close the console view")
+          this.addToConsole("clear ---- Used clear the console view")
+          this.addToConsole("rm ------- Used to reset console to default")
+          this.addToConsole("exit ----- Used to close the console view")
         }
         else {
           this.addToConsole("This website uses UNIX commands to navigate through pages. If you need help with commands type 'help commands'");
