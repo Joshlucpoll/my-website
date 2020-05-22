@@ -144,7 +144,7 @@ class Home extends React.Component {
         />
           <div className="sub-title">{this.state.subTitle}{this.state.cursor}</div>
         </div></FadeIn>
-        <div className="console-button-indicator">👉</div>
+        <span className="console-button-indicator" role="img" aria-label="hand pointing right">👉</span>
       </div>
     );
   }

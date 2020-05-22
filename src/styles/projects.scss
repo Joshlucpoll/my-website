@@ -11,43 +11,50 @@ body {
     position: relative;
     padding: 10vh 10vh;
     
-    .title {
-      position: relative;
-      font-family: 'Work Sans', sans-serif;
-      font-weight: 700;
-      font-size: 40px;
-      line-height: 40px;
-      color: white;
-      
-      z-index: 2;
-    }
-    
-    .subtitle {
-      position: relative;
-      font-family: 'Work Sans', sans-serif;
-      font-weight: 400;
-      font-size: 18px;
-      line-height: 20px;
-      color: white;
-      
-      z-index: 2;
-      margin-top: 10px;
-    }
     
     .overlay {
       position: absolute;
       background-color: rgba(2, 2, 2, 0.5);
-      height: 15vh;
-      width: calc(100vw - 20vh);
+      // height: 15vh;
+      // width: calc(100vw - 20vh);
+      height: calc(auto*2);
       z-index: 1;
       top: 10vh;
       transform: rotate(1.5deg);
+
+      .title {
+        position: relative;
+        font-family: 'Work Sans', sans-serif;
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 40px;
+        color: white;
+        transform: rotate(-1.5deg);
+        
+        z-index: 2;
+      }
+      
+      .subtitle {
+        position: relative;
+        font-family: 'Work Sans', sans-serif;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 20px;
+        color: white;
+        transform: rotate(-1.5deg);
+        
+        z-index: 2;
+        margin-top: 10px;
+      }
     }
   }
   
   .projects-container {
-    padding-top: 2vh;
-    padding: 0 10vh;
+    // padding-top: 2vh;
+    position: relative;
+    // padding: 4vh 10vh;
+    padding: 4vh 10vh 10vh 10vh; 
+    // bottom: 20vh;
     
     display: grid;
     gap: 5vh;
