@@ -15,9 +15,6 @@ body {
     .overlay {
       position: absolute;
       background-color: rgba(2, 2, 2, 0.5);
-      // height: 15vh;
-      // width: calc(100vw - 20vh);
-      height: calc(auto*2);
       z-index: 1;
       top: 10vh;
       transform: rotate(1.5deg);

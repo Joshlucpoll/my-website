@@ -80,7 +80,7 @@
       img {
         filter: invert(1);
         opacity: 0.8;
-        transition: width calc($animation-dur/2) $timing-func;
+        transition: width $animation-dur $timing-func;
         height: 4vh;
         width: 0;
       }
