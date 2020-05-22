@@ -11,7 +11,7 @@ class Projects extends React.Component {
         <div className="title-container">
           <div className="overlay">
             <div className="title">Projects</div>
-            <div className="subtitle">From Python to JavaScript to HTML, this page displays all my past projects with details on how I built them. <span role="img" aria-label="builder">👷‍♂️</span>
+            <div className="subtitle">From Python to HTML to Dart, this page displays all my past projects with details on how I built them. <span role="img" aria-label="builder">👷‍♂️</span>
           </div>
           </div>
         </div>
