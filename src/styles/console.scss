@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-around;
   bottom: 10vh;
-  position: fixed;
+  position: absolute;
   
   .console-tab {
     height: 6vh;
@@ -31,6 +31,8 @@
 
   .console {
     transform-origin: bottom right;
+    position: relative;
+    z-index: 20;
     
     .console-body {
       display: flex;
@@ -42,7 +44,7 @@
       border-bottom-right-radius: 2vh;
       line-height: 7vh;
       text-align: left;
-      box-shadow: 0px -3px 3px 0px rgba(0, 0, 0, 0.75);
+      box-shadow: 0px -6px 6px -3px rgba(0,0,0,0.75);
       background-color: rgba(54, 54, 54, 0.5);
       
       .console-text-short {
@@ -81,6 +83,7 @@
       border-top-left-radius: 2vh;
       border-top-right-radius: 2vh;
       background-color: rgba(54, 54, 54, 0.5);
+      // z-index: 10;
       
       .output-list-container {
         display: flex;

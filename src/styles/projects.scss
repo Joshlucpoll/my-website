@@ -1,0 +1,96 @@
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.projects-body {
+  height: 100vh;
+  width: 100vw;
+
+  .title-container {
+    position: relative;
+    padding: 10vh 10vh;
+    
+    .title {
+      position: relative;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 40px;
+      color: white;
+      
+      z-index: 2;
+    }
+    
+    .subtitle {
+      position: relative;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 20px;
+      color: white;
+      
+      z-index: 2;
+      margin-top: 10px;
+    }
+    
+    .overlay {
+      position: absolute;
+      background-color: rgba(2, 2, 2, 0.5);
+      height: 15vh;
+      width: calc(100vw - 20vh);
+      z-index: 1;
+      top: 10vh;
+      transform: rotate(1.5deg);
+    }
+  }
+  
+  .projects-container {
+    padding-top: 2vh;
+    padding: 0 10vh;
+    
+    display: grid;
+    gap: 5vh;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    
+    
+    .card {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background-color: #fff;
+    }
+  }
+}
+
+
+
+
+
+
+
+@media only screen and (min-width: 1000px) {
+  .desktop-dots {
+    opacity: 1;
+  }
+  .mobile-dots {
+    opacity: 0;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .desktop-dots {
+    opacity: 0;
+  }
+  .mobile-dots {
+    opacity: 1;
+  }
+}
+
+svg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  filter: invert(1);
+}
