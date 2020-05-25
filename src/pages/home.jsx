@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 
 // Components
 import LongShadow from "../components/longShadow";
-import Emoji from "../components/emoji";
 
 import BackgroundVideo from "../assets/Retro_Stripes_Monitor_Overlay.mp4"
 import "../styles/home.scss";
