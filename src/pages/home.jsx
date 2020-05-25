@@ -2,10 +2,11 @@ import React from "react";
 import {isBrowser} from "react-device-detect";
 import { motion } from "framer-motion";
 
-// Components
-import LongShadow from "../components/longShadow";
+import { pageStyle, pageTransition, pageVariants } from "../styles/pageTransition";
 
-import BackgroundVideo from "../assets/Retro_Stripes_Monitor_Overlay.mp4"
+// Components
+import longShadow from "../components/longShadow";
+import BackgroundVideo from "../assets/Retro_Stripes_Monitor_Overlay.mp4";
 import "../styles/home.scss";
 
 
@@ -92,11 +93,11 @@ class Home extends React.Component {
 
     setTimeout(() => {
       this.subTitleCursor();
-    }, 2000);
+    }, 4500);
 
     setTimeout(() => {
       this.typeSubTitle();
-    }, 3000);
+    }, 5500);
   }
   
   componentWillUnmount() {
@@ -119,39 +120,44 @@ class Home extends React.Component {
       styles = {}
     }
 
+    const longShadowStyle = longShadow(xVector, yVector);
+
     return (
-      <div 
+      <motion.div 
         className="home-body"
         onMouseMove={e => this.handleMouseMove(e)}
         onTouchMove={e => this.handleMouseMove(e)}
+
+        style={pageStyle}
+        initial="initial"
+        animate="in"
+        exit="out"
+        variants={pageVariants}
+        transition={pageTransition}
         >
         <video autoPlay muted loop className="background-video">
           <source src={BackgroundVideo} type="video/mp4"/>
         </video>
 
         <motion.div
-          id="title-container"
+          className="title-container"
           style={styles}
-          initial={{ y: -1000, opacity: 0}}
-          animate={{ y: 0, opacity: 1}}
+          initial={{ scale: 0, rotate: 180 }}
+          animate={{ rotate: 0, scale: 1 }}
           transition={{ 
-            delay: 1, 
+            delay: 3.5, 
             duration: 1,
             type: "spring",
-            stiffness: 200,
-            damping: 15
+            stiffness: 260,
+            damping: 20
           }}
         >
-          <LongShadow
-            id={"headline-title"}
-            textOne={"JOSH"}
-            textTwo={"POLLARD"}
-            xVector={xVector}
-            yVector={yVector}
-        />  
+          <div style={longShadowStyle} data-text="JOSH" className="headline-title glitch">JOSH
+            <span style={longShadowStyle} data-text=" POLLARD" className="glitch"> POLLARD</span>
+          </div>
           <div className="sub-title">{this.state.subTitle}{this.state.cursor}</div>
         </motion.div>
-      </div>
+      </motion.div>
     );
   }
 }

@@ -1,7 +1,5 @@
 import React from "react";
-import { Redirect } from "react-router-dom"
 import SimpleStorage from "react-simple-storage";
-import { CSSTransition } from "react-transition-group";
 import { motion } from "framer-motion";
 
 import ConsoleIcon from "../assets/console_icon.svg"
@@ -19,6 +17,7 @@ class Console extends React.Component {
       placeHolderText: "",
     };
     this.baseState = this.state;
+    this.setState({ consoleOpen: false });
     this.consoleInput = React.createRef();
   }
 
@@ -220,6 +219,11 @@ class Console extends React.Component {
         return <div className="item" key={index}> {item} </div>;
       });
     }
+
+    const variants = {
+      open: { opacity: 1, scale: 1 },
+      closed: { opacity: 0, scale: 0 },
+    }
     return (
       <div className="console-container">
         <SimpleStorage parent={this}/>
@@ -229,7 +233,7 @@ class Console extends React.Component {
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ 
-            delay: 3, 
+            delay: 5.5, 
             duration: 1,
             type: "spring",
             stiffness: 300,
@@ -238,44 +242,46 @@ class Console extends React.Component {
         >
           <img src={ConsoleIcon} alt="Terminal"/>
         </motion.div>
-          <CSSTransition
-            in={this.state.consoleOpen}
-            timeout={300}
-            classNames="window"
-            unmountOnExit
-            appear
-          >
-            <div className="console">
-              <div className="console-body">
-                <div className="console-text-short">></div>
-                  <form
-                    className="console-input"
-                    onSubmit={(e) => this.handleSubmit(e)}
-                  >
-                    <input
-                      ref={this.consoleInput}
-                      type="text"
-                      placeholder={this.state.placeHolderText}
-                      value={this.state.value}
-                      onChange={(e) => this.handleChange(e)}
-                      onKeyDown={(e) => this.handleKeyDown(e)}
-                    />
-                  </form>
-              </div>
-              <div
-                className="console-output">
-                <div className="output-list-container">
-                  <div className="output-list">
-                    {this.outputItems}
-                  </div>
-                </div> 
-              </div>
+        <motion.div
+          initial="closed"
+          animate={this.state.consoleOpen ? "open" : "closed"}
+          transition={  { 
+            duration: 1,
+            delay: 0.1,
+            type: "spring",
+            stiffness: 200,
+            damping: 23
+          }}
+          style={{ originX: 1, originY: 0 }}
+          variants={variants}
+        >
+          <div className="console">
+            <div className="console-body">
+              <div className="console-text-short">></div>
+                <form
+                  className="console-input"
+                  onSubmit={(e) => this.handleSubmit(e)}
+                >
+                  <input
+                    ref={this.consoleInput}
+                    type="text"
+                    placeholder={this.state.placeHolderText}
+                    value={this.state.value}
+                    onChange={(e) => this.handleChange(e)}
+                    onKeyDown={(e) => this.handleKeyDown(e)}
+                  />
+                </form>
             </div>
-          </CSSTransition>
-          
-          {this.props.currentDirectory !== window.location.pathname &&
-            <Redirect to={this.props.currentDirectory}/>
-          }
+            <div
+              className="console-output">
+              <div className="output-list-container">
+                <div className="output-list">
+                  {this.outputItems}
+                </div>
+              </div> 
+            </div>
+          </div>
+        </motion.div>
       </div>
     );
   }

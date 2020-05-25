@@ -45,7 +45,7 @@
       line-height: 7vh;
       text-align: left;
       box-shadow: 0px -6px 6px -3px rgba(0,0,0,0.75);
-      background-color: rgba(54, 54, 54, 0.5);
+      background-color: rgba(54, 54, 54, 0.75);
       
       .console-text-short {
         color:white;
@@ -82,8 +82,7 @@
       padding-left: 20px;
       border-top-left-radius: 2vh;
       border-top-right-radius: 2vh;
-      background-color: rgba(54, 54, 54, 0.5);
-      // z-index: 10;
+      background-color: rgba(54, 54, 54, 0.75);
       
       .output-list-container {
         display: flex;
@@ -117,24 +116,4 @@
 
 .console-body:hover {
   cursor: text;
-}
-
-
-.window-enter {
-  transform: scale(0);
-  transition: 300ms ease-in-out;
-}
-
-.window-enter-active {
-  transform: scale(1);
-  opacity: 1;
-}
-
-.window-exit {
-  transform: scale(1);
-  transition: 300ms ease-in-out;
-}
-.window-exit-active {
-  transform: scale(0);
-  opacity: 0;
 }

@@ -14,10 +14,10 @@ function SocialBar() {
   return (
     <motion.div 
       className="social-bar-container"
-      initial={{ x: -20, opacity: 0 }}
+      initial={{ x: -50, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ 
-        delay: 2.5, 
+        delay: 5, 
         duration: 1,
         type: "spring",
         stiffness: 300,

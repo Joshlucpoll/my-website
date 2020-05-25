@@ -1,9 +1,13 @@
 import React from "react";
 
+import { motion } from "framer-motion";
+
 import Dots from "../components/dots";
 import ProjectCard from "../components/projectCard";
 import Emoji from "../components/emoji";
 import "../styles/projects.scss";
+
+import { pageStyle, pageTransition, pageVariants } from "../styles/pageTransition";
 
 class Projects extends React.Component {
   
@@ -13,7 +17,16 @@ class Projects extends React.Component {
   
   render() {
     return (
-      <div className="projects-body">
+      <motion.div 
+        className="projects-body"
+        
+        style={pageStyle}
+        initial="initial"
+        animate="in"
+        exit="out"
+        variants={pageVariants}
+        transition={pageTransition}
+      >
         <div className="title-container">
           <div className="overlay">
             <div className="title">Projects</div>
@@ -35,7 +48,7 @@ class Projects extends React.Component {
           <ProjectCard num={"10"}></ProjectCard>
         </section>
         <Dots/>
-      </div>
+      </motion.div>
     )
   }
 }
