@@ -2,6 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom"
 import SimpleStorage from "react-simple-storage";
 import { CSSTransition } from "react-transition-group";
+import { motion } from "framer-motion";
 
 import ConsoleIcon from "../assets/console_icon.svg"
 import "../styles/console.scss";
@@ -222,12 +223,21 @@ class Console extends React.Component {
     return (
       <div className="console-container">
         <SimpleStorage parent={this}/>
-        <div
+        <motion.div
           className="console-tab"
           onClick={(e) => this.handleClick(e)}
+          initial={{ x: 20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ 
+            delay: 3, 
+            duration: 1,
+            type: "spring",
+            stiffness: 300,
+            damping: 15
+          }}
         >
           <img src={ConsoleIcon} alt="Terminal"/>
-        </div>
+        </motion.div>
           <CSSTransition
             in={this.state.consoleOpen}
             timeout={300}

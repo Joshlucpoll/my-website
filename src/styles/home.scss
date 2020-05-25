@@ -36,7 +36,7 @@
 
 #title-container {
   position: relative;
-  transition: 300ms ease-out;
+  transition: 200ms ease-out;
   z-index: 10;
   
   #headline-title {
@@ -44,20 +44,20 @@
     line-height: var(--font-size);
     font-size: var(--font-size);
     color: white;
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Work Sans', sans-serif;
     font-weight: 200;
     position: relative;
-    transition: 300ms ease-out;
+    transition: text-shadow 200ms ease-out;
     
     span {
       z-index: 10;
       font-size: var(--font-size);
       color: white;
-      font-family: 'Source Code Pro', monospace;
+      font-family: 'Work Sans', sans-serif;
       font-weight: 400;
       position: relative;
       word-break: normal;
-      transition: 300ms ease-out;
+      transition: text-shadow 200ms ease-out;
     }
   }
   
@@ -66,31 +66,8 @@
     float: left;
     font-size: calc(var(--font-size)/4);
     color: white;
-    text-shadow: 3px 3px 1px black;
+    text-shadow: 2px 2px 1px black;
     font-family: 'Ubuntu Mono', monospace;
     margin: 10px;
-  }
-}
-.console-button-indicator {
-  // height: 6vh;
-  // width: 6vh;
-  position: fixed;
-  bottom: 4vh;
-  right: 12vh;
-  font-size: 4vh;
-
-  animation: pulse 2s alternate infinite;
-  animation-timing-function: cubic-bezier(.72,.2,.23,.79);
-}
-
-@keyframes pulse {
-  0% {
-    transform: translate(0);
-  }
-  50% {
-    transform: translate(2vh);
-  }
-  100% {
-    transform: translate(0);
   }
 }

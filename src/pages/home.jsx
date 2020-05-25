@@ -1,15 +1,14 @@
 import React from "react";
 import {isBrowser} from "react-device-detect";
-import styled, {keyframes} from "styled-components";
-import {fadeInDownBig} from "react-animations";
+import { motion } from "framer-motion";
 
 // Components
 import LongShadow from "../components/longShadow";
+import Emoji from "../components/emoji";
 
 import BackgroundVideo from "../assets/Retro_Stripes_Monitor_Overlay.mp4"
 import "../styles/home.scss";
 
-const FadeIn = styled.div`animation: 2s ${keyframes`${fadeInDownBig}`}`;
 
 class Home extends React.Component {
   constructor(props) {
@@ -98,7 +97,7 @@ class Home extends React.Component {
 
     setTimeout(() => {
       this.typeSubTitle();
-    }, 4000);
+    }, 3000);
   }
   
   componentWillUnmount() {
@@ -131,9 +130,18 @@ class Home extends React.Component {
           <source src={BackgroundVideo} type="video/mp4"/>
         </video>
 
-        <FadeIn><div
+        <motion.div
           id="title-container"
           style={styles}
+          initial={{ y: -1000, opacity: 0}}
+          animate={{ y: 0, opacity: 1}}
+          transition={{ 
+            delay: 1, 
+            duration: 1,
+            type: "spring",
+            stiffness: 200,
+            damping: 15
+          }}
         >
           <LongShadow
             id={"headline-title"}
@@ -141,10 +149,9 @@ class Home extends React.Component {
             textTwo={"POLLARD"}
             xVector={xVector}
             yVector={yVector}
-        />
+        />  
           <div className="sub-title">{this.state.subTitle}{this.state.cursor}</div>
-        </div></FadeIn>
-        <span className="console-button-indicator" role="img" aria-label="hand pointing right">👉</span>
+        </motion.div>
       </div>
     );
   }
