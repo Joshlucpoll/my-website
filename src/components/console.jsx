@@ -54,6 +54,7 @@ class Console extends React.Component {
           this.props.changeDirectory(value);
         }
         this.closeConsole();
+        this.setState({ historyLocation: null })
         break;
       
       case "history":

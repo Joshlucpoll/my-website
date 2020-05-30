@@ -13,6 +13,12 @@ class Projects extends React.Component {
   
   componentDidMount() {
     document.title = "Josh Pollard | Projects";
+
+    document.getElementsByTagName("body")[0].classList.add("body-style-projects");
+  }
+  
+  componentWillUnmount() {
+    document.getElementsByTagName("body")[0].classList.remove("body-style-projects");
   }
   
   render() {
@@ -34,8 +40,28 @@ class Projects extends React.Component {
           </div>
           </div>
         </div>
-        <div className="projects-underlay"/>
+        {/* <div className="projects-underlay"/> */}
         <section className="projects-container">
+          <ProjectCard num={"1"}></ProjectCard>
+          <ProjectCard num={"2"}></ProjectCard>
+          <ProjectCard num={"3"}></ProjectCard>
+          <ProjectCard num={"4"}></ProjectCard>
+          <ProjectCard num={"5"}></ProjectCard>
+          <ProjectCard num={"6"}></ProjectCard>
+          <ProjectCard num={"7"}></ProjectCard>
+          <ProjectCard num={"8"}></ProjectCard>
+          <ProjectCard num={"9"}></ProjectCard>
+          <ProjectCard num={"10"}></ProjectCard>
+          <ProjectCard num={"1"}></ProjectCard>
+          <ProjectCard num={"2"}></ProjectCard>
+          <ProjectCard num={"3"}></ProjectCard>
+          <ProjectCard num={"4"}></ProjectCard>
+          <ProjectCard num={"5"}></ProjectCard>
+          <ProjectCard num={"6"}></ProjectCard>
+          <ProjectCard num={"7"}></ProjectCard>
+          <ProjectCard num={"8"}></ProjectCard>
+          <ProjectCard num={"9"}></ProjectCard>
+          <ProjectCard num={"10"}></ProjectCard>
           <ProjectCard num={"1"}></ProjectCard>
           <ProjectCard num={"2"}></ProjectCard>
           <ProjectCard num={"3"}></ProjectCard>

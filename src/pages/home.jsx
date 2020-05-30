@@ -85,6 +85,8 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    document.getElementsByTagName("body")[0].classList.add("body-style-home");
+
     this._isMounted = true;
     document.title = "Josh Pollard | Home";
     
@@ -101,6 +103,8 @@ class Home extends React.Component {
   }
   
   componentWillUnmount() {
+    document.getElementsByTagName("body")[0].classList.remove("body-style-home");
+
     this._isMounted = false;
     window.removeEventListener("resize", this.updateWindowDimensions);
   }

@@ -21,5 +21,5 @@ export const pageTransition = {
 };
 
 export const pageStyle = {
-  position: "absolute"
+  position: "absolute",
 };

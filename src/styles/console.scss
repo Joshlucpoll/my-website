@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-around;
   bottom: 10vh;
-  position: absolute;
+  position: fixed;
   
   .console-tab {
     height: 6vh;
@@ -86,12 +86,14 @@
       
       .output-list-container {
         display: flex;
-        flex-direction: column;
-        // flex-flow: column-reverse;
+        flex-flow: column-reverse;
         overflow-y: auto;
-        // scrollbar-width: none;
         height: 100%;
         
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
         .output-list {
           display: flex;
           flex-direction: column-reverse;

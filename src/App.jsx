@@ -16,6 +16,8 @@ import LostPage from "./pages/404";
 import Console from "./components/console";
 import SocialBar from "./components/socialBar"
 
+import "./styles/app.scss";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +28,10 @@ class App extends React.Component {
 
   changeDirectory(path) {
     this.setState({ currentDirectory: path })
+    document.getElementsByTagName("body")[0].classList.add("body-style-transition");
   }
+
+  
   
   render() {
     if (window.location.pathname !== this.state.currentDirectory) {
@@ -38,7 +43,7 @@ class App extends React.Component {
           <SocialBar/>
           <Route 
             render={({ location }) => (
-              <AnimatePresence>
+              <AnimatePresence onExitComplete={() => document.getElementsByTagName("body")[0].classList.remove("body-style-transition")}>
                 <Switch location={location} key={location.pathname}>
                   <Route exact path="/">
                     <Home/>

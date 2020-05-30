@@ -10,6 +10,11 @@ class LostPage extends React.Component {
 
   componentDidMount() {
     document.title = "Josh Pollard | Lost";
+    document.getElementsByTagName("body")[0].classList.add("body-style-404");
+  }
+
+  componentWillUnmount() {
+    document.getElementsByTagName("body")[0].classList.remove("body-style-404");
   }
 
   render() {

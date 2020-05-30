@@ -1,13 +1,19 @@
-body {
+.body-style-projects {
+  // overflow-x: hidden;
+  // overflow-y: scroll;
+  background-color: rgb(29, 29, 29);
+        
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   overflow-x: hidden;
-  overflow-y: scroll;
-  background-color: #3d3e3f;
 }
 
 .projects-body {
   height: 100vh;
   width: 100vw;
-  background-color: #3d3e3f;
+  background-color: rgb(29, 29, 29);
 
   .title-container {
     position: relative;
@@ -48,7 +54,6 @@ body {
     }
   }
   .projects-underlay {
-    // background-color: red;
     position: absolute;
     height: 100%;
     width: 100%;
