@@ -19,6 +19,39 @@ class Console extends React.Component {
     this.baseState = this.state;
     this.setState({ consoleOpen: false });
     this.consoleInput = React.createRef();
+
+    this.dir = [
+      {
+        name: "root",
+        id: 1,
+        parentId: null,
+        children: [2, 3],
+      },
+      {
+        name: "home",
+        id: 2,
+        parentId: 1,
+        children: [null]
+      },
+      {
+        name: "projects",
+        id: 3,
+        parentId: 1,
+        children: [4, 5]
+      },
+      {
+        name: "battleships",
+        id: 4,
+        parentId: 3,
+        children: [null]
+      },
+      {
+        name: "my-website",
+        id: 5,
+        parentId: 3,
+        children: [null]
+      }
+    ];
   }
 
   addToConsole(string) {
@@ -55,6 +88,30 @@ class Console extends React.Component {
         }
         this.closeConsole();
         this.setState({ historyLocation: null })
+        break;
+
+      case "ls":
+        try {
+
+          const currentDirArray = this.props.currentDirectory.split("/");
+          const currentDir = currentDirArray[currentDirArray.length - 1];
+          console.log(currentDir);
+          const currentId = this.dir.find(x => x.name === currentDir).id;
+        
+          const childrenIds = this.dir.find(x => x.id === currentId).children;
+          let childrenNames = [];
+          childrenIds.forEach(childId => {
+            childrenNames.push(this.dir.find(x => x.id === childId).name);
+          });
+        
+          childrenNames.forEach(element => {
+            this.addToConsole(element);
+          });
+        }
+        catch(err) {
+          console.log(err);
+          this.addToConsole(".");
+        } 
         break;
       
       case "history":

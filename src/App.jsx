@@ -22,7 +22,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentDirectory: window.location.pathname,
+      currentPath: window.location.pathname,
     }
   }
 
@@ -34,7 +34,7 @@ class App extends React.Component {
   
   
   render() {
-    if (window.location.pathname !== this.state.currentDirectory) {
+    if (window.location.pathname !== this.state.currentPath) {
 
     }
     return (
@@ -59,12 +59,12 @@ class App extends React.Component {
             )}
           />
           <Console
-            currentDirectory={this.state.currentDirectory}
+            currentDirectory={this.state.currentPath}
             changeDirectory={(path) => this.changeDirectory(path)}
           />
 
-          {this.state.currentDirectory !== window.location.pathname &&
-            <Redirect to={this.state.currentDirectory}/>
+          {this.state.currentPath !== window.location.pathname &&
+            <Redirect to={this.state.currentPath}/>
           }
         </div>
       </Router>
