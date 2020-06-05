@@ -27,16 +27,11 @@ class App extends React.Component {
   }
 
   changeDirectory(path) {
-    this.setState({ currentDirectory: path })
+    this.setState({ currentPath: path })
     document.getElementsByTagName("body")[0].classList.add("body-style-transition");
   }
 
-  
-  
   render() {
-    if (window.location.pathname !== this.state.currentPath) {
-
-    }
     return (
       <Router>
         <div className="app">

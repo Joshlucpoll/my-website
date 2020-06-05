@@ -21,34 +21,34 @@ class Console extends React.Component {
     this.consoleInput = React.createRef();
 
     this.dir = [
+      // {
+      //   name: "root",
+      //   id: 1,
+      //   parentId: null,
+      //   children: [2, 3],
+      // },
       {
-        name: "root",
+        name: "",
         id: 1,
         parentId: null,
-        children: [2, 3],
-      },
-      {
-        name: "home",
-        id: 2,
-        parentId: 1,
-        children: [null]
+        children: [2]
       },
       {
         name: "projects",
-        id: 3,
+        id: 2,
         parentId: 1,
-        children: [4, 5]
+        children: [3, 4]
       },
       {
         name: "battleships",
-        id: 4,
-        parentId: 3,
+        id: 3,
+        parentId: 2,
         children: [null]
       },
       {
         name: "my-website",
-        id: 5,
-        parentId: 3,
+        id: 4,
+        parentId: 2,
         children: [null]
       }
     ];
@@ -81,7 +81,21 @@ class Console extends React.Component {
     switch(command) {
       case "cd":
         if (value === "~") {
-          this.props.changeDirectory("/");
+          this.props.changeDirectory("");
+        }
+        else if (value ===  "..") {
+          try {
+            // finds name of the current directories parent
+            const currentDirArray = this.props.currentDirectory.split("/");
+            const currentDir = currentDirArray[currentDirArray.length - 1];
+            const parentId = this.dir.find(x => x.name === currentDir).parentId;
+            const parentName = this.dir.find(x => x.id === parentId).name;
+
+            this.props.changeDirectory(parentName);
+          }
+          catch(err) {
+            this.props.changeDirectory("");
+          }
         }
         else {
           this.props.changeDirectory(value);
@@ -91,11 +105,17 @@ class Console extends React.Component {
         break;
 
       case "ls":
+        this.addToConsole("");
+        this.addToConsole(".");
+        if (window.location.pathname !== "/") {
+          this.addToConsole("..");
+        }
         try {
-
+          
+          // gets the last "directory" in the path of the URL
           const currentDirArray = this.props.currentDirectory.split("/");
           const currentDir = currentDirArray[currentDirArray.length - 1];
-          console.log(currentDir);
+
           const currentId = this.dir.find(x => x.name === currentDir).id;
         
           const childrenIds = this.dir.find(x => x.id === currentId).children;
@@ -109,12 +129,17 @@ class Console extends React.Component {
           });
         }
         catch(err) {
-          console.log(err);
-          this.addToConsole(".");
-        } 
+          break;
+        }
+        break;
+
+      case "pwd":
+        this.addToConsole("");
+        this.addToConsole(window.location.pathname);
         break;
       
       case "history":
+        this.addToConsole("");
         let history = this.state.commandList;
         let count = 1;
         for (let i = history.length; i > 0; i--) {
