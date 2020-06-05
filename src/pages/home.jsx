@@ -95,11 +95,11 @@ class Home extends React.Component {
 
     setTimeout(() => {
       this.subTitleCursor();
-    }, 4500);
+    }, 2500);
 
     setTimeout(() => {
       this.typeSubTitle();
-    }, 5500);
+    }, 3500);
   }
   
   componentWillUnmount() {
@@ -149,7 +149,7 @@ class Home extends React.Component {
           initial={{ scale: 0, rotate: 180 }}
           animate={{ rotate: 0, scale: 1 }}
           transition={{ 
-            delay: 3.5, 
+            delay: 1.5, 
             duration: 1,
             type: "spring",
             stiffness: 260,

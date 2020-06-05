@@ -17,7 +17,7 @@ function SocialBar() {
       initial={{ x: -50, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ 
-        delay: 5, 
+        delay: 2, 
         duration: 1,
         type: "spring",
         stiffness: 300,

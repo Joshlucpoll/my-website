@@ -21,12 +21,6 @@ class Console extends React.Component {
     this.consoleInput = React.createRef();
 
     this.dir = [
-      // {
-      //   name: "root",
-      //   id: 1,
-      //   parentId: null,
-      //   children: [2, 3],
-      // },
       {
         name: "",
         id: 1,
@@ -62,7 +56,6 @@ class Console extends React.Component {
   }
 
   commandProcessor(commandLineRaw) {
-    // Converts command line to lowercase
     const commandLine = commandLineRaw.toLowerCase();
 
     // Updating output array
@@ -83,9 +76,12 @@ class Console extends React.Component {
         if (value === "~") {
           this.props.changeDirectory("");
         }
+        else if (value === ".") {
+          this.props.changeDirectory(window.location.pathname);
+        }
         else if (value ===  "..") {
           try {
-            // finds name of the current directories parent
+            // finds name of the current directory's parent
             const currentDirArray = this.props.currentDirectory.split("/");
             const currentDir = currentDirArray[currentDirArray.length - 1];
             const parentId = this.dir.find(x => x.name === currentDir).parentId;
@@ -111,7 +107,6 @@ class Console extends React.Component {
           this.addToConsole("..");
         }
         try {
-          
           // gets the last "directory" in the path of the URL
           const currentDirArray = this.props.currentDirectory.split("/");
           const currentDir = currentDirArray[currentDirArray.length - 1];
@@ -164,9 +159,10 @@ class Console extends React.Component {
       
       case "help":
         if (value === "commands") {
-          this.addToConsole("ls ------- Used to list pages in current directory (WIP)")
+          this.addToConsole("ls ------- Used to list pages in current directory")
           this.addToConsole("cd ------- Used to change directory")
           this.addToConsole("history -- Used to view command history")
+          this.addToConsole("pwd ------ Used to show current path")
           this.addToConsole("clear ---- Used clear the console view")
           this.addToConsole("rm ------- Used to reset console to default")
           this.addToConsole("exit ----- Used to close the console view")
@@ -304,8 +300,8 @@ class Console extends React.Component {
     }
 
     const variants = {
-      open: { opacity: 1, scale: 1 },
-      closed: { opacity: 0, scale: 0 },
+      open: { scale: 1 },
+      closed: { scale: 0 },
     }
     return (
       <div className="console-container">
@@ -316,7 +312,7 @@ class Console extends React.Component {
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ 
-            delay: 5.5, 
+            delay: 2.5, 
             duration: 1,
             type: "spring",
             stiffness: 300,
@@ -329,11 +325,7 @@ class Console extends React.Component {
           initial="closed"
           animate={this.state.consoleOpen ? "open" : "closed"}
           transition={  { 
-            duration: 1,
-            delay: 0.1,
-            type: "spring",
-            stiffness: 200,
-            damping: 23
+            duration: 0.3,
           }}
           style={{ originX: 1, originY: 0 }}
           variants={variants}
@@ -355,8 +347,7 @@ class Console extends React.Component {
                   />
                 </form>
             </div>
-            <div
-              className="console-output">
+            <div className="console-output">
               <div className="output-list-container">
                 <div className="output-list">
                   {this.outputItems}
