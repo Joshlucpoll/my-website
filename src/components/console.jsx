@@ -182,6 +182,7 @@ class Console extends React.Component {
       this.props.changeDirectory(window.location.pathname);
       this.setState({
         consoleOpen: true,
+        historyLocation: null,
       });
       this.forceUpdate(() => {this.consoleInput.current.focus();});
       setTimeout(() => {

@@ -2,10 +2,12 @@ export const pageVariants = {
   initial: {
     opacity: 0.99,
     x: "-100vw",
+    position: "fixed",
   },
   in: {
     opacity: 1,
     x: 0,
+    position: "absolute",
   },
   out: {
     zIndex: -100,
@@ -22,4 +24,6 @@ export const pageTransition = {
 
 export const pageStyle = {
   position: "absolute",
+  // top: "0",
+  // left: "0"
 };
