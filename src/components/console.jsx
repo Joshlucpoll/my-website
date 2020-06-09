@@ -34,17 +34,17 @@ class Console extends React.Component {
         children: [3, 4]
       },
       {
-        name: "battleships",
+        name: "my-website",
         id: 3,
         parentId: 2,
         children: [null]
       },
       {
-        name: "my-website",
+        name: "battleships",
         id: 4,
         parentId: 2,
         children: [null]
-      }
+      },
     ];
   }
 
