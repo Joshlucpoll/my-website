@@ -24,6 +24,7 @@ class App extends React.Component {
     this.state = {
       currentPath: window.location.pathname,
     }
+    this.location = this.props.location;
   }
 
   changeDirectory(path) {
@@ -59,7 +60,7 @@ class App extends React.Component {
           />
 
           {this.state.currentPath !== window.location.pathname &&
-            <Redirect to={this.state.currentPath}/>
+            <Redirect to={this.state.currentPath} push={true}/>
           }
         </div>
       </Router>
