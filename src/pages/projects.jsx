@@ -12,7 +12,7 @@ import { pageStyle, pageTransition, pageVariants } from "../styles/pageTransitio
 class Projects extends React.Component {
   
   componentDidMount() {
-    document.title = "Josh Pollard | Projects";
+    document.title = "Josh Pollard | 🚀";
 
     document.getElementsByTagName("body")[0].classList.add("body-style-projects");
   }

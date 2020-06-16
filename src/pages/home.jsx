@@ -7,6 +7,7 @@ import { pageStyle, pageTransition, pageVariants } from "../styles/pageTransitio
 // Components
 import longShadow from "../components/longShadow";
 import BackgroundVideo from "../assets/Retro_Stripes_Monitor_Overlay.mp4";
+import Emoji from "../components/emoji";
 import "../styles/home.scss";
 
 
@@ -46,13 +47,13 @@ class Home extends React.Component {
   subTitleCursor() {
     if (this._isMounted === true) {
       
-      if (this.state.cursor === "") {
+      if (this.state.cursor === " ") {
         this.setState({
           cursor: "|",
         });
       } else {
         this.setState({
-          cursor: "",
+          cursor: " ",
         });
       }
       setTimeout(() => {
@@ -88,7 +89,7 @@ class Home extends React.Component {
     document.getElementsByTagName("body")[0].classList.add("body-style-home");
 
     this._isMounted = true;
-    document.title = "Josh Pollard | Home";
+    document.title = "Josh Pollard | 🏠";
     
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions);
@@ -99,7 +100,7 @@ class Home extends React.Component {
 
     setTimeout(() => {
       this.typeSubTitle();
-    }, 3500);
+    }, 4000);
   }
   
   componentWillUnmount() {
@@ -143,24 +144,34 @@ class Home extends React.Component {
           <source src={BackgroundVideo} type="video/mp4"/>
         </video>
 
-        <motion.div
+        <div
           className="title-container"
           style={styles}
-          initial={{ scale: 0, rotate: 180 }}
-          animate={{ rotate: 0, scale: 1 }}
-          transition={{ 
-            delay: 1.5, 
-            duration: 1,
-            type: "spring",
-            stiffness: 260,
-            damping: 20
-          }}
         >
-          <div style={longShadowStyle} data-text="JOSH" className="headline-title glitch">JOSH
-            <span style={longShadowStyle} data-text=" POLLARD" className="glitch"> POLLARD</span>
-          </div>
+          <motion.div 
+            className="intro-title"
+            initial={{ opacity: 0, y: -100 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ delay: 1.5, duration: 0.5 }} 
+          ><span className="hi-title">Hi,</span><Emoji emoji="👋" class="wave-emoji" label="wave"/> my name is</motion.div>
+          <motion.div 
+            className="headline-title"
+            style={longShadowStyle} 
+            data-text="JOSH" 
+            initial={{ scale: 0, rotate: 180 }}
+            animate={{ rotate: 0, scale: 1 }}
+            transition={{ 
+              delay: 2.5, 
+              duration: 1,
+              type: "spring",
+              stiffness: 260,
+              damping: 25
+            }}
+            >JOSH
+            <span style={longShadowStyle} data-text=" POLLARD"> POLLARD</span>
+          </motion.div>
           <div className="sub-title">{this.state.subTitle}{this.state.cursor}</div>
-        </motion.div>
+        </div>
       </motion.div>
     );
   }

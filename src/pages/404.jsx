@@ -9,7 +9,7 @@ import { pageStyle, pageTransition, pageVariants } from "../styles/pageTransitio
 class LostPage extends React.Component {
 
   componentDidMount() {
-    document.title = "Josh Pollard | Lost";
+    document.title = "Josh Pollard | 🆘";
     document.getElementsByTagName("body")[0].classList.add("body-style-404");
   }
 
