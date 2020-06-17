@@ -22,18 +22,35 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPath: window.location.pathname,
+      changePage: null,
       scroll: window.scrollY,
     }
     this.location = this.props.location;
   }
   
   componentDidMount() {
-    window.addEventListener("scroll", () => this.setState({ scroll: window.scrollY }))
+    window.addEventListener("scroll", () => this.setState({ scroll: window.scrollY }));
+
+    window.addEventListener('locationchange', function(){
+      console.log('location changed!');
+    })
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", () => this.setState({ scroll: window.scrollY }));
+
+    window.removeEventListener('locationchange', function(){
+      console.log('location changed!');
+    })
+  }
+
+  animationEnd() {
+    document.getElementsByTagName("body")[0].classList.remove("body-style-transition")
+    this.setState({ scroll: 0})
   }
 
   changeDirectory(path) {
-    this.setState({ currentPath: path, scroll: window.scrollY });
+    this.setState({ changePage: path }, () => this.setState({ changePage: null }));
     document.getElementsByTagName("body")[0].classList.add("body-style-transition");
   }
 
@@ -44,7 +61,7 @@ class App extends React.Component {
           <SocialBar/>
           <Route 
             render={({ location }) => (
-              <AnimatePresence onExitComplete={() => document.getElementsByTagName("body")[0].classList.remove("body-style-transition")}>
+              <AnimatePresence onExitComplete={() => this.animationEnd()}>
                 <Switch location={location} key={location.pathname}>
                   <Route exact path="/">
                     <Home scroll={this.state.scroll}/>
@@ -64,8 +81,8 @@ class App extends React.Component {
             changeDirectory={(path) => this.changeDirectory(path)}
           />
 
-          {this.state.currentPath !== window.location.pathname &&
-            <Redirect to={this.state.currentPath} push={true}/>
+          {this.state.changePage !== null &&
+            <Redirect to={this.state.changePage}  push={true}/>
           }
         </div>
       </Router>
