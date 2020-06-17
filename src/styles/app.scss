@@ -1,3 +1,24 @@
+::-webkit-scrollbar {
+  background-color: rgb(29, 29, 29);
+  border-color: rgb(29, 29, 29);
+  border-style: solid;
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #777777;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a0;
+}
+::-webkit-scrollbar-thumb:active {
+  background-color: #bbbbbb;
+}
+
+body {
+  background-color: rgb(29, 29, 29);
+  overflow-x: hidden;
+}
+
 .body-style-transition {
   overflow: hidden;
 }

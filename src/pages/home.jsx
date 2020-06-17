@@ -2,7 +2,7 @@ import React from "react";
 import {isBrowser} from "react-device-detect";
 import { motion } from "framer-motion";
 
-import { pageStyle, pageTransition, pageVariants } from "../styles/pageTransition";
+import { pageTransition, pageVariants } from "../styles/pageTransition";
 
 // Components
 import longShadow from "../components/longShadow";
@@ -86,8 +86,6 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    document.getElementsByTagName("body")[0].classList.add("body-style-home");
-
     this._isMounted = true;
     document.title = "Josh Pollard | 🏠";
     
@@ -104,8 +102,6 @@ class Home extends React.Component {
   }
   
   componentWillUnmount() {
-    document.getElementsByTagName("body")[0].classList.remove("body-style-home");
-
     this._isMounted = false;
     window.removeEventListener("resize", this.updateWindowDimensions);
   }
@@ -126,6 +122,7 @@ class Home extends React.Component {
     }
 
     const longShadowStyle = longShadow(xVector, yVector);
+    const scrollStyle = { top: this.props.scroll + "px" }
 
     return (
       <motion.div 
@@ -133,8 +130,8 @@ class Home extends React.Component {
         onMouseMove={e => this.handleMouseMove(e)}
         onTouchMove={e => this.handleMouseMove(e)}
 
-        style={pageStyle}
-        initial="initial"
+        style={scrollStyle}
+        initial={"initial"} 
         animate="in"
         exit="out"
         variants={pageVariants}

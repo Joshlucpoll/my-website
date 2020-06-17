@@ -23,12 +23,17 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentPath: window.location.pathname,
+      scroll: window.scrollY,
     }
     this.location = this.props.location;
   }
+  
+  componentDidMount() {
+    window.addEventListener("scroll", () => this.setState({ scroll: window.scrollY }))
+  }
 
   changeDirectory(path) {
-    this.setState({ currentPath: path })
+    this.setState({ currentPath: path, scroll: window.scrollY });
     document.getElementsByTagName("body")[0].classList.add("body-style-transition");
   }
 
@@ -42,10 +47,10 @@ class App extends React.Component {
               <AnimatePresence onExitComplete={() => document.getElementsByTagName("body")[0].classList.remove("body-style-transition")}>
                 <Switch location={location} key={location.pathname}>
                   <Route exact path="/">
-                    <Home/>
+                    <Home scroll={this.state.scroll}/>
                   </Route>
-                  <Route exact path="/projects">
-                    <Projects/>
+                  <Route path="/projects">
+                    <Projects location={location}/>
                   </Route>
                   <Route>
                     <LostPage/>

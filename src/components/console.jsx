@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import ConsoleIcon from "../assets/console_icon.svg"
 import "../styles/console.scss";
 
+import Dir from "./dir";
+
 class Console extends React.Component {
   constructor(props) {
     super(props);
@@ -19,33 +21,7 @@ class Console extends React.Component {
     this.baseState = this.state;
     this.setState({ consoleOpen: false });
     this.consoleInput = React.createRef();
-
-    this.dir = [
-      {
-        name: "",
-        id: 1,
-        parentId: null,
-        children: [2]
-      },
-      {
-        name: "projects",
-        id: 2,
-        parentId: 1,
-        children: [3, 4]
-      },
-      {
-        name: "my-website",
-        id: 3,
-        parentId: 2,
-        children: [null]
-      },
-      {
-        name: "battleships",
-        id: 4,
-        parentId: 2,
-        children: [null]
-      },
-    ];
+    this.dir = new Dir();
   }
 
   addToConsole(string) {
@@ -81,11 +57,11 @@ class Console extends React.Component {
         }
         else if (value ===  "..") {
           try {
-            // finds name of the current directory's parent
+            // finds path
             const currentDirArray = this.props.currentDirectory.split("/");
             const currentDir = currentDirArray[currentDirArray.length - 1];
-            const parentId = this.dir.find(x => x.name === currentDir).parentId;
-            const parentName = this.dir.find(x => x.id === parentId).name;
+
+            const parentName = this.dir.getName(this.dir.getParent(this.dir.getId(currentDir)));
 
             this.props.changeDirectory(parentName);
           }
@@ -111,12 +87,12 @@ class Console extends React.Component {
           const currentDirArray = this.props.currentDirectory.split("/");
           const currentDir = currentDirArray[currentDirArray.length - 1];
 
-          const currentId = this.dir.find(x => x.name === currentDir).id;
+          const currentId = this.dir.getId(currentDir);
         
-          const childrenIds = this.dir.find(x => x.id === currentId).children;
+          const childrenIds = this.dir.getChildren(currentId);
           let childrenNames = [];
           childrenIds.forEach(childId => {
-            childrenNames.push(this.dir.find(x => x.id === childId).name);
+            childrenNames.push(this.dir.getName(childId));
           });
         
           childrenNames.forEach(element => {
@@ -310,8 +286,8 @@ class Console extends React.Component {
         <motion.div
           className="console-tab"
           onClick={(e) => this.handleClick(e)}
-          initial={{ x: 20, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
+          initial={{ x: 20, opacity: 0, rotate: 90 }}
+          animate={{ x: 0, opacity: 1, rotate: 0 }}
           transition={{ 
             delay: 2.5, 
             duration: 1,
@@ -325,15 +301,13 @@ class Console extends React.Component {
         <motion.div
           initial="closed"
           animate={this.state.consoleOpen ? "open" : "closed"}
-          transition={  { 
-            duration: 0.3,
-          }}
+          transition={{  duration: 0.3 }}
           style={{ originX: 1, originY: 0 }}
           variants={variants}
         >
           <div className="console">
             <div className="console-body">
-              <div className="console-text-short">></div>
+              <div className="console-text-short"></div>
                 <form
                   className="console-input"
                   onSubmit={(e) => this.handleSubmit(e)}
