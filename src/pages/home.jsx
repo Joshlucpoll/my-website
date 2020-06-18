@@ -157,7 +157,7 @@ class Home extends React.Component {
               style={{ originX: "1rem", originY: "3rem"}}
               initial={{ rotate: 0 }}
               animate={{ rotate: 20 }}
-              transition={{ flip: Infinity, duration: 1 }}
+              transition={{ flip: Infinity, duration: 0.5 }}
             >
               <Emoji emoji="👋" class="wave-emoji" label="wave"/>
             </motion.div> my name is</motion.div>
