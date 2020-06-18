@@ -150,7 +150,17 @@ class Home extends React.Component {
             initial={{ opacity: 0, y: -100 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 1.5, duration: 0.5 }} 
-          ><span className="hi-title">Hi,</span><Emoji emoji="👋" class="wave-emoji" label="wave"/> my name is</motion.div>
+          >
+            <span className="hi-title">Hi,</span>
+            <motion.div
+              className="wave-container"
+              style={{ originX: "1rem", originY: "3rem"}}
+              initial={{ rotate: 0 }}
+              animate={{ rotate: 20 }}
+              transition={{ flip: Infinity, duration: 1 }}
+            >
+              <Emoji emoji="👋" class="wave-emoji" label="wave"/>
+            </motion.div> my name is</motion.div>
           <motion.div 
             className="headline-title"
             style={longShadowStyle} 

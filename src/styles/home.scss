@@ -56,10 +56,16 @@
     position: relative;
     margin: 10px;
 
-    .wave-emoji {
-      display: none;
+    .wave-container {
+      display: inline-block;
+
+      .wave-emoji {
+        // transform-origin: center;
+        display: none;
+        height: 1rem;
+      }
     }
-    
+
   }
 
   .headline-title {
@@ -97,6 +103,6 @@
   }
 }
 
-.title-container:hover .wave-emoji {
+.title-container:hover .wave-container .wave-emoji {
   display: inline;
 }
