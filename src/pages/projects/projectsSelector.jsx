@@ -1,4 +1,3 @@
-import Lost from "../404";
 import MyWebsite from "./my-website";
 
 import React from "react";
@@ -12,7 +11,7 @@ function ProjectSelector() {
     return <MyWebsite/>
   }
   else {
-    return <Lost/>
+    window.location.replace(`https://github.com/joshlucpoll/${projectName}`)
   }
 }
 
