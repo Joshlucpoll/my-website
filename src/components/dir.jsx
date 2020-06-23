@@ -3,24 +3,28 @@ class Directory {
     this.dir = [
       {
         name: "",
+        path: "/",
         id: 1,
         parentId: null,
         children: [2]
       },
       {
         name: "projects",
+        path: "/projects",
         id: 2,
         parentId: 1,
         children: [3, 4]
       },
       {
         name: "my-website",
+        path: "/projects/my-website",
         id: 3,
         parentId: 2,
         children: [null]
       },
       {
         name: "battleships",
+        path: "/projects/battleships",
         id: 4,
         parentId: 2,
         children: [null]
@@ -30,8 +34,7 @@ class Directory {
 
   getParent(id) {
     const parentId = this.dir.find(x => x.id === id).parentId;
-    const parent = this.dir.find(x => x.id === parentId);
-    return parent;
+    return parentId;
   }
 
   getChildren(id) {
@@ -44,9 +47,14 @@ class Directory {
     return name;
   }
 
-  getId(name) {
-    const id = this.dir.find(x => x.name === name).id;
+  getId(path) {
+    const id = this.dir.find(x => x.path === path).id;
     return id;
+  }
+
+  getPath(id) {
+    const path = this.dir.find(x => x.id === id).path;
+    return path;
   }
 
 }

@@ -58,12 +58,13 @@ class Console extends React.Component {
         else if (value ===  "..") {
           try {
             // finds path
-            const currentDirArray = this.props.currentDirectory.split("/");
-            const currentDir = currentDirArray[currentDirArray.length - 1];
+            // const currentDirArray = window.location.pathname.split("/");
+            // const currentDir = currentDirArray[currentDirArray.length - 1];
+            const currentDir = window.location.pathname;
+                      
+            const parentPath = this.dir.getPath(this.dir.getParent(this.dir.getId(currentDir)));
 
-            const parentName = this.dir.getName(this.dir.getParent(this.dir.getId(currentDir)));
-
-            this.props.changeDirectory(parentName);
+            this.props.changeDirectory(parentPath);
           }
           catch(err) {
             this.props.changeDirectory("");
@@ -83,9 +84,7 @@ class Console extends React.Component {
           this.addToConsole("..");
         }
         try {
-          // gets the last "directory" in the path of the URL
-          const currentDirArray = this.props.currentDirectory.split("/");
-          const currentDir = currentDirArray[currentDirArray.length - 1];
+          const currentDir = window.location.pathname;
 
           const currentId = this.dir.getId(currentDir);
         
@@ -155,7 +154,7 @@ class Console extends React.Component {
   
   openConsole() {
     if (this.state.consoleOpen === false) {
-      this.props.changeDirectory(window.location.pathname);
+      // this.props.changeDirectory(window.location.pathname);
       this.setState({
         consoleOpen: true,
         historyLocation: null,

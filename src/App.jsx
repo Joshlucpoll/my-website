@@ -30,18 +30,10 @@ class App extends React.Component {
   
   componentDidMount() {
     window.addEventListener("scroll", () => this.setState({ scroll: window.scrollY }));
-
-    window.addEventListener('locationchange', function(){
-      console.log('location changed!');
-    })
   }
 
   componentWillUnmount() {
     window.removeEventListener("scroll", () => this.setState({ scroll: window.scrollY }));
-
-    window.removeEventListener('locationchange', function(){
-      console.log('location changed!');
-    })
   }
 
   animationEnd() {
@@ -50,6 +42,7 @@ class App extends React.Component {
   }
 
   changeDirectory(path) {
+    console.log(path);
     this.setState({ changePage: path }, () => this.setState({ changePage: null }));
     document.getElementsByTagName("body")[0].classList.add("body-style-transition");
   }
@@ -77,7 +70,6 @@ class App extends React.Component {
             )}
           />
           <Console
-            currentDirectory={this.state.currentPath}
             changeDirectory={(path) => this.changeDirectory(path)}
           />
 
