@@ -19,11 +19,30 @@ class Projects extends React.Component {
     this.state = {
       x: 0,
       y: 0,
+      isLoaded: false,
+      error: false,
     }
   }
 
   componentDidMount() {
     document.title = "Josh Pollard | 🚀";
+
+    fetch("https://api.github.com/users/joshlucpoll/repos?sort=pushed")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            repos: result,
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error: true,
+          });
+        }
+      )
   }
   
   onClick() {
@@ -38,63 +57,49 @@ class Projects extends React.Component {
   }
   
   render() {
-    return (
-      <Switch>
-        <Route exact path={"/projects"}>
-          <motion.div 
-            className="projects-body"
-            
-            style={pageStyle}
-            initial="initial"
-            animate="in"
-            exit="out"
-            variants={pageVariants}
-            transition={pageTransition}
-          >
-            <div className="title-container">
-              <div className="overlay">
-                <div className="title">Projects</div>
-                <div className="subtitle">From Python to HTML to Dart, this page displays all my past projects with details on how I built them. <Emoji label="builder" emoji="👷🏻‍♂️"/>
+    if (this.state.error) {
+      return <div>Error. Please reload page.</div>
+    }
+    else {
+      return (
+        <Switch>
+          <Route exact path={"/projects"}>
+            <motion.div 
+              className="projects-body"
+              
+              style={pageStyle}
+              initial="initial"
+              animate="in"
+              exit="out"
+              variants={pageVariants}
+              transition={pageTransition}
+            >
+              <div className="title-container">
+                <div className="overlay">
+                  <div className="title">Projects</div>
+                  <div className="subtitle">From Python to HTML to Dart, this page displays all my past projects with details on how I built them. <Emoji label="builder" emoji="👷🏻‍♂️"/>
+                </div>
+                </div>
               </div>
-              </div>
-            </div>
-            {/* <div className="projects-underlay"/> */}
-            <section className="projects-container">
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="my-website" onClick={() => this.onClick()}></ProjectCard>
-              <ProjectCard name="battleships"></ProjectCard>
-            </section>
-          </motion.div>
-        </Route>
-        <Route path={"/projects/:projectName"}>
-          <ProjectSelector/>
-        </Route>
-      </Switch>
-
-    )
+              {!this.state.isLoaded &&
+                <div>Loading...</div>
+              }
+              {this.state.isLoaded &&
+                <section className="projects-container">
+                  {this.state.repos.map(repo => (
+                    <ProjectCard repo={repo} onClick={() => this.onClick()}/>
+                  ))}
+                </section>
+              }
+            </motion.div>
+          </Route>
+          <Route path={"/projects/:projectName"}>
+            <ProjectSelector/>
+          </Route>
+        </Switch>
+  
+      )
+    }
   }
 }
 
