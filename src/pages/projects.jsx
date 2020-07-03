@@ -1,11 +1,12 @@
 import React from "react";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 import ProjectSelector from "./projects/projectsSelector";
 import ProjectCard from "../components/projectCard";
 import Emoji from "../components/emoji";
 import "../styles/projects.scss";
+import DownArrow from "../assets/down_arrow.svg";
 
 import { pageStyle, pageTransition, pageVariants } from "../styles/pageTransition";
 import { 
@@ -21,13 +22,14 @@ class Projects extends React.Component {
       y: 0,
       isLoaded: false,
       error: false,
+      isSortOpen: false,
     }
   }
 
-  componentDidMount() {
-    document.title = "Josh Pollard | 🚀";
+  getRepos(sort) {
+    // sort types: created, updated, pushed, full_name
 
-    fetch("https://api.github.com/users/joshlucpoll/repos?sort=pushed")
+    fetch(`https://api.github.com/users/joshlucpoll/repos?sort=${sort}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -44,7 +46,19 @@ class Projects extends React.Component {
         }
       )
   }
+
+  componentDidMount() {
+    document.title = "Josh Pollard | 🚀";
+
+    this.getRepos("created")
+  }
   
+  sortButtonHandler() {
+    this.setState((state) => ({
+      isSortOpen: !state.isSortOpen,
+    }));
+  }
+
   onClick() {
 
   }
@@ -77,8 +91,30 @@ class Projects extends React.Component {
               <div className="title-container">
                 <div className="overlay">
                   <div className="title">Projects</div>
-                  <div className="subtitle">From Python to HTML to Dart, this page displays all my past projects with details on how I built them. <Emoji label="builder" emoji="👷🏻‍♂️"/>
+                  <div className="subtitle">From Python to HTML to Dart, this page displays all my past projects with details on how I built them. <Emoji label="builder" emoji="👷🏻‍♂️"/></div>
                 </div>
+                <div className="sort-container">
+                  <div className="sort-button" onClick={() => this.sortButtonHandler()}>
+                    <div className="sort-text">Sort</div>
+                    <img className="down-arrow" alt="down-arrow" src={DownArrow}></img>
+                  </div>
+                  <AnimatePresence>
+                    {this.state.isSortOpen &&
+                      <motion.div 
+                        className="sort-menu-container"
+                        initial={{ y: "-10%", opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: "-10%", opacity: 0 }}
+                        transition={{ ease: "circOut", duration: 0.3 }}
+                      >
+                        <ul>
+                          <li><div onClick={() => this.getRepos("created")}>Created</div></li>
+                          <li><div onClick={() => this.getRepos("pushed")}>Updated</div></li>
+                          <li><div onClick={() => this.getRepos("full_name")}>Alphabetical</div></li>
+                        </ul>
+                      </motion.div>
+                    }
+                  </AnimatePresence>
                 </div>
               </div>
               {!this.state.isLoaded &&
@@ -87,7 +123,9 @@ class Projects extends React.Component {
               {this.state.isLoaded &&
                 <section className="projects-container">
                   {this.state.repos.map(repo => (
-                    <ProjectCard repo={repo} onClick={() => this.onClick()}/>
+                    <motion.div key={repo.name} positionTransition>
+                      <ProjectCard repo={repo} onClick={() => this.onClick()}/>
+                    </motion.div>
                   ))}
                 </section>
               }

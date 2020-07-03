@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../styles/projectCard.scss";
 
 function projectCard(props) {
 
@@ -7,7 +8,9 @@ function projectCard(props) {
 
   return(
     <Link to={link} onClick={props.onClick}>
-      <div className="card">{props.repo.name}</div>
+      <div className="card">
+        <div className="card-title">{props.repo.name}</div>
+      </div>
     </Link>
   );
 }

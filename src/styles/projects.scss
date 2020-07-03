@@ -10,7 +10,8 @@
     
     
     .overlay {
-      background-color: rgba(2, 2, 2, 0.5);
+      background-color: #40296e96;
+      border-radius: 10px;
       height: 100%;
       width: 100%;
       padding: 10px;
@@ -41,7 +42,59 @@
         margin-top: 10px;
       }
     }
+
+    .sort-container {
+      font-size: 18px;
+      float: right;
+      margin-top: 3rem;
+
+      .sort-button {
+        height: 1.7rem;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background-color: #40296E;
+        padding: 1px 5px;
+        border-radius: 10px 10px 0 0;
+        
+        .sort-text {
+          color: white;
+          display: inline;
+          font-family: 'Work Sans', sans-serif;
+        }
+        
+        .down-arrow {
+          float: right;
+          height: 1.2rem;
+          filter: invert(1);
+          padding-left: 0.5rem;
+          transform: translateY(0.3rem);
+        }
+      }
+
+      .sort-menu-container {
+        position: fixed;
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          background-color: #40296E;
+          padding: 5px;
+          border-radius: 0 10px 10px 10px;
+          
+          div {
+            margin: 5px 0;
+            color: white;
+            font-family: 'Work Sans', sans-serif;
+            cursor: pointer;
+          }
+        }
+      }
+    }
   }
+
+
   .projects-underlay {
     position: absolute;
     height: 100%;
@@ -55,13 +108,9 @@
     display: grid;
     gap: 5vh;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    
-    
-    .card {
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-      background-color: #fff;
+
+    a {
+      text-decoration: none;
     }
   }  
 }
