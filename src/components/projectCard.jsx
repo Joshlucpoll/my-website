@@ -64,7 +64,7 @@ class projectCard extends React.Component {
         >
           <motion.div className="card" id={this.props.repo.name + "-card"} animate={this.state.styles} transition={{ duration: 0.3, ease: "circOut" }}>
             <div className="card-title">{this.props.repo.name}</div>
-            {/* <img src="https://c1.staticflickr.com/1/343/31652757460_b2b5794a51_n.jpg"/> */}
+            <img src={`https://res.cloudinary.com/dy1xy7vkf/image/upload/${this.props.repo.name}.png`}/>
           </motion.div>
         </Link>
       </div>

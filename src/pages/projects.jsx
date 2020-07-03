@@ -108,9 +108,9 @@ class Projects extends React.Component {
                         transition={{ ease: "circOut", duration: 0.3 }}
                       >
                         <ul>
-                          <li><div onClick={() => this.getRepos("created")}>Created</div></li>
                           <li><div onClick={() => this.getRepos("pushed")}>Updated</div></li>
                           <li><div onClick={() => this.getRepos("full_name")}>Alphabetical</div></li>
+                          <li><div onClick={() => this.getRepos("created")}>Created</div></li>
                         </ul>
                       </motion.div>
                     }
