@@ -1,18 +1,75 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import "../styles/projectCard.scss";
 
-function projectCard(props) {
+class projectCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      styles: {}
+    }
 
-  const link = "/projects/" + props.repo.name
+    this.link = "/projects/" + props.repo.name
+  }
 
-  return(
-    <Link to={link} onClick={props.onClick}>
-      <div className="card">
-        <div className="card-title">{props.repo.name}</div>
+  mapVector(x, in_min, in_max, out_min, out_max) {
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+  }
+
+  updatePerspective(e) {
+    const card = document.getElementById(this.props.repo.name + "-card")
+    const x = Math.round(e.clientX - card.getBoundingClientRect().left);
+    const y = Math.round(e.clientY - card.getBoundingClientRect().top);
+
+    const rY = this.mapVector(x, 0, Math.round(card.getBoundingClientRect().width), -5, 5);
+    const rX = this.mapVector(y, 0, Math.round(card.getBoundingClientRect().height), -5, 5);
+
+    const styles = {
+      transform: `rotateY(${rY}deg) rotateX(${-rX}deg)`,
+    };
+
+    this.setState({ styles: styles });
+  }
+  
+  resetPerspective(e) {
+    const styles = {
+      transform: "rotateY(0deg) rotateX(0deg)",
+    };
+
+    this.setState({ styles: styles });
+  }
+
+  componentDidMount() {
+    const card = document.getElementById(this.props.repo.name + "-card");
+    const container = document.getElementById(this.props.repo.name + "-container");
+    card.addEventListener("mousemove", (e) => this.updatePerspective(e));
+    container.addEventListener("mouseleave", (e) => this.resetPerspective(e));
+  }
+
+  componentWillUnmount() {
+    const card = document.getElementById(this.props.repo.name + "-card");
+    const container = document.getElementById(this.props.repo.name + "-container");
+    card.removeEventListener("mousemove", (e) => this.updatePerspective(e));
+    container.removeEventListener("mouseleave", (e) => this.resetPerspective(e));
+
+  }
+
+  render() {
+    return(
+      <div className="card-container" id={this.props.repo.name + "-container"}>
+        <Link 
+          to={this.link}
+          onClick={this.props.onClick}
+        >
+          <motion.div className="card" id={this.props.repo.name + "-card"} animate={this.state.styles} transition={{ duration: 0.3, ease: "circOut" }}>
+            <div className="card-title">{this.props.repo.name}</div>
+            {/* <img src="https://c1.staticflickr.com/1/343/31652757460_b2b5794a51_n.jpg"/> */}
+          </motion.div>
+        </Link>
       </div>
-    </Link>
-  );
+    );
+  }
 }
 
 export default projectCard;

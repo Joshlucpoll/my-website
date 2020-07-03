@@ -1,21 +1,29 @@
-.card {
+.card-container {
   height: 100%;
   width: 100%;
-  overflow: hidden;
-  background-color: #40296E;
-  border-radius: 10px;
-  padding: 10px;
-  transition: transform 0.2s ease;
+  transform-style: preserve-3d;
+  perspective: 500px;
+  position: relative;
+  // overflow: hidden;
+  
+  .card {
+    // height: 100%;
+    // width: 100%;
+    background-color: #40296E;
+    border-radius: 10px;
+    padding: 10px;
+    
+    .card-title {
+      color: white;
+      text-decoration: none;
+      text-transform: capitalize;
+      font-family: 'Work Sans', sans-serif;
+    }
 
-  &:hover {
-    transform: scale(1.1);
-  }
-
-
-  .card-title {
-    color: white;
-    text-decoration: none;
-    text-transform: capitalize;
-    font-family: 'Work Sans', sans-serif;
+    img {
+      height: 100%;
+      width: 100%;
+    }
   }
 }
+

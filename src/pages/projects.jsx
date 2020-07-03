@@ -50,7 +50,7 @@ class Projects extends React.Component {
   componentDidMount() {
     document.title = "Josh Pollard | 🚀";
 
-    this.getRepos("created")
+    this.getRepos("pushed")
   }
   
   sortButtonHandler() {
@@ -123,7 +123,7 @@ class Projects extends React.Component {
               {this.state.isLoaded &&
                 <section className="projects-container">
                   {this.state.repos.map(repo => (
-                    <motion.div key={repo.name} positionTransition>
+                    <motion.div key={repo.name} positionTransition={{ duration: 0.5 }}>
                       <ProjectCard repo={repo} onClick={() => this.onClick()}/>
                     </motion.div>
                   ))}
