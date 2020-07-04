@@ -14,7 +14,7 @@ class projectCard extends React.Component {
   }
 
   mapVector(x, in_min, in_max, out_min, out_max) {
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    return Math.round((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
   }
 
   updatePerspective(e) {
@@ -22,8 +22,8 @@ class projectCard extends React.Component {
     const x = Math.round(e.clientX - card.getBoundingClientRect().left);
     const y = Math.round(e.clientY - card.getBoundingClientRect().top);
 
-    const rY = this.mapVector(x, 0, Math.round(card.getBoundingClientRect().width), -5, 5);
-    const rX = this.mapVector(y, 0, Math.round(card.getBoundingClientRect().height), -5, 5);
+    const rY = this.mapVector(x, 0, Math.round(card.getBoundingClientRect().width), -10, 10);
+    const rX = this.mapVector(y, 0, Math.round(card.getBoundingClientRect().height), -10, 10);
 
     const styles = {
       transform: `rotateY(${rY}deg) rotateX(${-rX}deg)`,
