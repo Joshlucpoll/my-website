@@ -123,7 +123,7 @@ class Projects extends React.Component {
               {this.state.isLoaded &&
                 <section className="projects-container">
                   {this.state.repos.map(repo => (
-                    <motion.div key={repo.name} positionTransition={{ duration: 0.5 }}>
+                    <motion.div key={repo.name} positionTransition={{ duration: 0.5, ease: "backInOut" }}>
                       <ProjectCard repo={repo} onClick={() => this.onClick()}/>
                     </motion.div>
                   ))}

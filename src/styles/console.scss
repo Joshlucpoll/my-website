@@ -3,10 +3,10 @@
   text-align: center;
   display: flex;
   justify-content: space-around;
-  bottom: 10vh;
+  bottom: 0;
   position: fixed;
   
-  .console-tab {
+  .console-tab-container {
     height: 6vh;
     width: 6vh;
     margin: 2vh;
@@ -14,22 +14,39 @@
     bottom: 0;
     right: 0;
     z-index: 150;
-    background-color: rgba(54, 54, 54, 0.75);
-    border-radius: 50%;
     
-    &:hover img {
-      opacity: 1;
+    .console-tab {
+      height: 6vh;
+      width: 6vh;
+      background-color: rgba(54, 54, 54, 0.75);
+      border-radius: 50%;
+      cursor: pointer;
+          
+      img {
+        transition: opacity 200ms ease-in;
+        opacity: 0.5;
+        padding: 20% 0;
+        width: 60%;
+      }
+
     }
-    
-    img {
-      transition: opacity 200ms ease-in;
-      opacity: 0.5;
-      padding: 20% 0;
-      width: 60%;
+    .easy-mode-button {
+      position: absolute;
+      top: 2vh;
+      right: 120%;
+      font-family: 'Ubuntu Mono', monospace;
+      white-space: nowrap;
+      color: white;
+      background-color: rgba(54, 54, 54, 0.75);
+      padding: 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0;
     }
   }
 
   .console {
+    bottom: 10vh;
     transform-origin: bottom right;
     position: relative;
     z-index: 20;
@@ -45,7 +62,7 @@
       line-height: 7vh;
       text-align: left;
       box-shadow: 0px -6px 6px -3px rgba(0,0,0,0.75);
-      background-color: rgba(54, 54, 54, 0.75);
+      background-color: rgba(29,29,29,0.95);
       
       .console-text-short {
         color:white;
@@ -82,7 +99,8 @@
       padding-left: 20px;
       border-top-left-radius: 2vh;
       border-top-right-radius: 2vh;
-      background-color: rgba(54, 54, 54, 0.75);
+      // background-color: rgba(54, 54, 54, 0.75);
+      background: linear-gradient(0deg, rgba(29,29,29,0.95) 0%, rgba(64,41,110,0.95) 100%);
       
       .output-list-container {
         display: flex;

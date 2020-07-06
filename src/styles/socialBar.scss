@@ -10,12 +10,12 @@
     
     height: 6vh;
     width: 30vh;
-    z-index: 100;
+    z-index: 9;
     
     div {
       position: relative;
       padding: 1vh;
-      z-index: 100;
+      z-index: 10;
       height: 4vh;
       
       &:hover img {
@@ -43,7 +43,7 @@
     
     height: 40vh;
     width: 0vh;
-    z-index: 100;
+    z-index: 10;
     
     &:hover div {
       width: 4vh;
@@ -60,7 +60,7 @@
 
       padding: 2vh 0;
       position: relative;
-      z-index: 100;
+      z-index: 10;
       width: 1vh;
       height: 4vh;
       transition: width $animation-dur $timing-func, box-shadow $animation-dur $timing-func, border-radius $animation-dur $timing-func;
@@ -68,7 +68,7 @@
       &:hover {
         width: 8vh;
         box-shadow: 0px 0px 22px 1px rgba(0,0,0,0.75);
-        z-index: 110;
+        z-index: 11;
         border-top-right-radius: 10%;
         border-bottom-right-radius: 10%;
       }

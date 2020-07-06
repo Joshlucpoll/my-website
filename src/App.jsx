@@ -5,7 +5,8 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import { AnimatePresence } from "framer-motion"
+import { isMobile } from 'react-device-detect';
+import { motion, AnimatePresence } from "framer-motion"
 
 // Pages
 import Home from "./pages/home";
@@ -14,6 +15,7 @@ import LostPage from "./pages/404";
 
 // Components
 import Console from "./components/console";
+import HamburgerMenu from "./components/hamburgerMenu";
 import SocialBar from "./components/socialBar"
 
 import "./styles/app.scss";
@@ -24,12 +26,21 @@ class App extends React.Component {
     this.state = {
       changePage: null,
       scroll: window.scrollY,
+      easyNav: null,
     }
     this.location = this.props.location;
   }
   
   componentDidMount() {
     window.addEventListener("scroll", () => this.setState({ scroll: window.scrollY }));
+    setTimeout(() => {
+      if (isMobile) {
+        this.setState({ easyNav: true });
+      }
+      else {
+        this.setState({ easyNav: false });
+      }
+    }, 2500);
   }
 
   componentWillUnmount() {
@@ -45,6 +56,15 @@ class App extends React.Component {
     console.log(path);
     this.setState({ changePage: path }, () => this.setState({ changePage: null }));
     document.getElementsByTagName("body")[0].classList.add("body-style-transition");
+  }
+
+  changeNav(nav) {
+    if (nav === "ham") {
+      this.setState({ easyNav: true })
+    }
+    if (nav === "term") {
+      this.setState({ easyNav: false })
+    }
   }
 
   render() {
@@ -69,9 +89,26 @@ class App extends React.Component {
               </AnimatePresence>
             )}
           />
-          <Console
-            changeDirectory={(path) => this.changeDirectory(path)}
-          />
+          {this.state.easyNav === null &&
+            <motion.div 
+              className="nav-button-fake"
+              initial={{ x: 20, opacity: 0, rotate: 90 }}
+              animate={{ x: 0, opacity: 1, rotate: 0 }}
+              transition={{ 
+                delay: 2, 
+                duration: 1,
+                type: "spring",
+                stiffness: 300,
+                damping: 15
+              }}
+            />
+          }
+          {this.state.easyNav === true &&
+            <HamburgerMenu changeDirectory={(path) => this.changeDirectory(path)} changeNav={(nav) => this.changeNav(nav)}/>
+          }
+          {this.state.easyNav === false &&
+            <Console changeDirectory={(path) => this.changeDirectory(path)} changeNav={(nav) => this.changeNav(nav)}/>
+          }
 
           {this.state.changePage !== null &&
             <Redirect to={this.state.changePage}  push={true}/>

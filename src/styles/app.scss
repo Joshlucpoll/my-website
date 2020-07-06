@@ -22,3 +22,15 @@ body {
 .body-style-transition {
   overflow: hidden;
 }
+
+.nav-button-fake {
+  height: 6vh;
+  width: 6vh;
+  margin: 2vh;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 150;
+  background-color: rgba(54, 54, 54, 0.75);
+  border-radius: 50%;
+}

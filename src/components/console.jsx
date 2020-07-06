@@ -7,6 +7,12 @@ import "../styles/console.scss";
 
 import Dir from "./dir";
 
+const button = {
+  rest: { scale: 1 },
+  hover: { scale: 1.1 },
+  pressed: { scale: 0.95 }
+};
+
 class Console extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +25,6 @@ class Console extends React.Component {
       placeHolderText: "",
     };
     this.baseState = this.state;
-    this.setState({ consoleOpen: false });
     this.consoleInput = React.createRef();
     this.dir = new Dir();
   }
@@ -151,39 +156,6 @@ class Console extends React.Component {
         this.addToConsole(commandLine + ": command not found");
     }
   }
-  
-  openConsole() {
-    if (this.state.consoleOpen === false) {
-      // this.props.changeDirectory(window.location.pathname);
-      this.setState({
-        consoleOpen: true,
-        historyLocation: null,
-      });
-      this.forceUpdate(() => {this.consoleInput.current.focus();});
-      setTimeout(() => {
-          if (this.state.consoleOpen === true) {
-            this.setState({ placeHolderText: '🤔 ⌨️"help"' }, this.forceUpdate());
-          }
-        }
-      ,3000)
-    }
-  }
-  
-  closeConsole() {
-    if (this.state.consoleOpen === true) {
-      this.consoleInput.current.blur();
-      this.setState({consoleOpen: false});
-      this.setState({ placeHolderText: "" }, this.forceUpdate());
-    }
-  }
-  
-  // Event listeners for key presses
-  componentDidMount() {
-    document.addEventListener("keydown", (e) => this.handleKey(e), false);
-  }
-  componentWillUnmount() {
-    document.removeEventListener("keydown", (e) => this.handleKey(e), false);
-  }
 
   previousCommand(direction) {
     if (this.state.commandList.length !== 0) {
@@ -218,6 +190,40 @@ class Console extends React.Component {
     this.consoleInput.current.selectionEnd = this.consoleInput.current.value.length;
   }
   
+  openConsole() {
+    if (this.state.consoleOpen === false) {
+      // this.props.changeDirectory(window.location.pathname);
+      this.setState({
+        consoleOpen: true,
+        historyLocation: null,
+      });
+      this.forceUpdate(() => {this.consoleInput.current.focus();});
+      setTimeout(() => {
+          if (this.state.consoleOpen === true) {
+            this.setState({ placeHolderText: '🤔 ⌨️"help"' }, this.forceUpdate());
+          }
+        }
+      ,3000)
+    }
+  }
+  
+  closeConsole() {
+    if (this.state.consoleOpen === true) {
+      this.consoleInput.current.blur();
+      this.setState({consoleOpen: false});
+      this.setState({ placeHolderText: "" }, this.forceUpdate());
+    }
+  }
+  
+  // Event listeners for key presses
+  componentDidMount() {
+    document.addEventListener("keydown", (e) => this.handleKey(e), false);
+    this.setState({consoleOpen: false});
+  }
+  componentWillUnmount() {
+    document.removeEventListener("keydown", (e) => this.handleKey(e), false);
+  }
+
   handleKey(e) {
     // esc (close output)
     if (e.keyCode === 27) {
@@ -266,6 +272,13 @@ class Console extends React.Component {
     }
   }
 
+  changeNav() {
+    this.closeConsole();
+    setTimeout(() => {
+      this.props.changeNav("ham");
+    }, 300)
+  }
+
   render() {
     if (this.state.outputList.length === 0) {
       this.outputItems = null;
@@ -282,25 +295,38 @@ class Console extends React.Component {
     return (
       <div className="console-container">
         <SimpleStorage parent={this}/>
-        <motion.div
-          className="console-tab"
-          onClick={(e) => this.handleClick(e)}
-          initial={{ x: 20, opacity: 0, rotate: 90 }}
-          animate={{ x: 0, opacity: 1, rotate: 0 }}
-          transition={{ 
-            delay: 2.5, 
-            duration: 1,
-            type: "spring",
-            stiffness: 300,
-            damping: 15
-          }}
-        >
-          <img src={ConsoleIcon} alt="Terminal"/>
-        </motion.div>
+          <motion.div
+            className="console-tab-container"
+            variants={button}
+            initial="rest"
+            whileHover="hover"
+            whileTap="pressed"
+          >
+            <div
+              className="console-tab"
+              onClick={(e) => this.handleClick(e)}
+            >
+              <motion.img
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.5 }} 
+                src={ConsoleIcon} 
+                alt="Terminal"
+              />
+            </div>
+            <motion.div
+              className="easy-mode-button"
+              animate={this.state.consoleOpen ? {y: 0, opacity: 1} : {y: "100%", opacity: 0}}
+              transition={{ ease: "easeOut" }}
+              style={{ originX: 1 }}
+              onClick={() => this.changeNav()}
+            >
+              Normal
+            </motion.div>
+          </motion.div>
         <motion.div
           initial="closed"
           animate={this.state.consoleOpen ? "open" : "closed"}
-          transition={{  duration: 0.3 }}
+          transition={{ duration: 0.3 }}
           style={{ originX: 1, originY: 0 }}
           variants={variants}
         >
