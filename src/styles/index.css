@@ -19,3 +19,7 @@ code {
   border-radius: .25rem;
   padding: .125rem;
 }
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
