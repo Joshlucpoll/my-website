@@ -110,7 +110,7 @@ class HamburgerMenu extends React.Component {
         </motion.div>
         <AnimatePresence>
           {this.state.isMenuOpen &&
-          <motion.div className="nav-container" initial={{height: 0}} animate={{height: "100vh"}} exit={{height: 0}}>
+          <motion.div className="nav-container" initial={{height: 0, opacity: 1}} animate={{height: "100vh", opacity: 1}} exit={{height: 0, opacity: -1}} transition={{type: "tween"}}>
             <ul className="nav">
               <li>
                 <div className="link" onClick={() => this.changePage("/")}>Home</div>
