@@ -14,6 +14,12 @@ import {
   Route,
  } from "react-router-dom";
 
+const button = {
+  rest: { scale: 1 },
+  hover: { scale: 1.1 },
+  pressed: { scale: 0.95 }
+};
+
 class Projects extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +29,7 @@ class Projects extends React.Component {
       isLoaded: false,
       error: false,
       isSortOpen: false,
+      currentRepo: "pushed",
     }
     this.blackList = ["joshlucpoll"];
   }
@@ -45,7 +52,8 @@ class Projects extends React.Component {
             error: true,
           });
         }
-      )
+      );
+      this.setState({ currentRepo: sort });
   }
 
   componentDidMount() {
@@ -72,6 +80,12 @@ class Projects extends React.Component {
   }
   
   render() {
+
+    const updated = () => this.state.currentRepo === "pushed" ? "bold" : "normal";
+    const full_name = () => this.state.currentRepo === "full_name" ? "bold" : "normal";
+    const created = () => this.state.currentRepo === "created" ? "bold" : "normal";
+    console.log(updated, full_name, created);
+
     if (this.state.error) {
       return <div>Error. Please reload page.</div>
     }
@@ -95,23 +109,31 @@ class Projects extends React.Component {
                   <div className="subtitle">From Python to HTML to Dart, this page displays all my past projects with details on how I built them. <Emoji label="builder" emoji="👷🏻‍♂️"/></div>
                 </div>
                 <div className="sort-container">
-                  <div className="sort-button" onClick={() => this.sortButtonHandler()}>
+                  <motion.div 
+                    className="sort-button" 
+                    onClick={() => this.sortButtonHandler()}
+                    variants={button}
+                    initial="rest"
+                    whileHover="hover"
+                    whileTap="pressed"
+                  >
                     <div className="sort-text">Sort</div>
                     <img className="down-arrow" alt="down-arrow" src={DownArrow}></img>
-                  </div>
+                  </motion.div>
                   <AnimatePresence>
                     {this.state.isSortOpen &&
                       <motion.div 
                         className="sort-menu-container"
-                        initial={{ y: "-10%", opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: "-10%", opacity: 0 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                         transition={{ ease: "circOut", duration: 0.3 }}
+                        // layoutTransition={{ type: "tween", duration: 0.3 }}
                       >
                         <ul>
-                          <li><div onClick={() => this.getRepos("pushed")}>Updated</div></li>
-                          <li><div onClick={() => this.getRepos("full_name")}>Alphabetical</div></li>
-                          <li><div onClick={() => this.getRepos("created")}>Created</div></li>
+                          <li><div style={{ fontWeight: updated() }} onClick={() => this.getRepos("pushed")}>Updated</div></li>
+                          <li><div style={{ fontWeight: full_name() }} onClick={() => this.getRepos("full_name")}>Alphabetical</div></li>
+                          <li><div style={{ fontWeight: created() }} onClick={() => this.getRepos("created")}>Created</div></li>
                         </ul>
                       </motion.div>
                     }
@@ -138,7 +160,6 @@ class Projects extends React.Component {
             <ProjectSelector/>
           </Route>
         </Switch>
-  
       )
     }
   }
