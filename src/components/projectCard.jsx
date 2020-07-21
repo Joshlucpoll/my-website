@@ -2,13 +2,14 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import "../styles/projectCard.scss";
+import GithubIcon from "../assets/social_icons/github.svg";
 
 class projectCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       styles: {}
-    }
+    };
 
     this.link = "/projects/" + props.repo.name
   }
@@ -64,7 +65,10 @@ class projectCard extends React.Component {
         >
           <motion.div className="card" id={this.props.repo.name + "-card"} animate={this.state.styles} transition={{ duration: 0.3, ease: "circOut" }}>
             <div className="card-title">{this.props.repo.name}</div>
-            <img alt="Project" src={`https://res.cloudinary.com/dy1xy7vkf/image/upload/${this.props.repo.name}.png`}/>
+            <img className="title-img" alt="Project" src={`https://res.cloudinary.com/dy1xy7vkf/image/upload/${this.props.repo.name}.png`}/>
+            <div className="bottom-bar">
+              <img src={GithubIcon} alt="Github" className="github-icon" onClick={() => window.location.replace(this.props.repo.html_url)}/>
+            </div>
           </motion.div>
         </Link>
       </div>

@@ -84,7 +84,6 @@ class Projects extends React.Component {
     const updated = () => this.state.currentRepo === "pushed" ? "bold" : "normal";
     const full_name = () => this.state.currentRepo === "full_name" ? "bold" : "normal";
     const created = () => this.state.currentRepo === "created" ? "bold" : "normal";
-    console.log(updated, full_name, created);
 
     if (this.state.error) {
       return <div>Error. Please reload page.</div>
