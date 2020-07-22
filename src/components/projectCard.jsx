@@ -19,15 +19,18 @@ class projectCard extends React.Component {
   }
 
   updatePerspective(e) {
+    const maxAngle = 10;
+
     const card = document.getElementById(this.props.repo.name + "-card")
     const x = Math.round(e.clientX - card.getBoundingClientRect().left);
     const y = Math.round(e.clientY - card.getBoundingClientRect().top);
 
-    const rY = this.mapAngle(x, 0, Math.round(card.getBoundingClientRect().width), -10, 10);
-    const rX = this.mapAngle(y, 0, Math.round(card.getBoundingClientRect().height), -10, 10);
+    const rY = this.mapAngle(x, 0, Math.round(card.getBoundingClientRect().width), -maxAngle, maxAngle);
+    const rX = this.mapAngle(y, 0, Math.round(card.getBoundingClientRect().height), -maxAngle, maxAngle);
 
     const styles = {
       transform: `rotateY(${rY}deg) rotateX(${-rX}deg)`,
+      // filter: `brightness(${-rX/40 + 1})`,
     };
 
     this.setState({ styles: styles });
@@ -36,6 +39,7 @@ class projectCard extends React.Component {
   resetPerspective(e) {
     const styles = {
       transform: "rotateY(0deg) rotateX(0deg)",
+      // filter: `brightness(1)`,
     };
 
     this.setState({ styles: styles });
@@ -64,8 +68,10 @@ class projectCard extends React.Component {
           onClick={this.props.onClick}
         >
           <motion.div className="card" id={this.props.repo.name + "-card"} animate={this.state.styles} transition={{ duration: 0.3, ease: "circOut" }}>
-            <div className="card-title">{this.props.repo.name}</div>
-            <img className="title-img" alt="Project" src={`https://res.cloudinary.com/dy1xy7vkf/image/upload/${this.props.repo.name}.png`}/>
+            <div className="title-container">
+              <img className="title-img" alt="Project" src={`https://res.cloudinary.com/dy1xy7vkf/image/upload/${this.props.repo.name}.png`}/>
+              <div className="card-title">{this.props.repo.name}</div>
+            </div>
             <div className="bottom-bar">
               <img src={GithubIcon} alt="Github" className="github-icon" onClick={() => window.location.replace(this.props.repo.html_url)}/>
             </div>
