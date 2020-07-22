@@ -48,7 +48,8 @@
 .backdrop-filter {
   position: fixed;
   width: 100vw;
-  background: linear-gradient(0deg, rgba(29,29,29,1) 0%, rgba(64,41,110,1) 100%);
+  // background: linear-gradient(0deg, rgba(29,29,29,1) 0%, rgba(64,41,110,1) 100%);
+  background: linear-gradient(0deg, rgba(29,29,29,1) 0%, #5F8491 100%);
   z-index: 15;
 }
 

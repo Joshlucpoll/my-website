@@ -71,7 +71,7 @@ class HamburgerMenu extends React.Component {
   render() {
     const linesTransition = {
       type: "spring",
-      stiffness: 400,
+      stiffness: 200,
       damping: 40
     }
     return(
@@ -85,9 +85,9 @@ class HamburgerMenu extends React.Component {
           whileTap="pressed"
         >
           <motion.div className="lines-container" initial={{ opacity: 0 }} animate={{ opacity: 0.5 }}>
-            <motion.div animate={ this.state.isMenuOpen ? {y: 0, rotate: 45} : {y: "1.3vh", rotate: 0} } transition={linesTransition} className="line"/>
+            <motion.div animate={ this.state.isMenuOpen ? {y: 0, rotate: 45} : {y: "1.3vh", rotate: 180} } transition={linesTransition} className="line"/>
             <motion.div animate={ this.state.isMenuOpen ? {y: 0, rotate: -45} : {y: 0, rotate: 0} } transition={linesTransition} className="line"/>
-            <motion.div animate={ this.state.isMenuOpen ? {y: 0, rotate: 45} : {y: "-1.3vh", rotate: 0} } transition={linesTransition} className="line"/> 
+            <motion.div animate={ this.state.isMenuOpen ? {y: 0, rotate: 45} : {y: "-1.3vh", rotate: 180} } transition={linesTransition} className="line"/> 
           </motion.div>
           <motion.div
             className="easy-mode-button"
