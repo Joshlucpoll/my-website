@@ -14,26 +14,23 @@ class projectCard extends React.Component {
     };
 
     this.link = "/projects/" + props.repo.name;
-    console.log(this.getDate());
   }
 
   getDate() {
     const now = moment();
     const pushed = moment(this.props.repo.pushed_at);
 
-    // console.log(now.diff(pushed, "days"));
-
-    if (now.diff(pushed, "days") === 0) {
+    if (now.date() === pushed.date() && now.month() === pushed.month() && now.year() === pushed.year()) {
       return("Today");
     }
-    else if (now.diff(pushed, "days") === 1) {
+    else if (now.date() - pushed.date() === 1 && now.month() === pushed.month() && now.year() === pushed.year()) {
       return("Yesterday");
     }
     else if (now.diff(pushed, "days") < 7) {
       return(pushed.format("ddd"))
     }
     else {
-      return(pushed.format("ddd[,] Q[/]MMM[/]YY" ))
+      return(pushed.format("ddd[,] Q[-]MMM[-]YY" ))
     }
   }
 
