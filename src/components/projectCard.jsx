@@ -18,19 +18,29 @@ class projectCard extends React.Component {
 
   getDate() {
     const now = moment();
-    const pushed = moment(this.props.repo.pushed_at);
-
-    if (now.date() === pushed.date() && now.month() === pushed.month() && now.year() === pushed.year()) {
-      return("Today");
+    let repoTime;
+    
+    if (this.props.sortMethod === "pushed") {
+      repoTime = moment(this.props.repo.pushed_at);
     }
-    else if (now.date() - pushed.date() === 1 && now.month() === pushed.month() && now.year() === pushed.year()) {
-      return("Yesterday");
-    }
-    else if (now.diff(pushed, "days") < 7) {
-      return(pushed.format("ddd"))
+    else if (this.props.sortMethod === "created") {
+      repoTime = moment(this.props.repo.created_at);
     }
     else {
-      return(pushed.format("ddd[,] Q[-]MMM[-]YY" ))
+      return("");
+    }
+
+    if (now.date() === repoTime.date() && now.month() === repoTime.month() && now.year() === repoTime.year()) {
+      return("Today");
+    }
+    else if (now.date() - repoTime.date() === 1 && now.month() === repoTime.month() && now.year() === repoTime.year()) {
+      return("Yesterday");
+    }
+    else if (now.diff(repoTime, "days") < 7) {
+      return(repoTime.format("ddd"))
+    }
+    else {
+      return(repoTime.format("ddd[,] Q[-]MMM[-]YY" ))
     }
   }
 
@@ -70,6 +80,12 @@ class projectCard extends React.Component {
     this.setState({ styles: styles, stylesBrightness: stylesBrightness });
   }
 
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.sortMethod !== prevProps.sortMethod) {
+  //     this.getDate();
+  //   }
+  // }
+
   componentDidMount() {
     const card = document.getElementById(this.props.repo.name + "-card");
     const container = document.getElementById(this.props.repo.name + "-container");
@@ -97,7 +113,7 @@ class projectCard extends React.Component {
           </Link>
           <div className="bottom-bar">
             <img src={GithubIcon} alt="Github" className="github-icon" onClick={() => window.location.replace(this.props.repo.html_url)}/>
-            <div className="date" title="Date updated">{this.getDate()}</div>
+            <div className="date" title="Date">{this.getDate()}</div>
           </div>
         </motion.div>
       </div>

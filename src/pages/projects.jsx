@@ -20,6 +20,12 @@ const button = {
   pressed: { scale: 0.95 }
 };
 
+const sort = {
+  pushed: "Updated",
+  full_name: "Alphabetical",
+  created: "Created",
+}
+
 class Projects extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +35,7 @@ class Projects extends React.Component {
       isLoaded: false,
       error: false,
       isSortOpen: false,
-      currentRepo: "pushed",
+      sortMethod: "pushed",
     }
     this.blackList = ["joshlucpoll"];
   }
@@ -53,7 +59,7 @@ class Projects extends React.Component {
           });
         }
       );
-      this.setState({ currentRepo: sort });
+      this.setState({ sortMethod: sort });
   }
 
   componentDidMount() {
@@ -81,9 +87,9 @@ class Projects extends React.Component {
   
   render() {
 
-    const updated = () => this.state.currentRepo === "pushed" ? "bold" : "normal";
-    const full_name = () => this.state.currentRepo === "full_name" ? "bold" : "normal";
-    const created = () => this.state.currentRepo === "created" ? "bold" : "normal";
+    const updated = () => this.state.sortMethod === "pushed" ? "bold" : "normal";
+    const full_name = () => this.state.sortMethod === "full_name" ? "bold" : "normal";
+    const created = () => this.state.sortMethod === "created" ? "bold" : "normal";
 
     if (this.state.error) {
       return <div>Error. Please reload page.</div>
@@ -107,7 +113,7 @@ class Projects extends React.Component {
                   <div className="title">Projects</div>
                   <div className="subtitle">From Python to HTML to Dart, this page displays all my past projects with details on how I built them. <Emoji label="builder" emoji="👷🏻‍♂️"/></div>
                 </div>
-                <div className="sort-container">
+                <motion.div className="sort-container" layoutTransition={{ type: "tween", duration: 0.1 }}>
                   <motion.div 
                     className="sort-button" 
                     onClick={() => this.sortButtonHandler()}
@@ -116,7 +122,7 @@ class Projects extends React.Component {
                     whileHover="hover"
                     whileTap="pressed"
                   >
-                    <div className="sort-text">Sort</div>
+                    <div className="sort-text">Sort: {sort[this.state.sortMethod]}</div>
                     <img className="down-arrow" alt="down-arrow" src={DownArrow}></img>
                   </motion.div>
                   <AnimatePresence>
@@ -127,7 +133,6 @@ class Projects extends React.Component {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ ease: "circOut", duration: 0.3 }}
-                        // layoutTransition={{ type: "tween", duration: 0.3 }}
                       >
                         <ul>
                           <li><div style={{ fontWeight: updated() }} onClick={() => this.getRepos("pushed")}>Updated</div></li>
@@ -137,7 +142,7 @@ class Projects extends React.Component {
                       </motion.div>
                     }
                   </AnimatePresence>
-                </div>
+                </motion.div>
               </div>
               {!this.state.isLoaded &&
                 <div>Loading...</div>
@@ -148,7 +153,7 @@ class Projects extends React.Component {
                     // Excludes repos in 'blacklist' array
                     !this.blackList.includes(repo.name.toLowerCase()) &&
                       <motion.div key={repo.name} positionTransition={{ duration: 0.5, ease: "backInOut" }}>
-                        <ProjectCard repo={repo} onClick={() => this.onClick()}/>
+                        <ProjectCard repo={repo} sortMethod={this.state.sortMethod} onClick={() => this.onClick()}/>
                       </motion.div>
                   ))}
                 </section>
