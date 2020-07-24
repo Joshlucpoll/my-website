@@ -10,6 +10,12 @@ import Email from "../assets/social_icons/gmail.svg";
 
 import "../styles/socialBar.scss";
 
+const button = {
+  rest: { scale: 1 },
+  hover: { scale: 1.1 },
+  pressed: { scale: 0.95 }
+};
+
 class SocialBar extends React.Component {
   constructor(props) {
     super(props);
@@ -132,10 +138,23 @@ class SocialBar extends React.Component {
             }
           </AnimatePresence>
             
-          <svg className="share-button" onClick={() => this.switchBar()} fill="#939393" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="4vh" height="4vh">
+          <motion.svg 
+            className="share-button"
+            onClick={() => this.switchBar()}
+            variants={button}
+            initial="rest"
+            whileHover="hover"
+            whileTap="pressed"
+            style={{ originX: 0 }}
+            fill="#939393"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="4vh"
+            height="4vh"
+          >
             <motion.path opacity={this.state.isOpen ? "0" : "1"} d="M18 2A3 3 0 1 0 18 8 3 3 0 1 0 18 2zM18 16A3 3 0 1 0 18 22 3 3 0 1 0 18 16zM6 9A3 3 0 1 0 6 15 3 3 0 1 0 6 9z" />
             <path fill="none" stroke="#939393" stroke-miterlimit="10" stroke-width="2" d="M18 19L6 12 18 5"/>
-          </svg>
+          </motion.svg>
         </motion.div>
       );
     }
