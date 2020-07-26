@@ -37,7 +37,7 @@ class projectCard extends React.Component {
       return("Yesterday");
     }
     else if (now.diff(repoTime, "days") < 7) {
-      return(repoTime.format("ddd"))
+      return(repoTime.format("dddd"))
     }
     else {
       return(repoTime.format("ddd[,] Q[-]MMM[-]YY" ))
