@@ -8,7 +8,7 @@ import Emoji from "../components/emoji";
 import "../styles/projects.scss";
 import DownArrow from "../assets/down_arrow.svg";
 
-import { pageStyle, pageTransition, pageVariants } from "../styles/pageTransition";
+import { pageTransition, pageVariants } from "../styles/pageTransition";
 import { 
   Switch, 
   Route,
@@ -33,11 +33,14 @@ class Projects extends React.Component {
       x: 0,
       y: 0,
       isLoaded: false,
+      repos: "",
       error: false,
       isSortOpen: false,
       sortMethod: "pushed",
+      imageLocation: null,
     }
-    this.blackList = ["joshlucpoll"];
+    this.blackList = ["joshlucpoll", "rotating-dials-watchface"];
+    this.scroll = { top: this.props.scroll + "px" };
   }
 
   getRepos(sort) {
@@ -64,8 +67,11 @@ class Projects extends React.Component {
 
   componentDidMount() {
     document.title = "Josh Pollard | 🚀";
-
     this.getRepos("pushed")
+
+    setTimeout(() => {
+      this.scroll = {};
+    }, 1300);
   }
   
   sortButtonHandler() {
@@ -74,10 +80,14 @@ class Projects extends React.Component {
     }));
   }
 
-  onClick() {
-
+  onClick(imageLocation, link) {
+    console.log(imageLocation);
+    // this.setState({ imageLocation: imageLocation });
+    this.imageLocation = imageLocation;
+    // this.forceUpdate()
+    this.props.changeDirectory(link);
   }
-
+  
   cardLocation(x, y) {
     this.setState({
       x: x,
@@ -86,13 +96,15 @@ class Projects extends React.Component {
   }
   
   render() {
-
+    
     const updated = () => this.state.sortMethod === "pushed" ? "bold" : "normal";
     const full_name = () => this.state.sortMethod === "full_name" ? "bold" : "normal";
     const created = () => this.state.sortMethod === "created" ? "bold" : "normal";
 
-    if (this.state.error) {
-      return <div>Error. Please reload page.</div>
+    console.log(this.imageLocation);
+
+    if (this.state.error || !Array.isArray(this.state.repos)) {
+      return <motion.div animate={{ opacity: 1 }} style={{ opacity: 0, color: "white" }} transition={{ delay: 2 }}>Error. Please reload page. {JSON.stringify(this.state.repos)}</motion.div>
     }
     else {
       return (
@@ -101,7 +113,7 @@ class Projects extends React.Component {
             <motion.div 
               className="projects-body"
               
-              style={pageStyle}
+              style={this.scrollStyle}
               initial="initial"
               animate="in"
               exit="out"
@@ -144,6 +156,7 @@ class Projects extends React.Component {
                   </AnimatePresence>
                 </motion.div>
               </div>
+
               {!this.state.isLoaded &&
                 <div>Loading...</div>
               }
@@ -153,7 +166,7 @@ class Projects extends React.Component {
                     // Excludes repos in 'blacklist' array
                     !this.blackList.includes(repo.name.toLowerCase()) &&
                       <motion.div key={repo.name} positionTransition={{ duration: 0.5, ease: "backInOut" }}>
-                        <ProjectCard repo={repo} sortMethod={this.state.sortMethod} onClick={() => this.onClick()}/>
+                        <ProjectCard repo={repo} sortMethod={this.state.sortMethod} onClick={(imageLocation, link) => this.onClick(imageLocation, link)}/>
                       </motion.div>
                   ))}
                 </section>
@@ -161,7 +174,7 @@ class Projects extends React.Component {
             </motion.div>
           </Route>
           <Route path={"/projects/:projectName"}>
-            <ProjectSelector/>
+            <ProjectSelector scroll={this.props.scroll} imageLocation={this.imageLocation}/>
           </Route>
         </Switch>
       )

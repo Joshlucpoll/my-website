@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import moment from "moment";
 import "../styles/projectCard.scss";
 import GithubIcon from "../assets/social_icons/github.svg";
@@ -71,7 +70,6 @@ class projectCard extends React.Component {
   resetPerspective(e) {
     const styles = {
       transform: "rotateY(0deg) rotateX(0deg)",
-      // filter: `brightness(1)`,
     };
     const stylesBrightness = {
       filter: `brightness(1)`,
@@ -80,11 +78,10 @@ class projectCard extends React.Component {
     this.setState({ styles: styles, stylesBrightness: stylesBrightness });
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.sortMethod !== prevProps.sortMethod) {
-  //     this.getDate();
-  //   }
-  // }
+  onClick() {
+    const img = document.getElementById(this.props.repo.name + "-img");
+    this.props.onClick(img.getBoundingClientRect(), this.link);
+  }
 
   componentDidMount() {
     const card = document.getElementById(this.props.repo.name + "-card");
@@ -98,21 +95,18 @@ class projectCard extends React.Component {
     const container = document.getElementById(this.props.repo.name + "-container");
     card.removeEventListener("mousemove", (e) => this.updatePerspective(e));
     container.removeEventListener("mouseleave", (e) => this.resetPerspective(e));
-
   }
 
   render() {
     return(
       <div className="card-container" id={this.props.repo.name + "-container"}>
         <motion.div className="card" id={this.props.repo.name + "-card"} animate={this.state.styles} transition={{ duration: 0.3, ease: "circOut" }}>
-          <Link to={this.link} onClick={this.props.onClick}>
-            <div className="title-container">
-              <motion.img style={this.state.stylesBrightness} className="title-img" alt="Project" src={`https://res.cloudinary.com/dy1xy7vkf/image/upload/${this.props.repo.name}.png`}/>
-              <div className="card-title">{this.props.repo.name}</div>
-            </div>
-          </Link>
+          <div className="title-container" onClick={() => this.onClick()}>
+            <motion.img style={this.state.stylesBrightness} id={this.props.repo.name + "-img"} className="title-img" alt="Project" src={`https://res.cloudinary.com/dy1xy7vkf/image/upload/${this.props.repo.name}.png`}/>
+            <div className="card-title">{this.props.repo.name}</div>
+          </div>
           <div className="bottom-bar">
-            <img src={GithubIcon} alt="Github" className="github-icon" onClick={() => window.location.replace(this.props.repo.html_url)}/>
+            <img src={GithubIcon} alt="Github" className="github-icon" onClick={() => window.location.href = this.props.repo.html_url}/>
             <div className="date" title="Date">{this.getDate()}</div>
           </div>
         </motion.div>

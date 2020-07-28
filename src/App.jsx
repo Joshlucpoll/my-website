@@ -53,7 +53,6 @@ class App extends React.Component {
   }
 
   changeDirectory(path) {
-    console.log(path);
     this.setState({ changePage: path }, () => this.setState({ changePage: null }));
     document.getElementsByTagName("body")[0].classList.add("body-style-transition");
   }
@@ -80,7 +79,7 @@ class App extends React.Component {
                     <Home scroll={this.state.scroll}/>
                   </Route>
                   <Route path="/projects">
-                    <Projects location={location}/>
+                    <Projects location={location} scroll={this.state.scroll} changeDirectory={(path) => this.changeDirectory(path)}/>
                   </Route>
                   <Route>
                     <LostPage/>

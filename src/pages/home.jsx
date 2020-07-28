@@ -26,7 +26,7 @@ class Home extends React.Component {
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.string = "<software-developer/>";
     this.i = 0
-    this.howManyTimes = 21;
+    this.howManyTimes = this.string.length;
   }
   
   typeSubTitle() {

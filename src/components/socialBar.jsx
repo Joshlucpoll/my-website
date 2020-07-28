@@ -26,7 +26,6 @@ class SocialBar extends React.Component {
   }
 
   switchBar() {
-    console.log("clicked")
     this.setState(prevState => {
       return { isOpen: !prevState.isOpen }
     });
@@ -153,7 +152,7 @@ class SocialBar extends React.Component {
             height="4vh"
           >
             <motion.path opacity={this.state.isOpen ? "0" : "1"} d="M18 2A3 3 0 1 0 18 8 3 3 0 1 0 18 2zM18 16A3 3 0 1 0 18 22 3 3 0 1 0 18 16zM6 9A3 3 0 1 0 6 15 3 3 0 1 0 6 9z" />
-            <path fill="none" stroke="#939393" stroke-miterlimit="10" stroke-width="2" d="M18 19L6 12 18 5"/>
+            <path fill="none" stroke="#939393" strokeMiterlimit="10" strokeWidth="2" d="M18 19L6 12 18 5"/>
           </motion.svg>
         </motion.div>
       );
