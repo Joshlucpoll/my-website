@@ -7,6 +7,7 @@ import { pageTransition, pageVariants } from "../styles/pageTransition";
 // Components
 import longShadow from "../components/longShadow";
 import BackgroundVideo from "../assets/Retro_Stripes_Monitor_Overlay.mp4";
+import BackgroundPoster from "../assets/Retro_Stripes_Monitor_Poster.png";
 import Emoji from "../components/emoji";
 import "../styles/home.scss";
 
@@ -137,7 +138,7 @@ class Home extends React.Component {
         variants={pageVariants}
         transition={pageTransition}
         >
-        <video autoPlay muted loop preload="auto" className="background-video">
+        <video autoPlay muted loop poster={BackgroundPoster} preload="auto" className="background-video">
           <source src={BackgroundVideo} type="video/mp4"/>
         </video>
 
