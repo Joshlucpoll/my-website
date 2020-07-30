@@ -137,7 +137,7 @@ class Home extends React.Component {
         variants={pageVariants}
         transition={pageTransition}
         >
-        <video autoPlay muted loop className="background-video">
+        <video autoPlay muted loop preload="auto" className="background-video">
           <source src={BackgroundVideo} type="video/mp4"/>
         </video>
 
