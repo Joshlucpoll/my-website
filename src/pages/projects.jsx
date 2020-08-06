@@ -39,7 +39,7 @@ class Projects extends React.Component {
       sortMethod: "pushed",
       imageLocation: null,
     }
-    this.blackList = ["joshlucpoll", "rotating-dials-watchface"];
+    this.blackList = ["joshlucpoll", "rotating-dials-watchface", "joshlucpoll.github.io"];
     this.scroll = { top: this.props.scroll + "px" };
   }
 
