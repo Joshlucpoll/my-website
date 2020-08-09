@@ -27,7 +27,7 @@ function shadowAngleCalculator(xVector, yVector) {
   return angle;
 }
 
-function longShadow(xVector, yVector, colour="#000000") {
+function longShadow(xVector, yVector, colour="rgb(29, 29, 29)") {
   let angle = shadowAngleCalculator(xVector, yVector);
   let styles = {
     textShadow: longShadowCalculator(angle, 8, colour)

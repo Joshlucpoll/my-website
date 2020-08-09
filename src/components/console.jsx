@@ -57,16 +57,13 @@ class Console extends React.Component {
         if (value === "~") {
           this.props.changeDirectory("");
         }
-        else if (value === ".") {
+        else if (value === "." || value === undefined) {
           this.props.changeDirectory(window.location.pathname);
         }
         else if (value ===  "..") {
           try {
             // finds path
-            // const currentDirArray = window.location.pathname.split("/");
-            // const currentDir = currentDirArray[currentDirArray.length - 1];
             const currentDir = window.location.pathname;
-                      
             const parentPath = this.dir.getPath(this.dir.getParent(this.dir.getId(currentDir)));
 
             this.props.changeDirectory(parentPath);
@@ -76,7 +73,14 @@ class Console extends React.Component {
           }
         }
         else {
-          this.props.changeDirectory(value);
+          const currentDir = window.location.pathname;
+
+          if (value[0] !== "/" && value[0] !== "\\") {
+            this.props.changeDirectory(currentDir + "/" + value);
+          }
+          else {
+            this.props.changeDirectory(value);
+          }
         }
         this.closeConsole();
         this.setState({ historyLocation: null })
@@ -189,10 +193,18 @@ class Console extends React.Component {
     this.consoleInput.current.selectionStart = this.consoleInput.current.value.length;
     this.consoleInput.current.selectionEnd = this.consoleInput.current.value.length;
   }
+
+  toggleConsole() {
+    if (this.state.consoleOpen) {
+      this.closeConsole();
+    }
+    else {
+      this.openConsole();
+    }
+  }
   
   openConsole() {
     if (this.state.consoleOpen === false) {
-      // this.props.changeDirectory(window.location.pathname);
       this.setState({
         consoleOpen: true,
         historyLocation: null,
@@ -200,7 +212,7 @@ class Console extends React.Component {
       this.forceUpdate(() => {this.consoleInput.current.focus();});
       setTimeout(() => {
           if (this.state.consoleOpen === true) {
-            this.setState({ placeHolderText: '🤔 ⌨️"help"' }, this.forceUpdate());
+            this.setState({ placeHolderText: "help" }, this.forceUpdate());
           }
         }
       ,3000)
@@ -229,9 +241,10 @@ class Console extends React.Component {
     if (e.keyCode === 27) {
       this.closeConsole();
     }
-    // shift (open output)
-    if (e.keyCode === 16) {
-      this.openConsole();
+    // backtick (open output)
+    if (e.keyCode === 223) {
+      this.toggleConsole();
+      e.preventDefault();
     }
     // up arrow (cycle previous commands)
     if (e.keyCode === 38) {

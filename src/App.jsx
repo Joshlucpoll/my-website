@@ -53,6 +53,7 @@ class App extends React.Component {
   }
 
   changeDirectory(path) {
+    console.log(path)
     this.setState({ changePage: path }, () => this.setState({ changePage: null }));
     document.getElementsByTagName("body")[0].classList.add("body-style-transition");
   }

@@ -17,7 +17,7 @@ class HamburgerMenu extends React.Component {
     }
   }
 
-  switchMenu() {
+  toggleMenu() {
     this.setState((state) => {
       return {isMenuOpen: !state.isMenuOpen};
     });
@@ -42,13 +42,13 @@ class HamburgerMenu extends React.Component {
   }
   
   handleKey(e) {
-    // esc (close output)
+    // esc (close menu)
     if (e.keyCode === 27) {
-      this.closeMenu()
+      this.closeMenu();
     }
-    // shift (open output)
-    if (e.keyCode === 16) {
-      this.openMenu()
+    // m (toggle menu)
+    if (e.keyCode === 77) {
+      this.toggleMenu();
     }
   }
   
@@ -78,7 +78,7 @@ class HamburgerMenu extends React.Component {
       <div>
         <motion.div 
           className="hamburger-container" 
-          onClick={() => this.switchMenu()}
+          onClick={() => this.toggleMenu()}
           variants={button}
           initial="rest"
           whileHover="hover"

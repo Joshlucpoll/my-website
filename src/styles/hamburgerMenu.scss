@@ -5,7 +5,7 @@
   bottom: 0;
   height: 6vh;
   width: 6vh;
-  background-color: rgba(54, 54, 54, 0.75);
+  background-color: rgba(49, 61, 83, 0.75);
   border-radius: 50%;
   cursor: pointer;
   z-index: 100;
@@ -37,8 +37,8 @@
     font-family: 'Ubuntu Mono', monospace;
     white-space: nowrap;
     color: white;
-    background-color: rgba(54, 54, 54, 0.75);
     padding: 4px;
+    background-color: rgba(49, 61, 83, 0.75);
     border-radius: 4px;
     cursor: pointer;
     opacity: 0;
@@ -48,8 +48,7 @@
 .backdrop-filter {
   position: fixed;
   width: 100vw;
-  // background: linear-gradient(0deg, rgba(29,29,29,1) 0%, rgba(64,41,110,1) 100%);
-  background: linear-gradient(0deg, rgba(29,29,29,1) 0%, #5F8491 100%);
+  background-color: rgba(49, 61, 83, 0.95);
   z-index: 15;
 }
 
@@ -65,7 +64,7 @@
   .nav {
     position: absolute;
     list-style: none;
-
+    
     .link {
       color: white;
       background-color: rgba(54, 54, 54, 0.75);

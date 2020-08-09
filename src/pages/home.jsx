@@ -1,5 +1,4 @@
 import React from "react";
-import {isBrowser} from "react-device-detect";
 import { motion } from "framer-motion";
 
 import { pageTransition, pageVariants } from "../styles/pageTransition";
@@ -110,17 +109,6 @@ class Home extends React.Component {
   render() {
     let xVector = this.state.xMiddle - this.state.xMouse;
     let yVector = this.state.yMiddle - this.state.yMouse;
-    let styles
-
-    if (isBrowser) {
-      styles = {
-        top: yVector / 50,
-        left: xVector / 50
-      }
-    }
-    else {
-      styles = {}
-    }
 
     const longShadowStyle = longShadow(xVector, yVector);
     const scrollStyle = { top: this.props.scroll + "px" }
@@ -144,7 +132,7 @@ class Home extends React.Component {
 
         <div
           className="title-container"
-          style={styles}
+          // style={styles}
         >
           <motion.div 
             className="intro-title"

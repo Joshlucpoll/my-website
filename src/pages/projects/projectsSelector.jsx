@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 function ProjectSelector(props) {
 
-  const imageLocation = props.imageLocation;
+  // const imageLocation = props.imageLocation;
 
   let { projectName } = useParams();
 
@@ -15,8 +15,6 @@ function ProjectSelector(props) {
   //     (result) => {
   //       const repo = result;
   //     });
-
-  console.log(imageLocation);
 
   if (projectName === "my-website") {
     return <MyWebsite scroll={props.scroll} imageLocation={props.imageLocation}/>
