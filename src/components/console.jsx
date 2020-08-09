@@ -76,7 +76,12 @@ class Console extends React.Component {
           const currentDir = window.location.pathname;
 
           if (value[0] !== "/" && value[0] !== "\\") {
-            this.props.changeDirectory(currentDir + "/" + value);
+            if (currentDir !== "/") {
+              this.props.changeDirectory(currentDir + "/" + value);
+            }
+            else {
+              this.props.changeDirectory(value);
+            }
           }
           else {
             this.props.changeDirectory(value);
