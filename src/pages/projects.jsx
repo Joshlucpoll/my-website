@@ -2,13 +2,13 @@ import React from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
 
-import ProjectSelector from "./projects/projectsSelector";
 import ProjectCard from "../components/projectCard";
+import ProjectSelector from "./projects/projectsSelector";
 import Emoji from "../components/emoji";
 import "../styles/projects.scss";
 import DownArrow from "../assets/down_arrow.svg";
 
-import { pageTransition, pageVariants } from "../styles/pageTransition";
+import { pageTransition } from "../styles/pageTransition";
 import { Switch, Route } from "react-router-dom";
 
 const button = {
@@ -23,6 +23,45 @@ const sort = {
   created: "Created",
 };
 
+const list = {
+  visible: {
+    transition: {
+      delay: 1,
+      when: "beforeChildren",
+      staggerChildren: 0.15,
+      delayChildren: 1.5,
+    },
+  },
+};
+
+const item = {
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+};
+
+const pageVariants = {
+  initial: (window) => ({
+    position: "fixed",
+    clipPath: `circle(0px at ${window.innerWidth / 2}px ${
+      window.innerHeight / 2
+    }px)`,
+  }),
+  animate: (window) => ({
+    clipPath: `circle(${Math.max(window.innerWidth, window.innerHeight)}px at ${
+      window.innerWidth / 2
+    }px ${window.innerHeight / 2}px)`,
+    position: "absolute",
+    transitionEnd: {
+      clipPath: "none",
+    },
+  }),
+  exit: {
+    opacity: 0.99,
+  },
+};
+
 class Projects extends React.Component {
   constructor(props) {
     super(props);
@@ -30,7 +69,7 @@ class Projects extends React.Component {
       x: 0,
       y: 0,
       isLoaded: false,
-      repos: "",
+      repos: null,
       error: false,
       isSortOpen: false,
       sortMethod: "pushed",
@@ -41,7 +80,7 @@ class Projects extends React.Component {
       "rotating-dials-watchface",
       "joshlucpoll.github.io",
     ];
-    this.scroll = { top: this.props.scroll + "px" };
+    this.scrollStyle = { top: this.props.scroll + "px" };
   }
 
   getRepos(sort) {
@@ -51,6 +90,13 @@ class Projects extends React.Component {
       .then((res) => res.json())
       .then(
         (result) => {
+          if (!Array.isArray(result)) {
+            this.setState({
+              isLoaded: true,
+              repos: result,
+              error: true
+            });
+          }
           this.setState({
             isLoaded: true,
             repos: result,
@@ -82,11 +128,10 @@ class Projects extends React.Component {
   }
 
   onClick(imageLocation, link) {
-    // console.log(imageLocation);
-    // this.setState({ imageLocation: imageLocation });
-    this.imageLocation = imageLocation;
-    // this.forceUpdate()
-    this.props.changeDirectory(link);
+    this.setState(
+      { imageLocation: imageLocation },
+      this.props.changeDirectory(link)
+    );
   }
 
   cardLocation(x, y) {
@@ -96,7 +141,14 @@ class Projects extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    console.log("Will unmount");
+  }
+
   render() {
+    console.log(Array.isArray(this.state.repos));
+    console.log(this.state.repos);
+
     const updated = () =>
       this.state.sortMethod === "pushed" ? "bold" : "normal";
     const full_name = () =>
@@ -104,139 +156,161 @@ class Projects extends React.Component {
     const created = () =>
       this.state.sortMethod === "created" ? "bold" : "normal";
 
-    // console.log(this.imageLocation);
-
-    if (this.state.error || !Array.isArray(this.state.repos)) {
-      return (
-        <motion.div
-          animate={{ opacity: 1 }}
-          style={{ opacity: 0, color: "white" }}
-          transition={{ delay: 2 }}
-        >
-          Error. Please reload page. {JSON.stringify(this.state.repos)}
-        </motion.div>
-      );
-    } else {
-      return (
-        <Switch>
-          <Route exact path={"/projects"}>
-            <motion.div
-              className="projects-body"
-              style={this.scrollStyle}
-              initial="initial"
-              animate="in"
-              exit="out"
-              variants={pageVariants}
-              transition={pageTransition}
-            >
-              <div className="title-container">
-                <div className="overlay">
-                  <div className="title">Projects</div>
-                  <div className="subtitle">
-                    From Python to HTML to Dart, this page displays all my past
-                    projects with details on how I built them.{" "}
-                    <Emoji label="builder" emoji="👷🏻‍♂️" />
-                  </div>
+    return (
+      <Switch>
+        <Route exact path="/projects">
+          <motion.div
+            className="projects-body"
+            style={this.scrollStyle}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            custom={window}
+            variants={pageVariants}
+            transition={pageTransition}
+          >
+            <div className="title-container">
+              <div className="overlay">
+                <div className="title">Projects</div>
+                <div className="subtitle">
+                  From Python to HTML to Dart, this page displays all my past
+                  projects with details on how I built them.{" "}
+                  <Emoji label="builder" emoji="👷🏻‍♂️" />
                 </div>
-                <motion.div
-                  className="sort-container"
-                  layoutTransition={{ type: "tween", duration: 0.1 }}
-                >
-                  <motion.div
-                    className="sort-button"
-                    onClick={() => this.sortButtonHandler()}
-                    variants={button}
-                    initial="rest"
-                    whileHover="hover"
-                    whileTap="pressed"
-                  >
-                    <div className="sort-text">
-                      Sort: {sort[this.state.sortMethod]}
-                    </div>
-                    <img
-                      className="down-arrow"
-                      alt="down-arrow"
-                      src={DownArrow}
-                    ></img>
-                  </motion.div>
-                  <AnimatePresence>
-                    {this.state.isSortOpen && (
-                      <motion.div
-                        className="sort-menu-container"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ ease: "circOut", duration: 0.3 }}
-                      >
-                        <ul>
-                          <li>
-                            <div
-                              style={{ fontWeight: updated() }}
-                              onClick={() => this.getRepos("pushed")}
-                            >
-                              Updated
-                            </div>
-                          </li>
-                          <li>
-                            <div
-                              style={{ fontWeight: full_name() }}
-                              onClick={() => this.getRepos("full_name")}
-                            >
-                              Alphabetical
-                            </div>
-                          </li>
-                          <li>
-                            <div
-                              style={{ fontWeight: created() }}
-                              onClick={() => this.getRepos("created")}
-                            >
-                              Created
-                            </div>
-                          </li>
-                        </ul>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
               </div>
-
-              {!this.state.isLoaded && <div>Loading...</div>}
-              {this.state.isLoaded && (
-                <section className="projects-container">
-                  {this.state.repos.map(
-                    (repo) =>
-                      // Excludes repos in 'blacklist' array
-                      !this.blackList.includes(repo.name.toLowerCase()) && (
-                        <motion.div
-                          key={repo.name}
-                          positionTransition={{
-                            duration: 0.5,
-                            ease: "backInOut",
-                          }}
-                        >
-                          <ProjectCard
-                            repo={repo}
-                            sortMethod={this.state.sortMethod}
-                            onClick={(imageLocation, link) =>
-                              this.onClick(imageLocation, link)
-                            }
-                          />
-                        </motion.div>
-                      )
+              <motion.div
+                className="sort-container"
+                layoutTransition={{ type: "tween", duration: 0.1 }}
+              >
+                <motion.div
+                  className="sort-button"
+                  onClick={() => this.sortButtonHandler()}
+                  variants={button}
+                  initial="rest"
+                  whileHover="hover"
+                  whileTap="pressed"
+                >
+                  <div className="sort-text">
+                    Sort: {sort[this.state.sortMethod]}
+                  </div>
+                  <img
+                    className="down-arrow"
+                    alt="down-arrow"
+                    src={DownArrow}
+                  ></img>
+                </motion.div>
+                <AnimatePresence>
+                  {this.state.isSortOpen && (
+                    <motion.div
+                      className="sort-menu-container"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ ease: "circOut", duration: 0.3 }}
+                    >
+                      <ul>
+                        <li>
+                          <div
+                            style={{ fontWeight: updated() }}
+                            onClick={() => this.getRepos("pushed")}
+                          >
+                            Updated
+                          </div>
+                        </li>
+                        <li>
+                          <div
+                            style={{ fontWeight: full_name() }}
+                            onClick={() => this.getRepos("full_name")}
+                          >
+                            Alphabetical
+                          </div>
+                        </li>
+                        <li>
+                          <div
+                            style={{ fontWeight: created() }}
+                            onClick={() => this.getRepos("created")}
+                          >
+                            Created
+                          </div>
+                        </li>
+                      </ul>
+                    </motion.div>
                   )}
-                </section>
-              )}
-            </motion.div>
-          </Route>
-          <Route path={"/projects/:projectName"}>
-            <ProjectSelector
-              scroll={this.props.scroll}
-              imageLocation={this.imageLocation}
-            />
-          </Route>
-        </Switch>
-      );
-    }
+                </AnimatePresence>
+              </motion.div>
+            </div>
+
+            {!this.state.isLoaded && (
+              <motion.div
+                className="loading-title"
+                animate={{ opacity: 1 }}
+                style={{
+                  opacity: 0,
+                  color: "white",
+                  textAlign: "center",
+                  width: "100vw",
+                }}
+              >
+                Loading...
+              </motion.div>
+            )}
+
+            {!Array.isArray(this.state.repos) ? (
+              this.state.error && 
+                <motion.div
+                  animate={{ opacity: 1 }}
+                  style={{
+                    opacity: 0,
+                    color: "white",
+                    textAlign: "center",
+                    width: "100vw",
+                  }}
+                >
+                  Error. Please reload page. <br/>
+                  {JSON.stringify(this.state.repos)}
+                </motion.div>
+              ) : (
+              this.state.isLoaded &&
+                <motion.section
+                  className="projects-container"
+                  initial="hidden"
+                  animate="visible"
+                  variants={list}
+                >
+                  {this.state.repos.map((repo) =>
+                    // Excludes repos in 'blacklist' array
+                    !this.blackList.includes(repo.name.toLowerCase()) &&
+                      <motion.div
+                        key={repo.name}
+                        initial={{ opacity: 0, y: -100 }}
+                        variants={item}
+                        positionTransition={{
+                          duration: 0.5,
+                          ease: "backInOut",
+                        }}
+                      >
+                        <ProjectCard
+                          repo={repo}
+                          sortMethod={this.state.sortMethod}
+                          onClick={(imageLocation, link) =>
+                            this.onClick(imageLocation, link)
+                          }
+                        />
+                      </motion.div>
+                  )}
+                </motion.section>
+              )
+            }
+          </motion.div>
+        </Route>
+        <Route path={"/projects/:projectName"}>
+          <ProjectSelector
+            scroll={this.props.scroll}
+            imageLocation={this.state.imageLocation}
+          />
+        </Route>
+      </Switch>
+    );
   }
 }
 

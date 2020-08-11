@@ -2,6 +2,7 @@
 	height: 100vh;
 	width: 100vw;
 	background-color: rgb(32, 34, 37);
+	z-index: -100;
 }
 .text-top{
 	position: absolute;
@@ -15,7 +16,7 @@
 	line-height:28px;
 	font-weight:bold;
 	letter-spacing:2px;
-	z-index:99
+	// z-index:99
 }
 .text-bottom{
 	position: absolute;
@@ -28,7 +29,7 @@
 	line-height:28px;
 	font-weight:bold;
 	letter-spacing:2px;
-	z-index:99
+	// z-index:99
 }
 a{
 	color:#6172BA;
@@ -45,7 +46,7 @@ a:hover{
 	display:inline-block;
 	-webkit-transform:translate(-50%,-50%);
 	transform:translate(-50%,-50%);
-	z-index: 102;
+	// z-index: 102;
 	
 }
 .vader .head{

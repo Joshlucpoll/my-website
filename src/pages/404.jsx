@@ -3,7 +3,27 @@ import {Link} from "react-router-dom";
 
 import "../styles/404.scss";
 import { motion } from "framer-motion";
-import { pageStyle, pageTransition, pageVariants } from "../styles/pageTransition";
+import { pageStyle, pageTransition } from "../styles/pageTransition";
+
+
+const pageVariants = {
+  initial: window => ({
+    opacity: 0.99,
+    position: "fixed",
+    clipPath: `circle(0px at ${window.innerWidth / 2}px ${window.innerHeight / 2}px)`,
+  }),
+  animate: window => ({
+    opacity: 1,
+    clipPath: `circle(${Math.max(window.innerWidth, window.innerHeight)}px at ${window.innerWidth / 2}px ${window.innerHeight / 2}px)`,
+    position: "absolute",
+    transitionEnd: {
+      clipPath: "none",
+    }
+  }),
+  exit: {
+    opacity: 0.99
+  }
+}
 
 
 class LostPage extends React.Component {
@@ -17,8 +37,9 @@ class LostPage extends React.Component {
       <motion.div
         style={pageStyle}
         initial="initial"
-        animate="in"
-        exit="out"
+        animate="animate"
+        exit="exit"
+        custom={window}
         variants={pageVariants}
         transition={pageTransition}
       >

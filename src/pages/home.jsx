@@ -1,14 +1,29 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-import { pageTransition, pageVariants } from "../styles/pageTransition";
+import { pageTransition } from "../styles/pageTransition";
 
 // Components
 import longShadow from "../components/longShadow";
 import BackgroundVideo from "../assets/Retro_Stripes_Monitor_Overlay.mp4";
 import BackgroundPoster from "../assets/Retro_Stripes_Monitor_Poster.png";
-import Emoji from "../components/emoji";
 import "../styles/home.scss";
+
+const pageVariants = {
+  initial: window => ({
+    opacity: 0.99,
+    position: "fixed",
+    clipPath: `circle(0px at ${window.innerWidth / 2}px ${window.innerHeight / 2}px)`,
+  }),
+  animate: window => ({
+    opacity: 1,
+    clipPath: `circle(${Math.max(window.innerWidth, window.innerHeight) * 4}px at ${window.innerWidth / 2}px ${window.innerHeight / 2}px)`,
+    position: "absolute",
+  }),
+  exit: {
+    opacity: 0.99
+  }
+}
 
 
 class Home extends React.Component {
@@ -120,9 +135,10 @@ class Home extends React.Component {
         onTouchMove={e => this.handleMouseMove(e)}
 
         style={scrollStyle}
-        initial={"initial"} 
-        animate="in"
-        exit="out"
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        custom={window}
         variants={pageVariants}
         transition={pageTransition}
         >
@@ -130,26 +146,7 @@ class Home extends React.Component {
           <source src={BackgroundVideo} type="video/mp4"/>
         </video>
 
-        <div
-          className="title-container"
-          // style={styles}
-        >
-          <motion.div 
-            className="intro-title"
-            initial={{ opacity: 0, y: -100 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ delay: 1.5, duration: 0.5 }} 
-          >
-            <span className="hi-title">Hi,</span>
-            <motion.div
-              className="wave-container"
-              style={{ originX: "1rem", originY: "3rem"}}
-              initial={{ rotate: 0 }}
-              animate={{ rotate: 20 }}
-              transition={{ flip: Infinity, duration: 0.5 }}
-            >
-              <Emoji emoji="👋" class="wave-emoji" label="wave"/>
-            </motion.div> my name is</motion.div>
+        <div className="title-container">
           <motion.div 
             className="headline-title"
             style={longShadowStyle} 

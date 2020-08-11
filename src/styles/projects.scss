@@ -24,8 +24,6 @@
         line-height: 40px;
         color: white;
         transform: rotate(-1.5deg);
-        
-        z-index: 2;
       }
       
       .subtitle {
@@ -36,8 +34,6 @@
         line-height: 20px;
         color: white;
         transform: rotate(-1.5deg);
-        
-        z-index: 2;
         margin-top: 10px;
       }
     }
@@ -70,6 +66,7 @@
           transform: translateY(0.3rem);
         }
       }
+
       
       .sort-menu-container {
         position: absolute;
@@ -95,14 +92,14 @@
       }
     }
   }
-
-
+  
+  
   .projects-underlay {
     position: absolute;
     height: 100%;
     width: 100%;
   }
-
+  
   .projects-container {
     position: relative;
     width: calc(100vw - 20vh);
@@ -111,7 +108,7 @@
     display: grid;
     gap: 5vh;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-
+    
     a {
       text-decoration: none;
     }

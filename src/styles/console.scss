@@ -5,6 +5,7 @@
   justify-content: space-around;
   bottom: 0;
   position: fixed;
+  z-index: 10;
   
   .console-tab-container {
     height: 6vh;
@@ -13,7 +14,6 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    z-index: 150;
     
     .console-tab {
       height: 6vh;
@@ -49,7 +49,6 @@
     bottom: 10vh;
     transform-origin: bottom right;
     position: relative;
-    z-index: 20;
     
     .console-body {
       display: flex;
@@ -61,7 +60,6 @@
       border-bottom-right-radius: 2vh;
       line-height: 7vh;
       text-align: left;
-      box-shadow: 0px -6px 6px -3px rgba(0,0,0,0.75);
       background-color: rgba(49, 61, 83, 0.75);
 
       
@@ -95,9 +93,9 @@
       opacity: 1;
       position: absolute;
       bottom: 7vh;
-      width: 90vw;
+      width: calc(90vw - 20px);
       height: 75vh;
-      padding-left: 20px;
+      padding: 20px;
       border-top-left-radius: 2vh;
       border-top-right-radius: 2vh;
       background-color: rgba(49, 61, 83, 0.75);

@@ -2,7 +2,7 @@ import React from "react";
 import SimpleStorage from "react-simple-storage";
 import { motion } from "framer-motion";
 
-import ConsoleIcon from "../assets/console_icon.svg"
+import ConsoleIcon from "../assets/console_icon.svg";
 import "../styles/console.scss";
 
 import Dir from "./dir";
@@ -10,7 +10,7 @@ import Dir from "./dir";
 const button = {
   rest: { scale: 1 },
   hover: { scale: 1.1 },
-  pressed: { scale: 0.95 }
+  pressed: { scale: 0.95 },
 };
 
 class Console extends React.Component {
@@ -33,7 +33,7 @@ class Console extends React.Component {
     let newOutputList = this.state.outputList;
     newOutputList.unshift(string);
 
-    this.setState({outputList: newOutputList});
+    this.setState({ outputList: newOutputList });
   }
 
   commandProcessor(commandLineRaw) {
@@ -42,53 +42,49 @@ class Console extends React.Component {
     // Updating output array
     this.addToConsole("⠀‎");
     this.addToConsole("> " + commandLine);
-    
+
     let newCommandList = this.state.commandList;
     newCommandList.unshift(commandLine);
-    this.setState({commandList: newCommandList})
+    this.setState({ commandList: newCommandList });
 
     // Splitting command line into command + arguments
     const words = commandLine.split(" ");
     const command = words[0];
     const value = words[1];
 
-    switch(command) {
+    switch (command) {
       case "cd":
         if (value === "~") {
           this.props.changeDirectory("");
-        }
-        else if (value === "." || value === undefined) {
+        } else if (value === "." || value === undefined) {
           this.props.changeDirectory(window.location.pathname);
-        }
-        else if (value ===  "..") {
+        } else if (value === "..") {
           try {
             // finds path
             const currentDir = window.location.pathname;
-            const parentPath = this.dir.getPath(this.dir.getParent(this.dir.getId(currentDir)));
+            const parentPath = this.dir.getPath(
+              this.dir.getParent(this.dir.getId(currentDir))
+            );
 
             this.props.changeDirectory(parentPath);
-          }
-          catch(err) {
+          } catch (err) {
             this.props.changeDirectory("");
           }
-        }
-        else {
+        } else {
           const currentDir = window.location.pathname;
 
           if (value[0] !== "/" && value[0] !== "\\") {
             if (currentDir !== "/") {
               this.props.changeDirectory(currentDir + "/" + value);
-            }
-            else {
+            } else {
               this.props.changeDirectory(value);
             }
-          }
-          else {
+          } else {
             this.props.changeDirectory(value);
           }
         }
         this.closeConsole();
-        this.setState({ historyLocation: null })
+        this.setState({ historyLocation: null });
         break;
 
       case "ls":
@@ -101,18 +97,17 @@ class Console extends React.Component {
           const currentDir = window.location.pathname;
 
           const currentId = this.dir.getId(currentDir);
-        
+
           const childrenIds = this.dir.getChildren(currentId);
           let childrenNames = [];
-          childrenIds.forEach(childId => {
+          childrenIds.forEach((childId) => {
             childrenNames.push(this.dir.getName(childId));
           });
-        
-          childrenNames.forEach(element => {
+
+          childrenNames.forEach((element) => {
             this.addToConsole(element);
           });
-        }
-        catch(err) {
+        } catch (err) {
           break;
         }
         break;
@@ -121,7 +116,7 @@ class Console extends React.Component {
         this.addToConsole("");
         this.addToConsole(window.location.pathname);
         break;
-      
+
       case "history":
         this.addToConsole("");
         let history = this.state.commandList;
@@ -133,34 +128,38 @@ class Console extends React.Component {
           count++;
         }
         break;
-      
+
       case "rm":
         this.setState(this.baseState);
         break;
-        
+
       case "clear":
         this.setState({ outputList: [] });
         break;
-    
+
       case "exit":
         this.closeConsole();
         break;
-      
+
       case "help":
         if (value === "commands") {
-          this.addToConsole("ls ------- Used to list pages in current directory")
-          this.addToConsole("cd ------- Used to change directory")
-          this.addToConsole("history -- Used to view command history")
-          this.addToConsole("pwd ------ Used to show current path")
-          this.addToConsole("clear ---- Used to clear the console view")
-          this.addToConsole("rm ------- Used to reset console to default")
-          this.addToConsole("exit ----- Used to close the console view")
-        }
-        else {
-          this.addToConsole("This website uses UNIX commands to navigate through pages. If you need help with commands type 'help commands'");
+          this.addToConsole(
+            "ls ------- Used to list pages in current directory"
+          );
+          this.addToConsole("cd ------- Used to change directory");
+          this.addToConsole("history -- Used to view command history");
+          this.addToConsole("pwd ------ Used to show current path");
+          this.addToConsole("clear ---- Used to clear the console view");
+          this.addToConsole("rm ------- Used to reset console to default");
+          this.addToConsole("exit ----- Used to close the console view");
+        } else {
+          this.addToConsole(
+            "This website uses UNIX commands to navigate through pages. If you need help with commands type 'help commands'"
+          );
+          this.addToConsole("If you would like a more traditional navigation experience, press the 'Normal' button in the lower right");
         }
         break;
-        
+
       default:
         this.addToConsole(commandLine + ": command not found");
     }
@@ -174,21 +173,22 @@ class Console extends React.Component {
             value: this.state.commandList[0],
             historyLocation: 0,
           });
-        }
-        else {
-          if (this.state.historyLocation !== (this.state.commandList.length - 1)) {
+        } else {
+          if (
+            this.state.historyLocation !==
+            this.state.commandList.length - 1
+          ) {
             this.setState({
-              value: this.state.commandList[(this.state.historyLocation + 1)],
+              value: this.state.commandList[this.state.historyLocation + 1],
               historyLocation: this.state.historyLocation + 1,
             });
           }
         }
-      }
-      else if (direction === "down") {
+      } else if (direction === "down") {
         if (this.state.historyLocation !== null) {
           if (this.state.historyLocation !== 0) {
             this.setState({
-              value: this.state.commandList[(this.state.historyLocation - 1)],
+              value: this.state.commandList[this.state.historyLocation - 1],
               historyLocation: this.state.historyLocation - 1,
             });
           }
@@ -202,40 +202,40 @@ class Console extends React.Component {
   toggleConsole() {
     if (this.state.consoleOpen) {
       this.closeConsole();
-    }
-    else {
+    } else {
       this.openConsole();
     }
   }
-  
+
   openConsole() {
     if (this.state.consoleOpen === false) {
       this.setState({
         consoleOpen: true,
         historyLocation: null,
       });
-      this.forceUpdate(() => {this.consoleInput.current.focus();});
+      this.forceUpdate(() => {
+        this.consoleInput.current.focus();
+      });
       setTimeout(() => {
-          if (this.state.consoleOpen === true) {
-            this.setState({ placeHolderText: "help" }, this.forceUpdate());
-          }
+        if (this.state.consoleOpen === true) {
+          this.setState({ placeHolderText: "help" }, this.forceUpdate());
         }
-      ,3000)
+      }, 1500);
     }
   }
-  
+
   closeConsole() {
     if (this.state.consoleOpen === true) {
       this.consoleInput.current.blur();
-      this.setState({consoleOpen: false});
+      this.setState({ consoleOpen: false });
       this.setState({ placeHolderText: "" }, this.forceUpdate());
     }
   }
-  
+
   // Event listeners for key presses
   componentDidMount() {
     document.addEventListener("keydown", (e) => this.handleKey(e), false);
-    this.setState({consoleOpen: false});
+    this.setState({ consoleOpen: false });
   }
   componentWillUnmount() {
     document.removeEventListener("keydown", (e) => this.handleKey(e), false);
@@ -272,9 +272,9 @@ class Console extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.commandProcessor(this.state.value);
-    this.setState({value: ""});
+    this.setState({ value: "" });
   }
-  
+
   handleChange(e) {
     this.setState({
       value: e.target.value,
@@ -285,7 +285,7 @@ class Console extends React.Component {
 
   handleKeyDown(e) {
     // Prevents cursor change with up/down arrows
-    if(e.keyCode === 38 || e.keyCode === 40) {
+    if (e.keyCode === 38 || e.keyCode === 40) {
       e.preventDefault();
     }
   }
@@ -294,7 +294,7 @@ class Console extends React.Component {
     this.closeConsole();
     setTimeout(() => {
       this.props.changeNav("ham");
-    }, 300)
+    }, 300);
   }
 
   render() {
@@ -302,45 +302,51 @@ class Console extends React.Component {
       this.outputItems = null;
     } else {
       this.outputItems = this.state.outputList.map(function (item, index) {
-        return <div className="item" key={index}> {item} </div>;
+        return (
+          <div className="item" key={index}>
+            {" "}
+            {item}{" "}
+          </div>
+        );
       });
     }
 
     const variants = {
       open: { scale: 1 },
       closed: { scale: 0 },
-    }
+    };
     return (
       <div className="console-container">
-        <SimpleStorage parent={this}/>
+        <SimpleStorage parent={this} />
+        <motion.div
+          className="console-tab-container"
+          variants={button}
+          initial="rest"
+          whileHover="hover"
+          whileTap="pressed"
+        >
+          <div className="console-tab" onClick={(e) => this.handleClick(e)}>
+            <motion.img
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              src={ConsoleIcon}
+              alt="Terminal"
+            />
+          </div>
           <motion.div
-            className="console-tab-container"
-            variants={button}
-            initial="rest"
-            whileHover="hover"
-            whileTap="pressed"
+            className="easy-mode-button"
+            animate={
+              this.state.consoleOpen
+                ? { y: 0, opacity: 1 }
+                : { y: "100%", opacity: 0 }
+            }
+            transition={{ ease: "easeOut" }}
+            style={{ originX: 1 }}
+            onClick={() => this.changeNav()}
           >
-            <div
-              className="console-tab"
-              onClick={(e) => this.handleClick(e)}
-            >
-              <motion.img
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.5 }} 
-                src={ConsoleIcon} 
-                alt="Terminal"
-              />
-            </div>
-            <motion.div
-              className="easy-mode-button"
-              animate={this.state.consoleOpen ? {y: 0, opacity: 1} : {y: "100%", opacity: 0}}
-              transition={{ ease: "easeOut" }}
-              style={{ originX: 1 }}
-              onClick={() => this.changeNav()}
-            >
-              Normal
-            </motion.div>
+            Normal
           </motion.div>
+        </motion.div>
         <motion.div
           initial="closed"
           animate={this.state.consoleOpen ? "open" : "closed"}
@@ -350,27 +356,25 @@ class Console extends React.Component {
         >
           <div className="console">
             <div className="console-body">
-              <div className="console-text-short"></div>
-                <form
-                  className="console-input"
-                  onSubmit={(e) => this.handleSubmit(e)}
-                >
-                  <input
-                    ref={this.consoleInput}
-                    type="text"
-                    placeholder={this.state.placeHolderText}
-                    value={this.state.value}
-                    onChange={(e) => this.handleChange(e)}
-                    onKeyDown={(e) => this.handleKeyDown(e)}
-                  />
-                </form>
+              <div className="console-text-short">></div>
+              <form
+                className="console-input"
+                onSubmit={(e) => this.handleSubmit(e)}
+              >
+                <input
+                  ref={this.consoleInput}
+                  type="text"
+                  placeholder={this.state.placeHolderText}
+                  value={this.state.value}
+                  onChange={(e) => this.handleChange(e)}
+                  onKeyDown={(e) => this.handleKeyDown(e)}
+                />
+              </form>
             </div>
             <div className="console-output">
               <div className="output-list-container">
-                <div className="output-list">
-                  {this.outputItems}
-                </div>
-              </div> 
+                <div className="output-list">{this.outputItems}</div>
+              </div>
             </div>
           </div>
         </motion.div>

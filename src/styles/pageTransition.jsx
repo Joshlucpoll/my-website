@@ -1,25 +1,26 @@
-export const pageVariants = {
+export let pageVariants = {
   initial: {
     opacity: 0.99,
-    x: "-100vw",
     position: "fixed",
+    clipPath: `circle(0px at ${window.innerWidth / 2}px ${window.innerHeight / 2}px)`,
   },
   in: {
     opacity: 1,
-    x: 0,
+    clipPath: `circle(${Math.max(window.innerWidth, window.innerHeight)}px at ${window.innerWidth / 2}px ${window.innerHeight / 2}px)`,
     position: "absolute",
+    transitionEnd: {
+      clipPath: "none",
+    }
   },
   out: {
-    zIndex: -100,
     opacity: 0.99,
   }
 };
 
 export const pageTransition = {
-  type: "tween",
-  ease: "anticipate",
+  ease: [0.94, 0.06, 0.88, 0.45],
   duration: 1,
-  delay: 0.3,
+  delay: 0.5,
 };
 
 export const pageStyle = {

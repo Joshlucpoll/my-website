@@ -4,8 +4,8 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 function ProjectSelector(props) {
-
   // const imageLocation = props.imageLocation;
+  console.log(props.imageLocation);
 
   let { projectName } = useParams();
 
@@ -17,10 +17,14 @@ function ProjectSelector(props) {
   //     });
 
   if (projectName === "my-website") {
-    return <MyWebsite scroll={props.scroll} imageLocation={props.imageLocation}/>
-  }
-  else {
-    window.location.replace(`https://github.com/joshlucpoll/${projectName}`)
+    return (
+      <MyWebsite 
+        scroll={props.scroll}
+        imageLocation={props.imageLocation}
+      />
+    );
+  } else {
+    window.location.replace(`https://github.com/joshlucpoll/${projectName}`);
   }
 }
 
