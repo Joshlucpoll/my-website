@@ -57,37 +57,37 @@ class SocialBar extends React.Component {
           }}
         > 
           <a href="https://github.com/joshlucpoll" target="_blank" rel="noopener noreferrer">
-            <div className="github">
+            <div className="github" title="Github">
               <img className="invert" src={Github} alt="Github"/>
             </div>
           </a>
           <a href="https://twitter.com/Joshlucpoll" target="_blank" rel="noopener noreferrer">
-            <div className="twitter">
+            <div className="twitter" title="Twitter">
               <img className="invert" src={Twitter} alt="Twitter"/>
             </div>
           </a>
           <a href="https://stackoverflow.com/users/10472451/joshlucpoll" target="_blank" rel="noopener noreferrer">
-            <div className="stackoverflow">
+            <div className="stackoverflow" title="Stack Overflow">
               <img className="invert" src={StackOverflow} alt="StackOverflow"/>
             </div>
           </a>
           <a href="https://codesandbox.io/u/joshlucpoll" target="_blank" rel="noopener noreferrer">
-            <div className="codesandbox">
+            <div className="codesandbox" title="Code Sandbox">
               <img src={CodeSandbox} alt="CodeSandbox"/>
             </div>
           </a>
           <a href="https://codepen.io/Joshlucpoll" target="_blank" rel="noopener noreferrer">
-            <div className="codepen">
+            <div className="codepen" title="Code Pen">
               <img src={CodePen} alt="CodePen"/>
             </div>
           </a>
           <a href="https://www.linkedin.com/in/joshlucpoll" target="_blank" rel="noopener noreferrer">
-            <div className="linkedin">
+            <div className="linkedin" title="Linked In">
               <img className="invert" src={LinkedIn} alt="LinkedIn"/>
             </div>
           </a>
           <a href="mailto:info@joshlucpoll.com" target="_blank" rel="noopener noreferrer">
-            <div className="email">
+            <div className="email" title="Email">
               <img className="invert" src={Email} alt="Email"/>
             </div>
           </a>
