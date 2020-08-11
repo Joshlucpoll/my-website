@@ -79,7 +79,6 @@ class App extends React.Component {
     return (
       <Router>
         <div className="app">
-          <SocialBar />
           <Route
             render={({ location }) => (
               <AnimatePresence onExitComplete={() => this.animationEnd()}>
@@ -92,7 +91,7 @@ class App extends React.Component {
                       location={location}
                       scroll={this.state.scroll}
                       changeDirectory={(path) => this.changeDirectory(path)}
-                    />
+                      />
                   </Route>
                   <Route>
                     <LostPage />
@@ -100,7 +99,8 @@ class App extends React.Component {
                 </Switch>
               </AnimatePresence>
             )}
-          />
+            />
+          <SocialBar/>
           {this.state.easyNav === null && (
             <motion.div
               className="nav-button-fake"
