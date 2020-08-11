@@ -113,24 +113,24 @@ class App extends React.Component {
                 stiffness: 300,
                 damping: 15,
               }}
-            />
-          )}
+              />
+              )}
           {this.state.easyNav === true && (
             <HamburgerMenu
-              changeDirectory={(path) => this.changeDirectory(path)}
+            changeDirectory={(path) => this.changeDirectory(path)}
               changeNav={(nav) => this.changeNav(nav)}
-            />
-          )}
+              />
+              )}
           {this.state.easyNav === false && (
             <Console
-              changeDirectory={(path) => this.changeDirectory(path)}
+            changeDirectory={(path) => this.changeDirectory(path)}
               changeNav={(nav) => this.changeNav(nav)}
-            />
+              />
           )}
 
           {this.state.changePage !== null && (
             <Redirect to={this.state.changePage} push={true} />
-          )}
+            )}
         </div>
       </Router>
     );

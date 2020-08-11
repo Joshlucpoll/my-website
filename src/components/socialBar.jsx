@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Github from "../assets/social_icons/github.svg";
 import Twitter from "../assets/social_icons/twitter.svg";
 import StackOverflow from "../assets/social_icons/stackoverflow.svg";
+import CodeSandbox from "../assets/social_icons/codesandbox.svg";
+import CodePen from "../assets/social_icons/codepen.svg";
 import LinkedIn from "../assets/social_icons/linkedin.svg"
 import Email from "../assets/social_icons/gmail.svg";
 
@@ -40,7 +42,7 @@ class SocialBar extends React.Component {
   }
 
   render() {
-    if (this.state.width > 1000) {
+    if (this.state.width > 600) {
       return(
         <motion.div 
           className="social-bar-container"
@@ -56,27 +58,37 @@ class SocialBar extends React.Component {
         > 
           <a href="https://github.com/joshlucpoll" target="_blank" rel="noopener noreferrer">
             <div className="github">
-              <img src={Github} alt="Github"/>
+              <img className="invert" src={Github} alt="Github"/>
             </div>
           </a>
           <a href="https://twitter.com/Joshlucpoll" target="_blank" rel="noopener noreferrer">
             <div className="twitter">
-              <img src={Twitter} alt="Twitter"/>
+              <img className="invert" src={Twitter} alt="Twitter"/>
             </div>
           </a>
           <a href="https://stackoverflow.com/users/10472451/joshlucpoll" target="_blank" rel="noopener noreferrer">
             <div className="stackoverflow">
-              <img src={StackOverflow} alt="StackOverflow"/>
+              <img className="invert" src={StackOverflow} alt="StackOverflow"/>
+            </div>
+          </a>
+          <a href="https://codesandbox.io/u/joshlucpoll" target="_blank" rel="noopener noreferrer">
+            <div className="codesandbox">
+              <img src={CodeSandbox} alt="CodeSandbox"/>
+            </div>
+          </a>
+          <a href="https://codepen.io/Joshlucpoll" target="_blank" rel="noopener noreferrer">
+            <div className="codepen">
+              <img src={CodePen} alt="CodePen"/>
             </div>
           </a>
           <a href="https://www.linkedin.com/in/joshlucpoll" target="_blank" rel="noopener noreferrer">
             <div className="linkedin">
-              <img src={LinkedIn} alt="LinkedIn"/>
+              <img className="invert" src={LinkedIn} alt="LinkedIn"/>
             </div>
           </a>
           <a href="mailto:info@joshlucpoll.com" target="_blank" rel="noopener noreferrer">
             <div className="email">
-              <img src={Email} alt="Email"/>
+              <img className="invert" src={Email} alt="Email"/>
             </div>
           </a>
         </motion.div>
@@ -110,27 +122,27 @@ class SocialBar extends React.Component {
               > 
                 <a href="https://github.com/joshlucpoll" target="_blank" rel="noopener noreferrer">
                   <div className="github">
-                    <img src={Github} alt="Github"/>
+                    <img className="invert" src={Github} alt="Github"/>
                   </div>
                 </a>
                 <a href="https://twitter.com/Joshlucpoll" target="_blank" rel="noopener noreferrer">
                   <div className="twitter">
-                    <img src={Twitter} alt="Twitter"/>
+                    <img className="invert" src={Twitter} alt="Twitter"/>
                   </div>
                 </a>
                 <a href="https://stackoverflow.com/users/10472451/joshlucpoll" target="_blank" rel="noopener noreferrer">
                   <div className="stackoverflow">
-                    <img src={StackOverflow} alt="StackOverflow"/>
+                    <img className="invert" src={StackOverflow} alt="StackOverflow"/>
                   </div>
                 </a>
                 <a href="https://www.linkedin.com/in/joshlucpoll" target="_blank" rel="noopener noreferrer">
                   <div className="linkedin">
-                    <img src={LinkedIn} alt="LinkedIn"/>
+                    <img className="invert" src={LinkedIn} alt="LinkedIn"/>
                   </div>
                 </a>
                 <a href="mailto:info@joshlucpoll.com" target="_blank" rel="noopener noreferrer">
                   <div className="email">
-                    <img src={Email} alt="Email"/>
+                    <img className="invert" src={Email} alt="Email"/>
                   </div>
                 </a>
               </motion.div>
