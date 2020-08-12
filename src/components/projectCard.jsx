@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import moment from "moment";
-import clone from "clone";
+// import clone from "clone";
 import "../styles/projectCard.scss";
 import GithubIcon from "../assets/social_icons/github.svg";
 
@@ -81,7 +81,7 @@ class projectCard extends React.Component {
 
   onClick(event) {
     // const deepClone = JSON.parse(JSON.stringify(this.image));
-    const imageClone = clone(this.image);
+    // const imageClone = clone(this.image);
     // console.log(imageClone);
     // this.props.onClick(this.link, this.image);
   }

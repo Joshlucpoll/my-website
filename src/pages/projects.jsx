@@ -134,7 +134,7 @@ class Projects extends React.Component {
     // const x = event.left;
     // const y = event.top - window.scrollY;
     const style = el.style;
-    console.log(el.style);
+    // console.log(el.style);
 
     this.props.changeDirectory(path, [style])
   }
