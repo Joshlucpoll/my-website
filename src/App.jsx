@@ -1,9 +1,8 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
+  withRouter,
 } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import { motion, AnimatePresence } from "framer-motion";
@@ -28,12 +27,11 @@ class App extends React.Component {
       scroll: window.scrollY,
       easyNav: null,
     };
-    this.location = this.props.location;
   }
-
+  
   componentDidMount() {
     window.addEventListener("scroll", () =>
-      this.setState({ scroll: window.scrollY })
+    this.setState({ scroll: window.scrollY })
     );
     setTimeout(() => {
       if (isMobile) {
@@ -43,24 +41,28 @@ class App extends React.Component {
       }
     }, 2500);
   }
-
+  
   componentWillUnmount() {
     window.removeEventListener("scroll", () =>
-      this.setState({ scroll: window.scrollY })
+    this.setState({ scroll: window.scrollY })
     );
   }
-
+  
   animationEnd() {
     document
-      .getElementsByTagName("body")[0]
-      .classList.remove("body-style-transition");
+    .getElementsByTagName("body")[0]
+    .classList.remove("body-style-transition");
     this.setState({ scroll: 0 });
   }
+  
+  changeDirectory(path, state={}) {
+    const location = {
+      pathname: path,
+      state: state,
+    };
+    this.props.history.push(location);
+    // console.log(this.props.location);
 
-  changeDirectory(path) {
-    this.setState({ changePage: path }, () =>
-      this.setState({ changePage: null })
-    );
     document
       .getElementsByTagName("body")[0]
       .classList.add("body-style-transition");
@@ -77,64 +79,58 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <div className="app">
-          <Route
-            render={({ location }) => (
-              <AnimatePresence onExitComplete={() => this.animationEnd()}>
-                <Switch location={location} key={location.pathname}>
-                  <Route exact path="/">
-                    <Home scroll={this.state.scroll} />
-                  </Route>
-                  <Route path="/projects">
-                    <Projects
-                      location={location}
-                      scroll={this.state.scroll}
-                      changeDirectory={(path) => this.changeDirectory(path)}
-                      />
-                  </Route>
-                  <Route>
-                    <LostPage />
-                  </Route>
-                </Switch>
-              </AnimatePresence>
-            )}
-            />
-          <SocialBar/>
-          {this.state.easyNav === null && (
-            <motion.div
-              className="nav-button-fake"
-              initial={{ x: 20, opacity: 0, rotate: 90 }}
-              animate={{ x: 0, opacity: 1, rotate: 0 }}
-              transition={{
-                delay: 2,
-                duration: 1,
-                type: "spring",
-                stiffness: 300,
-                damping: 15,
-              }}
-              />
-              )}
-          {this.state.easyNav === true && (
-            <HamburgerMenu
-            changeDirectory={(path) => this.changeDirectory(path)}
-              changeNav={(nav) => this.changeNav(nav)}
-              />
-              )}
-          {this.state.easyNav === false && (
-            <Console
-            changeDirectory={(path) => this.changeDirectory(path)}
-              changeNav={(nav) => this.changeNav(nav)}
-              />
+      <div className="app">
+        <Route
+          render={({ location }) => (
+            <AnimatePresence onExitComplete={() => this.animationEnd()}>
+              <Switch location={location} key={location.pathname}>
+                <Route exact path="/">
+                  <Home scroll={this.state.scroll} />
+                </Route>
+                <Route path="/projects">
+                  <Projects
+                    location={location}
+                    scroll={this.state.scroll}
+                    changeDirectory={(path, state) => this.changeDirectory(path, state)}
+                  />
+                </Route>
+                <Route>
+                  <LostPage />
+                </Route>
+              </Switch>
+            </AnimatePresence>
           )}
-
-          {this.state.changePage !== null && (
-            <Redirect to={this.state.changePage} push={true} />
+          />
+        <SocialBar/>
+        {this.state.easyNav === null && (
+          <motion.div
+            className="nav-button-fake"
+            initial={{ x: 20, opacity: 0, rotate: 90 }}
+            animate={{ x: 0, opacity: 1, rotate: 0 }}
+            transition={{
+              delay: 2,
+              duration: 1,
+              type: "spring",
+              stiffness: 300,
+              damping: 15,
+            }}
+            />
             )}
-        </div>
-      </Router>
+        {this.state.easyNav === true && (
+          <HamburgerMenu
+          changeDirectory={(path) => this.changeDirectory(path)}
+            changeNav={(nav) => this.changeNav(nav)}
+            />
+            )}
+        {this.state.easyNav === false && (
+          <Console
+          changeDirectory={(path) => this.changeDirectory(path)}
+            changeNav={(nav) => this.changeNav(nav)}
+            />
+        )}
+      </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

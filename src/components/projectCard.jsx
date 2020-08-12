@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import moment from "moment";
+import clone from "clone";
 import "../styles/projectCard.scss";
 import GithubIcon from "../assets/social_icons/github.svg";
 
@@ -11,7 +12,7 @@ class projectCard extends React.Component {
       styles: {},
       stylesBrightness: {},
     };
-
+    this.image = React.createRef();
     this.link = "/projects/" + props.repo.name;
   }
 
@@ -78,9 +79,11 @@ class projectCard extends React.Component {
     this.setState({ styles: styles, stylesBrightness: stylesBrightness });
   }
 
-  onClick() {
-    const img = document.getElementById(this.props.repo.name + "-img");
-    this.props.onClick(img.getBoundingClientRect(), this.link);
+  onClick(event) {
+    // const deepClone = JSON.parse(JSON.stringify(this.image));
+    const imageClone = clone(this.image);
+    // console.log(imageClone);
+    // this.props.onClick(this.link, this.image);
   }
 
   componentDidMount() {
@@ -101,8 +104,8 @@ class projectCard extends React.Component {
     return(
       <div className="card-container" id={this.props.repo.name + "-container"}>
         <motion.div className="card" id={this.props.repo.name + "-card"} animate={this.state.styles} transition={{ duration: 0.3, ease: "circOut" }}>
-          <div className="title-container" onClick={() => this.onClick()}>
-            <motion.img style={this.state.stylesBrightness} id={this.props.repo.name + "-img"} className="title-img" alt="Project" src={`https://res.cloudinary.com/dy1xy7vkf/image/upload/${this.props.repo.name}.png`}/>
+          <div className="title-container" onClick={(event) => this.onClick(event)}>
+            <motion.img style={this.state.stylesBrightness} id={this.props.repo.name + "-img"} className="title-img" alt="Project" src={`https://res.cloudinary.com/dy1xy7vkf/image/upload/${this.props.repo.name}.png`} ref={this.image}/>
             <div className="card-title">{this.props.repo.name}</div>
           </div>
           <div className="bottom-bar">

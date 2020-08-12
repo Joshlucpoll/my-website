@@ -127,11 +127,16 @@ class Projects extends React.Component {
     }));
   }
 
-  onClick(imageLocation, link) {
-    this.setState(
-      { imageLocation: imageLocation },
-      this.props.changeDirectory(link)
-    );
+  onItemClick(path, el) {
+
+    // const width = event.width;
+    // const height = event.height;
+    // const x = event.left;
+    // const y = event.top - window.scrollY;
+    const style = el.style;
+    console.log(el.style);
+
+    this.props.changeDirectory(path, [style])
   }
 
   cardLocation(x, y) {
@@ -141,14 +146,7 @@ class Projects extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    console.log("Will unmount");
-  }
-
   render() {
-    console.log(Array.isArray(this.state.repos));
-    console.log(this.state.repos);
-
     const updated = () =>
       this.state.sortMethod === "pushed" ? "bold" : "normal";
     const full_name = () =>
@@ -292,8 +290,8 @@ class Projects extends React.Component {
                         <ProjectCard
                           repo={repo}
                           sortMethod={this.state.sortMethod}
-                          onClick={(imageLocation, link) =>
-                            this.onClick(imageLocation, link)
+                          onClick={(path, el) =>
+                            this.onItemClick(path, el)
                           }
                         />
                       </motion.div>
@@ -307,6 +305,7 @@ class Projects extends React.Component {
           <ProjectSelector
             scroll={this.props.scroll}
             imageLocation={this.state.imageLocation}
+            location={this.props.location}
           />
         </Route>
       </Switch>

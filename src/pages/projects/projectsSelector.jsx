@@ -5,7 +5,8 @@ import { useParams } from "react-router-dom";
 
 function ProjectSelector(props) {
   // const imageLocation = props.imageLocation;
-  console.log(props.imageLocation);
+  // console.log(props.imageLocation);
+  // console.log(props.location.state);
 
   let { projectName } = useParams();
 
