@@ -27,7 +27,7 @@ const pageVariants = {
 }
 
 
-class MyWebsite extends React.Component {
+class NameThatColour extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,7 +49,7 @@ class MyWebsite extends React.Component {
       opacity: 1,
       borderRadius: 0,
       width: "100vw",
-      height: `${100/styles.x * styles.y}vw`,
+      height: `${styles.x/styles.y/100}vw`,
       y: 0,
       x: 0,
       filter: "brightness(1)",
@@ -102,4 +102,4 @@ Nunc aliquet ipsum tincidunt felis cursus, sit amet auctor metus finibus. Donec 
   }
 }
 
-export default MyWebsite;
+export default NameThatColour;

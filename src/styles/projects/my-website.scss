@@ -2,6 +2,10 @@
   position: absolute;
   height: 100vh;
   width: 100vw;
-  background-color: rgb(32, 34, 37);
+  background-color: rgba(32, 34, 37, 0);
+}
 
+.title-img-my-website {
+  opacity: 1;
+  position: absolute;
 }

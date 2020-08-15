@@ -40,12 +40,54 @@ class App extends React.Component {
         this.setState({ easyNav: false });
       }
     }, 2500);
+
+    
+    // Updated lastTime if it's invalid
+    const lastTime = new Date(localStorage.getItem("lastTime"));
+    if (Object.prototype.toString.call(lastTime) === "[object Date]") {
+      if (isNaN(lastTime.getTime())) {
+        localStorage.setItem("lastTime", new Date());
+      }
+    }
+    else {
+      localStorage.setItem("lastTime", new Date());
+    }
+
+    this.fetchRepos();
   }
   
   componentWillUnmount() {
     window.removeEventListener("scroll", () =>
     this.setState({ scroll: window.scrollY })
     );
+  }
+
+  fetchRepos() {
+    const diff = Math.abs(new Date() - new Date(localStorage.getItem("lastTime"))) / 60000; // difference in minutes
+
+    if (diff > 1) {
+      try {
+        fetch("https://api.github.com/users/joshlucpoll/repos")
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            if (result instanceof Array) {
+              localStorage.setItem("repos", JSON.stringify(result));
+              localStorage.setItem("lastTime", new Date());
+            }
+            else {
+              throw Error("Reach API Limit")
+            }
+          },
+          (error) => {
+            throw error;
+          }
+        );
+      }
+      catch (error) {
+        console.error(error)
+      }
+    }
   }
   
   animationEnd() {
@@ -61,7 +103,6 @@ class App extends React.Component {
       state: state,
     };
     this.props.history.push(location);
-    // console.log(this.props.location);
 
     document
       .getElementsByTagName("body")[0]
@@ -89,7 +130,6 @@ class App extends React.Component {
                 </Route>
                 <Route path="/projects">
                   <Projects
-                    location={location}
                     scroll={this.state.scroll}
                     changeDirectory={(path, state) => this.changeDirectory(path, state)}
                   />
@@ -114,19 +154,19 @@ class App extends React.Component {
               stiffness: 300,
               damping: 15,
             }}
-            />
-            )}
+          />
+        )}
         {this.state.easyNav === true && (
           <HamburgerMenu
-          changeDirectory={(path) => this.changeDirectory(path)}
+            changeDirectory={(path) => this.changeDirectory(path)}
             changeNav={(nav) => this.changeNav(nav)}
-            />
-            )}
+          />
+        )}
         {this.state.easyNav === false && (
           <Console
-          changeDirectory={(path) => this.changeDirectory(path)}
+            changeDirectory={(path) => this.changeDirectory(path)}
             changeNav={(nav) => this.changeNav(nav)}
-            />
+          />
         )}
       </div>
     );

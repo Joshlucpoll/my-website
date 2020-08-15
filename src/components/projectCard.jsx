@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import moment from "moment";
-// import clone from "clone";
 import "../styles/projectCard.scss";
 import GithubIcon from "../assets/social_icons/github.svg";
 
@@ -20,10 +19,10 @@ class projectCard extends React.Component {
     const now = moment();
     let repoTime;
     
-    if (this.props.sortMethod === "pushed") {
+    if (this.props.sortMethod === "pushed_at") {
       repoTime = moment(this.props.repo.pushed_at);
     }
-    else if (this.props.sortMethod === "created") {
+    else if (this.props.sortMethod === "created_at") {
       repoTime = moment(this.props.repo.created_at);
     }
     else {
@@ -79,11 +78,8 @@ class projectCard extends React.Component {
     this.setState({ styles: styles, stylesBrightness: stylesBrightness });
   }
 
-  onClick(event) {
-    // const deepClone = JSON.parse(JSON.stringify(this.image));
-    // const imageClone = clone(this.image);
-    // console.log(imageClone);
-    // this.props.onClick(this.link, this.image);
+  onClick() {
+    this.props.onClick(this.link, this.image);
   }
 
   componentDidMount() {
@@ -104,7 +100,7 @@ class projectCard extends React.Component {
     return(
       <div className="card-container" id={this.props.repo.name + "-container"}>
         <motion.div className="card" id={this.props.repo.name + "-card"} animate={this.state.styles} transition={{ duration: 0.3, ease: "circOut" }}>
-          <div className="title-container" onClick={(event) => this.onClick(event)}>
+          <div className="title-container" onClick={() => this.onClick()}>
             <motion.img style={this.state.stylesBrightness} id={this.props.repo.name + "-img"} className="title-img" alt="Project" src={`https://res.cloudinary.com/dy1xy7vkf/image/upload/${this.props.repo.name}.png`} ref={this.image}/>
             <div className="card-title">{this.props.repo.name}</div>
           </div>

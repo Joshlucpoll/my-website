@@ -1,32 +1,39 @@
 import MyWebsite from "./my-website";
+import NameThatColour from "./name-that-colour";
 
 import React from "react";
-import { useParams } from "react-router-dom";
+import { withRouter, useParams } from "react-router-dom";
 
 function ProjectSelector(props) {
-  // const imageLocation = props.imageLocation;
-  // console.log(props.imageLocation);
-  // console.log(props.location.state);
+    let { projectName } = useParams();
 
-  let { projectName } = useParams();
+    const imageLocation = props.location.state;
+    const repos = JSON.parse(localStorage.getItem("repos"));
+    const repo = repos.find(repo => repo.name === projectName);
+  
+    switch (projectName) {
+      case "my-website":
+        return (
+          <MyWebsite 
+            scroll={props.scroll}
+            imageLocation={imageLocation}
+            repo={repo}
+          />
+        );
+      case "name-that-colour":
+        return (
+          <NameThatColour 
+            scroll={props.scroll}
+            imageLocation={imageLocation}
+            repo={repo}
+          />
+        );
 
-  // fetch(`https://api.github.com/repos/joshlucpoll/${projectName}`)
-  //   .then(res => res.json())
-  //   .then(
-  //     (result) => {
-  //       const repo = result;
-  //     });
-
-  if (projectName === "my-website") {
-    return (
-      <MyWebsite 
-        scroll={props.scroll}
-        imageLocation={props.imageLocation}
-      />
-    );
-  } else {
-    window.location.replace(`https://github.com/joshlucpoll/${projectName}`);
-  }
+      default:
+        window.location.replace(`https://github.com/joshlucpoll/${projectName}`);
+        return(<div/>)
+    }
 }
 
-export default ProjectSelector;
+
+export default withRouter(ProjectSelector);

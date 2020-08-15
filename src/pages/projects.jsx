@@ -24,6 +24,14 @@ const sort = {
 };
 
 const list = {
+  hidden: {
+    transition: {
+      delay: 1,
+      when: "beforeChildren",
+      staggerChildren: 0.15,
+      delayChildren: 1.5,
+    },
+  },
   visible: {
     transition: {
       delay: 1,
@@ -35,6 +43,10 @@ const list = {
 };
 
 const item = {
+  hidden: {
+    opacity: 0,
+    y: -100,
+  },
   visible: {
     opacity: 1,
     y: 0,
@@ -59,6 +71,7 @@ const pageVariants = {
   }),
   exit: {
     opacity: 0.99,
+    display: "fixed",
   },
 };
 
@@ -83,42 +96,60 @@ class Projects extends React.Component {
     this.scrollStyle = { top: this.props.scroll + "px" };
   }
 
-  getRepos(sort) {
+  getRepos(sort="pushed_at") {
     // sort types: created, updated, pushed, full_name
 
-    fetch(`https://api.github.com/users/joshlucpoll/repos?sort=${sort}`)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          if (!Array.isArray(result)) {
-            this.setState({
-              isLoaded: true,
-              repos: result,
-              error: true
-            });
-          }
-          this.setState({
-            isLoaded: true,
-            repos: result,
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error: true,
-          });
+    function compareValues(key, direction="desc") {
+      return function innerSort(a, b) {
+        if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+          // property doesn't exist on either object
+          return 0;
         }
-      );
-    this.setState({ sortMethod: sort });
+    
+        const varA = (key === "full_name")
+          ? a[key].toUpperCase() : new Date(a[key]);
+        const varB = (key === "full_name")
+          ? b[key].toUpperCase() : new Date(b[key]);
+    
+        let comparison = 0;
+        if (varA > varB) {
+          comparison = 1;
+        } else if (varA < varB) {
+          comparison = -1;
+        }
+        
+        return (
+          (direction === 'desc') ? (comparison * -1) : comparison
+        );
+      };
+    }
+
+
+    const repos = JSON.parse(localStorage.getItem("repos"));
+
+    if (repos instanceof Array) {
+      const sortedRepos = repos.sort(compareValues(sort));
+      this.setState({ 
+        repos: sortedRepos,
+        sortMethod: sort,
+        isLoaded: true
+      });
+    }
+    if (repos === null) {
+      setTimeout(() => {
+        this.getRepos()
+      }, 100);
+    }
+
   }
 
   componentDidMount() {
     document.title = "Josh Pollard | 🚀";
-    this.getRepos("pushed");
+    this.getRepos("pushed_at");
 
     setTimeout(() => {
-      this.scroll = {};
-    }, 1300);
+      this.scrollStyle = {};
+    }, 1500);
   }
 
   sortButtonHandler() {
@@ -129,14 +160,23 @@ class Projects extends React.Component {
 
   onItemClick(path, el) {
 
-    // const width = event.width;
-    // const height = event.height;
-    // const x = event.left;
-    // const y = event.top - window.scrollY;
-    const style = el.style;
-    // console.log(el.style);
-
-    this.props.changeDirectory(path, [style])
+    const width = el.current.clientWidth;
+    const height = el.current.clientHeight;
+    const x = el.current.getBoundingClientRect().left;
+    const y = el.current.getBoundingClientRect().top - window.scrollY;
+    const brightness = el.current.style.filter
+    const transform = el.current.parentElement.parentElement.style.transform;
+    
+    const state = {
+      width: width, 
+      height: height,
+      x: x,
+      y: y,
+      brightness: brightness,
+      transform: transform,
+    };
+    
+    this.props.changeDirectory(path, state);
   }
 
   cardLocation(x, y) {
@@ -148,11 +188,11 @@ class Projects extends React.Component {
 
   render() {
     const updated = () =>
-      this.state.sortMethod === "pushed" ? "bold" : "normal";
+      this.state.sortMethod === "pushed_at" ? "bold" : "normal";
     const full_name = () =>
-      this.state.sortMethod === "full_name" ? "bold" : "normal";
+      this.state.sortMethod === "name" ? "bold" : "normal";
     const created = () =>
-      this.state.sortMethod === "created" ? "bold" : "normal";
+      this.state.sortMethod === "created_at" ? "bold" : "normal";
 
     return (
       <Switch>
@@ -210,7 +250,7 @@ class Projects extends React.Component {
                         <li>
                           <div
                             style={{ fontWeight: updated() }}
-                            onClick={() => this.getRepos("pushed")}
+                            onClick={() => this.getRepos("pushed_at")}
                           >
                             Updated
                           </div>
@@ -218,7 +258,7 @@ class Projects extends React.Component {
                         <li>
                           <div
                             style={{ fontWeight: full_name() }}
-                            onClick={() => this.getRepos("full_name")}
+                            onClick={() => this.getRepos("name")}
                           >
                             Alphabetical
                           </div>
@@ -226,7 +266,7 @@ class Projects extends React.Component {
                         <li>
                           <div
                             style={{ fontWeight: created() }}
-                            onClick={() => this.getRepos("created")}
+                            onClick={() => this.getRepos("created_at")}
                           >
                             Created
                           </div>
@@ -238,66 +278,33 @@ class Projects extends React.Component {
               </motion.div>
             </div>
 
-            {!this.state.isLoaded && (
-              <motion.div
-                className="loading-title"
-                animate={{ opacity: 1 }}
-                style={{
-                  opacity: 0,
-                  color: "white",
-                  textAlign: "center",
-                  width: "100vw",
-                }}
+            {this.state.isLoaded &&
+              <motion.section
+                className="projects-container"
+                animate={this.state.isLoaded ? "visible" : "hidden"}
+                variants={list}
               >
-                Loading...
-              </motion.div>
-            )}
-
-            {!Array.isArray(this.state.repos) ? (
-              this.state.error && 
-                <motion.div
-                  animate={{ opacity: 1 }}
-                  style={{
-                    opacity: 0,
-                    color: "white",
-                    textAlign: "center",
-                    width: "100vw",
-                  }}
-                >
-                  Error. Please reload page. <br/>
-                  {JSON.stringify(this.state.repos)}
-                </motion.div>
-              ) : (
-              this.state.isLoaded &&
-                <motion.section
-                  className="projects-container"
-                  initial="hidden"
-                  animate="visible"
-                  variants={list}
-                >
-                  {this.state.repos.map((repo) =>
-                    // Excludes repos in 'blacklist' array
-                    !this.blackList.includes(repo.name.toLowerCase()) &&
-                      <motion.div
-                        key={repo.name}
-                        initial={{ opacity: 0, y: -100 }}
-                        variants={item}
-                        positionTransition={{
-                          duration: 0.5,
-                          ease: "backInOut",
-                        }}
-                      >
-                        <ProjectCard
-                          repo={repo}
-                          sortMethod={this.state.sortMethod}
-                          onClick={(path, el) =>
-                            this.onItemClick(path, el)
-                          }
-                        />
-                      </motion.div>
-                  )}
-                </motion.section>
-              )
+                {this.state.repos.map((repo) =>
+                  // Excludes repos in 'blacklist' array
+                  !this.blackList.includes(repo.name.toLowerCase()) &&
+                    <motion.div
+                      key={repo.name}
+                      variants={item}
+                      positionTransition={{
+                        duration: 0.5,
+                        ease: "backInOut",
+                      }}
+                    >
+                      <ProjectCard
+                        repo={repo}
+                        sortMethod={this.state.sortMethod}
+                        onClick={(path, el) =>
+                          this.onItemClick(path, el)
+                        }
+                      />
+                    </motion.div>
+                )}
+              </motion.section>
             }
           </motion.div>
         </Route>
@@ -305,7 +312,7 @@ class Projects extends React.Component {
           <ProjectSelector
             scroll={this.props.scroll}
             imageLocation={this.state.imageLocation}
-            location={this.props.location}
+            getRepos={() => this.getRepos()}
           />
         </Route>
       </Switch>

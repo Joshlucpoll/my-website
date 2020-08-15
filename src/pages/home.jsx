@@ -21,7 +21,8 @@ const pageVariants = {
     position: "absolute",
   }),
   exit: {
-    opacity: 0.99
+    opacity: 0.99,
+    display: "fixed",
   }
 }
 
@@ -42,6 +43,8 @@ class Home extends React.Component {
     this.string = "<software-developer/>";
     this.i = 0
     this.howManyTimes = this.string.length;
+
+    this.scrollStyle = { top: this.props.scroll + "px" };
   }
   
   typeSubTitle() {
@@ -108,6 +111,10 @@ class Home extends React.Component {
     window.addEventListener("resize", this.updateWindowDimensions);
 
     setTimeout(() => {
+      this.scrollStyle = {};
+    }, 1500);
+
+    setTimeout(() => {
       this.subTitleCursor();
     }, 2500);
 
@@ -126,7 +133,6 @@ class Home extends React.Component {
     let yVector = this.state.yMiddle - this.state.yMouse;
 
     const longShadowStyle = longShadow(xVector, yVector);
-    const scrollStyle = { top: this.props.scroll + "px" }
 
     return (
       <motion.div 
@@ -134,7 +140,7 @@ class Home extends React.Component {
         onMouseMove={e => this.handleMouseMove(e)}
         onTouchMove={e => this.handleMouseMove(e)}
 
-        style={scrollStyle}
+        style={this.scrollStyle}
         initial="initial"
         animate="animate"
         exit="exit"
