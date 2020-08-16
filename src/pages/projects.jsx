@@ -163,7 +163,7 @@ class Projects extends React.Component {
     const width = el.current.clientWidth;
     const height = el.current.clientHeight;
     const x = el.current.getBoundingClientRect().left;
-    const y = el.current.getBoundingClientRect().top - window.scrollY;
+    const y = el.current.getBoundingClientRect().top;
     const brightness = el.current.style.filter
     const transform = el.current.parentElement.parentElement.style.transform;
     
