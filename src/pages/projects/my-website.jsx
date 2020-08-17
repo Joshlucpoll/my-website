@@ -29,7 +29,7 @@ class MyWebsite extends React.Component {
     };
     this.scrollStyle = { top: this.props.scroll + "px" };
     const styles = this.props.imageLocation;
-  
+
     this.initialStyles = {
       opacity: 1,
       borderRadius: "10px",
@@ -57,7 +57,6 @@ class MyWebsite extends React.Component {
     setTimeout(() => {
       this.scrollStyle = {};
     }, 1500);
-
   }
 
   render() {
@@ -72,7 +71,7 @@ class MyWebsite extends React.Component {
           exit="exit"
           custom={window}
           variants={pageVariants}
-          transition={{delay: 0, ...pageTransition}}
+          transition={{ ease: [0.94, 0.06, 0.88, 0.45], duration: 0.5 }}
         >
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris placerat vehicula ligula et feugiat. Donec metus dui, dignissim id mollis nec, suscipit quis sapien. Nam pellentesque bibendum neque vitae ullamcorper. Quisque at elit aliquam, imperdiet nunc et, auctor enim. Fusce elementum accumsan magna, ut aliquam tellus scelerisque vel. Sed fermentum sollicitudin lorem quis rutrum. Maecenas et pellentesque turpis. Praesent vestibulum nunc ut imperdiet tincidunt. Aliquam in purus vitae elit tristique bibendum. Pellentesque mattis ullamcorper urna, non interdum est condimentum id.
 
@@ -88,13 +87,14 @@ class MyWebsite extends React.Component {
           style={{opacity: 1}}
           initial={this.initialStyles}
           animate={this.finalStyles}
-          transition={{duration: 0.5, ease: "easeIn"}}
+          exit={{opacity: 0}}
+          transition={{duration: 0.5, ease: [0.94, 0.06, 0.88, 0.45]}}
           layout
           className="title-img-project" 
           alt="Project" 
           src={`https://res.cloudinary.com/dy1xy7vkf/image/upload/${this.props.repo.name}.png`}
         />
-        <motion.div className="card-title">{this.props.repo.name}</motion.div>
+        <motion.div className="project-title">{this.props.repo.name}</motion.div>
       </>
     );
   }

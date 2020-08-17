@@ -8,4 +8,17 @@
 .title-img-project {
   opacity: 1;
   position: absolute;
+  z-index: 1;
+}
+
+.project-title {
+  position: absolute;
+  padding: 5px;
+  bottom: 10px;
+  border-radius: 10px;
+  color: white;
+  background-color: rgba(29, 29, 29, 0.7);
+  text-decoration: none;
+  text-transform: capitalize;
+  font-family: 'IBM Plex Sans', sans-serif;
 }

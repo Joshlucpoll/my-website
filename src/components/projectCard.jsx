@@ -10,6 +10,7 @@ class projectCard extends React.Component {
     this.state = {
       styles: {},
       stylesBrightness: {},
+      clicked: false,
     };
     this.image = React.createRef();
     this.link = "/projects/" + props.repo.name;
