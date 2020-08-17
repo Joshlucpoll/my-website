@@ -1,7 +1,6 @@
 import React from "react";
 
 import { motion } from "framer-motion";
-import { pageTransition } from "../../styles/pageTransition";
 
 import "../../styles/projects/project.scss";
 
