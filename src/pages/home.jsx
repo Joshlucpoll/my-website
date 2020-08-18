@@ -5,8 +5,6 @@ import { pageTransition } from "../styles/pageTransition";
 
 // Components
 import longShadow from "../components/longShadow";
-import BackgroundVideo from "../assets/Retro_Stripes_Monitor_Overlay.mp4";
-import BackgroundPoster from "../assets/Retro_Stripes_Monitor_Poster.png";
 import "../styles/home.scss";
 
 const pageVariants = {
@@ -26,6 +24,94 @@ const pageVariants = {
   }
 }
 
+class Stars {
+  constructor(c) {
+    this.c = c;
+    this.ctx = this.c.getContext("2d");
+
+    this.spaceColour = "rgb(0,10,20)";
+    this.numStars = window.innerWidth;
+    this.starSpeed = 0.5;
+    this.radius = "0." + Math.floor(Math.random() * 9) + 1;
+    this.focalLength = this.c.width * 2;
+    this.centerX = this.c.width/2;
+    this.centerY = this.c.height/2;
+    this.stars = [];
+
+    document.addEventListener("mousemove", (e) => this.updateStarSpeed(e), false);
+
+    this.initializeStars();
+    this.executeFrame();
+
+  }
+
+  initializeStars() {
+    this.centerX = this.c.width / 2;
+    this.centerY = this.c.height / 2;
+  
+    this.stars = [];
+    for (let i = 0; i < this.numStars; i++) {
+      const star = {
+        x: Math.random() * this.c.width,
+        y: Math.random() * this.c.height,
+        z: Math.random() * this.c.width,
+        o: "0." + Math.floor(Math.random() * 99) + 1,
+      };
+      this.stars.push(star);
+    }
+  }
+
+  updateStarSpeed(e) {
+    const speed = Math.round(Math.sqrt(Math.sqrt(e.movementX**2 + e.movementY**2)));
+    
+    this.starSpeed = speed;
+  }
+
+  moveStars() {
+    for (let i = 0; i < this.numStars; i++) {
+      const star = this.stars[i];
+      star.z -= this.starSpeed;
+  
+      if (star.z <= 0) {
+        star.z = this.c.width;
+      }
+    }
+  }
+
+  drawStars() {
+    // Resize to the screen
+    if (this.c.width !== window.innerWidth || this.c.height !== window.innerHeight) {
+      this.c.width = window.innerWidth;
+      this.c.height = window.innerHeight;
+      this.initializeStars();
+    }
+    this.ctx.fillStyle = this.spaceColour;
+    this.ctx.fillRect(0, 0, this.c.width, this.c.height);
+    this.ctx.fillStyle = `rgba(209, 255, 255, ${this.radius})`;
+    for (let i = 0; i < this.numStars; i++) {
+      const star = this.stars[i];
+  
+      let pixelX = (star.x - this.centerX) * (this.focalLength / star.z);
+      pixelX += this.centerX;
+      let pixelY = (star.y - this.centerY) * (this.focalLength / star.z);
+      pixelY += this.centerY;
+      let pixelRadius = 1 * (this.focalLength / star.z);
+  
+      this.ctx.beginPath()
+      this.ctx.arc(pixelX, pixelY, pixelRadius, 0, Math.PI * 2)
+      this.ctx.fillStyle = `rgba(209, 255, 255, ${star.o})`;
+      this.ctx.fill();
+    }
+  }
+
+  executeFrame() {
+    this.moveStars();
+    this.drawStars();
+    setTimeout(() => {
+      this.executeFrame();
+    }, 17);
+  }
+}
 
 class Home extends React.Component {
   constructor(props) {
@@ -121,6 +207,8 @@ class Home extends React.Component {
     setTimeout(() => {
       this.typeSubTitle();
     }, 4000);
+
+    new Stars(document.getElementById("space"));
   }
   
   componentWillUnmount() {
@@ -132,7 +220,7 @@ class Home extends React.Component {
     let xVector = this.state.xMiddle - this.state.xMouse;
     let yVector = this.state.yMiddle - this.state.yMouse;
 
-    const longShadowStyle = longShadow(xVector, yVector);
+    const longShadowStyle = longShadow(xVector, yVector, ("#"+((1<<24)*Math.random()|0).toString(16)));
 
     return (
       <motion.div 
@@ -148,9 +236,7 @@ class Home extends React.Component {
         variants={pageVariants}
         transition={pageTransition}
         >
-        <video autoPlay muted loop poster={BackgroundPoster} className="background-video">
-          <source src={BackgroundVideo} type="video/mp4"/>
-        </video>
+        <canvas id="space"></canvas>
 
         <div className="title-container">
           <motion.div 

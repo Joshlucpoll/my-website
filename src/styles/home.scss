@@ -19,19 +19,12 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+}
 
-  .background-video {
-    z-index: -2;
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  video::-webkit-media-controls {
-    display: none;
-  }
+#space {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
 }
 
 .title-container {
