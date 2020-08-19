@@ -64,7 +64,8 @@ class Stars {
   updateStarSpeed(e) {
     const speed = Math.round(Math.sqrt(Math.sqrt(e.movementX**2 + e.movementY**2)));
     
-    this.starSpeed = speed;
+    // Minimum speed is 0.1
+    this.starSpeed = speed < 0.1 ?  0.1 : speed;
   }
 
   moveStars() {
