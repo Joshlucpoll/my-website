@@ -31,18 +31,45 @@ class Stars {
 
     this.spaceColour = "rgb(0,10,20)";
     this.numStars = window.innerWidth;
-    this.starSpeed = 0.5;
+    this.starSpeed = 1;
     this.radius = "0." + Math.floor(Math.random() * 9) + 1;
     this.focalLength = this.c.width * 2;
     this.centerX = this.c.width/2;
     this.centerY = this.c.height/2;
     this.stars = [];
+    this.starPositions = [];
+    
+    this.warp = false;
 
     document.addEventListener("mousemove", (e) => this.updateStarSpeed(e), false);
+    document.getElementById("warp").onclick = () => this.toggleWarp();
 
     this.initializeStars();
     this.executeFrame();
 
+  }
+
+  toggleWarp() {
+    this.warp = !this.warp;
+    if (this.warp) {
+      
+      this.starPositions = [];
+      
+      for (let i = 0; i < this.numStars; i++) {
+        
+        const star = this.stars[i];
+  
+        const x = (star.x - this.centerX) * (this.c.width * 0.5 / star.z) + this.centerX;
+        const y = (star.y - this.centerY) * (this.c.width * 0.5 / star.z) + this.centerY;
+        
+        this.starPositions.push({x: x, y: y})
+      }
+      this.increaseStarSpeed();
+    }
+    else {
+      this.initializeStars();
+      this.starSpeed = 1
+    }
   }
 
   initializeStars() {
@@ -61,11 +88,22 @@ class Stars {
     }
   }
 
+  increaseStarSpeed() {
+    if (this.warp) {
+      this.starSpeed = this.starSpeed * 1.4;
+      
+      if (this.starSpeed < 100) {
+        setTimeout(() => this.increaseStarSpeed(), 100);
+      }
+    }
+  }
+
   updateStarSpeed(e) {
-    const speed = Math.round(Math.sqrt(Math.sqrt(e.movementX**2 + e.movementY**2)));
-    
-    // Minimum speed is 0.1
-    this.starSpeed = speed < 0.1 ?  0.1 : speed;
+    if (!this.warp) {
+      const speed = Math.round(Math.sqrt(Math.sqrt(e.movementX**2 + e.movementY**2)));
+      // Minimum speed is 0.1
+      this.starSpeed = speed < 1 ?  1 : speed;
+    }
   }
 
   moveStars() {
@@ -74,7 +112,12 @@ class Stars {
       star.z -= this.starSpeed;
   
       if (star.z <= 0) {
-        star.z = this.c.width;
+        if (this.warp) {
+          star.z = 0.1;
+        }
+        else {
+          star.z = this.c.width; 
+        }
       }
     }
   }
@@ -86,21 +129,33 @@ class Stars {
       this.c.height = window.innerHeight;
       this.initializeStars();
     }
+
     this.ctx.fillStyle = this.spaceColour;
     this.ctx.fillRect(0, 0, this.c.width, this.c.height);
     this.ctx.fillStyle = `rgba(209, 255, 255, ${this.radius})`;
+
     for (let i = 0; i < this.numStars; i++) {
       const star = this.stars[i];
   
-      let pixelX = (star.x - this.centerX) * (this.focalLength / star.z);
+      let pixelX = (star.x - this.centerX) * (this.c.width * 0.5 / star.z);
       pixelX += this.centerX;
-      let pixelY = (star.y - this.centerY) * (this.focalLength / star.z);
+      let pixelY = (star.y - this.centerY) * (this.c.width * 0.5 / star.z);
       pixelY += this.centerY;
-      let pixelRadius = 1 * (this.focalLength / star.z);
+      let pixelRadius = Math.abs(1 * (this.focalLength / star.z));
+
+      this.ctx.fillStyle = `rgba(209, 255, 255, ${star.o})`;
   
+      if (this.warp) {
+        this.ctx.fillStyle = `rgba(154, 206, 253, ${star.o})`;
+        this.ctx.beginPath();
+        this.ctx.moveTo(pixelX - pixelRadius, pixelY - pixelRadius);
+        this.ctx.lineTo(pixelX + pixelRadius, pixelY + pixelRadius);
+        this.ctx.lineTo(this.starPositions[i].x, this.starPositions[i].y) 
+        this.ctx.fill();
+      }
+
       this.ctx.beginPath()
       this.ctx.arc(pixelX, pixelY, pixelRadius, 0, Math.PI * 2)
-      this.ctx.fillStyle = `rgba(209, 255, 255, ${star.o})`;
       this.ctx.fill();
     }
   }
@@ -257,6 +312,7 @@ class Home extends React.Component {
             <span style={longShadowStyle} data-text=" POLLARD"> POLLARD</span>
           </motion.div>
           <div className="sub-title">{this.state.subTitle}{this.state.cursor}</div>
+          <div className="warp-button" id="warp">Warp</div>
         </div>
       </motion.div>
     );
