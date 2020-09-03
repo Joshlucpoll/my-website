@@ -102,7 +102,7 @@ class projectCard extends React.Component {
       <div className="card-container" id={this.props.repo.name + "-container"}>
         <motion.div className="card" id={this.props.repo.name + "-card"} animate={this.state.styles} transition={{ duration: 0.3, ease: "circOut" }}>
           <div className="title-container" onClick={() => this.onClick()}>
-            <motion.img style={this.state.stylesBrightness} id={this.props.repo.name + "-img"} className="title-img" alt="Project" src={`https://res.cloudinary.com/dy1xy7vkf/image/upload/${this.props.repo.name}.png`} ref={this.image}/>
+            <motion.img style={this.state.stylesBrightness} id={this.props.repo.name + "-img"} className="title-img" alt="Project" src={this.props.image} ref={this.image}/>
             <div className="card-title">{this.props.repo.name}</div>
           </div>
           <div className="bottom-bar">

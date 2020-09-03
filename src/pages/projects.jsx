@@ -11,6 +11,30 @@ import DownArrow from "../assets/down_arrow.svg";
 import { pageTransition } from "../styles/pageTransition";
 import { Switch, Route } from "react-router-dom";
 
+import bsgIMG from "../assets/projects/battleships-game.png";
+import ffmcIMG from "../assets/projects/freefall-model-calculator.png";
+import hwwIMG from "../assets/projects/homeworks-website.png";
+import itsIMG from "../assets/projects/img-to-spreadsheet.png";
+import mqIMG from "../assets/projects/multiplayer-quiz.png";
+import mwIMG from "../assets/projects/my-website.png";
+import ntcIMG from "../assets/projects/name-that-colour.png";
+import rdwfIMG from "../assets/projects/rotating-dials-watchface.png";
+import ttwIMG from "../assets/projects/tabletime-website.png";
+import taIMG from "../assets/projects/text-adventure.png";
+
+const projectImages = {
+  "battleships-game": bsgIMG,
+  "freefall-model-calculator": ffmcIMG,
+  "homeworks-website": hwwIMG,
+  "img-to-spreadsheet": itsIMG,
+  "multiplayer-quiz": mqIMG,
+  "my-website": mwIMG,
+  "name-that-colour": ntcIMG,
+  "rotating-dials-watchface": rdwfIMG,
+  "tabletime-website": ttwIMG,
+  "text-adventure": taIMG,
+}
+
 const button = {
   rest: { scale: 1 },
   hover: { scale: 1.1 },
@@ -92,6 +116,7 @@ class Projects extends React.Component {
       "joshlucpoll",
       "rotating-dials-watchface",
       "joshlucpoll.github.io",
+      "alfred-website",
     ];
     this.scrollStyle = { top: this.props.scroll + "px" };
   }
@@ -297,6 +322,7 @@ class Projects extends React.Component {
                     >
                       <ProjectCard
                         repo={repo}
+                        image={projectImages[repo.name]}
                         sortMethod={this.state.sortMethod}
                         onClick={(path, el) =>
                           this.onItemClick(path, el)
@@ -311,6 +337,7 @@ class Projects extends React.Component {
         <Route path={"/projects/:projectName"}>
           <ProjectSelector
             scroll={this.props.scroll}
+            images={projectImages}
             imageLocation={this.state.imageLocation}
             getRepos={() => this.getRepos()}
           />

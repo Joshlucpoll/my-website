@@ -25,6 +25,7 @@ class MyWebsite extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      repo: props.repo,
     };
     this.scrollStyle = { top: this.props.scroll + "px" };
     const styles = this.props.imageLocation;
@@ -91,7 +92,7 @@ class MyWebsite extends React.Component {
           layout
           className="title-img-project" 
           alt="Project" 
-          src={`https://res.cloudinary.com/dy1xy7vkf/image/upload/${this.props.repo.name}.png`}
+          src={this.props.image}
         />
         <motion.div className="project-title">{this.props.repo.name}</motion.div>
       </>
