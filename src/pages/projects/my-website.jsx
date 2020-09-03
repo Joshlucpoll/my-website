@@ -27,7 +27,6 @@ class MyWebsite extends React.Component {
     this.state = {
       repo: props.repo,
     };
-    this.scrollStyle = { top: this.props.scroll + "px" };
     const styles = this.props.imageLocation;
 
     this.initialStyles = {
@@ -54,9 +53,6 @@ class MyWebsite extends React.Component {
 
   componentDidMount() {
     document.title = "Josh Pollard | My-Website";
-    setTimeout(() => {
-      this.scrollStyle = {};
-    }, 1500);
   }
 
   render() {
@@ -65,7 +61,7 @@ class MyWebsite extends React.Component {
         <motion.div
           className="project-body"
 
-          style={{marginTop: `${100/this.props.imageLocation.width * this.props.imageLocation.height}vw`, ...this.scrollStyle}}
+          style={{marginTop: `${100/this.props.imageLocation.width * this.props.imageLocation.height}vw`}}
           initial="initial"
           animate="animate"
           exit="exit"

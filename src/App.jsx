@@ -24,15 +24,11 @@ class App extends React.Component {
     super(props);
     this.state = {
       changePage: null,
-      scroll: window.scrollY,
       easyNav: null,
     };
   }
   
   componentDidMount() {
-    window.addEventListener("scroll", () =>
-    this.setState({ scroll: window.scrollY })
-    );
     setTimeout(() => {
       if (isMobile) {
         this.setState({ easyNav: true });
@@ -40,7 +36,6 @@ class App extends React.Component {
         this.setState({ easyNav: false });
       }
     }, 2500);
-
     
     // Updated lastTime if it's invalid
     const lastTime = new Date(localStorage.getItem("lastTime"));
@@ -52,14 +47,7 @@ class App extends React.Component {
     else {
       localStorage.setItem("lastTime", new Date());
     }
-
     this.fetchRepos();
-  }
-  
-  componentWillUnmount() {
-    window.removeEventListener("scroll", () =>
-    this.setState({ scroll: window.scrollY })
-    );
   }
 
   fetchRepos() {
@@ -90,23 +78,17 @@ class App extends React.Component {
     }
   }
   
-  animationEnd() {
-    document
-    .getElementsByTagName("body")[0]
-    .classList.remove("body-style-transition");
-    this.setState({ scroll: 0 });
-  }
-  
   changeDirectory(path, state={}) {
+    window.scroll({
+      top: 0, 
+      left: 0, 
+      behavior: 'smooth'
+    });
     const location = {
       pathname: path,
       state: state,
     };
     this.props.history.push(location);
-
-    document
-      .getElementsByTagName("body")[0]
-      .classList.add("body-style-transition");
   }
 
   changeNav(nav) {
@@ -123,14 +105,13 @@ class App extends React.Component {
       <div className="app">
         <Route
           render={({ location }) => (
-            <AnimatePresence onExitComplete={() => this.animationEnd()}>
+            <AnimatePresence>
               <Switch location={location} key={location.pathname}>
                 <Route exact path="/">
-                  <Home scroll={this.state.scroll} />
+                  <Home/>
                 </Route>
                 <Route path="/projects">
                   <Projects
-                    scroll={this.state.scroll}
                     changeDirectory={(path, state) => this.changeDirectory(path, state)}
                   />
                 </Route>

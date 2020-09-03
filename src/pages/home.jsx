@@ -213,8 +213,6 @@ class Home extends React.Component {
     this.string = "<software-developer/>";
     this.i = 0;
     this.howManyTimes = this.string.length;
-
-    this.scrollStyle = { top: this.props.scroll + "px" };
   }
 
   typeSubTitle() {
@@ -279,10 +277,6 @@ class Home extends React.Component {
     window.addEventListener("resize", this.updateWindowDimensions);
 
     setTimeout(() => {
-      this.scrollStyle = {};
-    }, 1500);
-
-    setTimeout(() => {
       this.subTitleCursor();
     }, 2500);
 
@@ -313,7 +307,6 @@ class Home extends React.Component {
         className="home-body"
         onMouseMove={(e) => this.handleMouseMove(e)}
         onTouchMove={(e) => this.handleMouseMove(e)}
-        style={this.scrollStyle}
         initial="initial"
         animate="animate"
         exit="exit"

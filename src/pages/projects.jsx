@@ -118,7 +118,6 @@ class Projects extends React.Component {
       "joshlucpoll.github.io",
       "alfred-website",
     ];
-    this.scrollStyle = { top: this.props.scroll + "px" };
   }
 
   getRepos(sort="pushed_at") {
@@ -171,10 +170,6 @@ class Projects extends React.Component {
   componentDidMount() {
     document.title = "Josh Pollard | 🚀";
     this.getRepos("pushed_at");
-
-    setTimeout(() => {
-      this.scrollStyle = {};
-    }, 1500);
   }
 
   sortButtonHandler() {
@@ -188,7 +183,7 @@ class Projects extends React.Component {
     const width = el.current.clientWidth;
     const height = el.current.clientHeight;
     const x = el.current.getBoundingClientRect().left;
-    const y = el.current.getBoundingClientRect().top;
+    const y = el.current.getBoundingClientRect().top + window.scrollY;
     const brightness = el.current.style.filter
     const transform = el.current.parentElement.parentElement.style.transform;
     
@@ -204,13 +199,6 @@ class Projects extends React.Component {
     this.props.changeDirectory(path, state);
   }
 
-  cardLocation(x, y) {
-    this.setState({
-      x: x,
-      y: y,
-    });
-  }
-
   render() {
     const updated = () =>
       this.state.sortMethod === "pushed_at" ? "bold" : "normal";
@@ -224,7 +212,6 @@ class Projects extends React.Component {
         <Route exact path="/projects">
           <motion.div
             className="projects-body"
-            style={this.scrollStyle}
             initial="initial"
             animate="animate"
             exit="exit"
@@ -336,7 +323,6 @@ class Projects extends React.Component {
         </Route>
         <Route path={"/projects/:projectName"}>
           <ProjectSelector
-            scroll={this.props.scroll}
             images={projectImages}
             imageLocation={this.state.imageLocation}
             getRepos={() => this.getRepos()}

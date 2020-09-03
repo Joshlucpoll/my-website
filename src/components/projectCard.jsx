@@ -10,7 +10,7 @@ class projectCard extends React.Component {
     this.state = {
       styles: {},
       stylesBrightness: {},
-      clicked: false,
+      isClicked: false,
     };
     this.image = React.createRef();
     this.link = "/projects/" + props.repo.name;
@@ -81,6 +81,15 @@ class projectCard extends React.Component {
 
   onClick() {
     this.props.onClick(this.link, this.image);
+    setTimeout(() => {
+
+      this.setState({ isClicked: true });
+
+      setTimeout(() => {
+        this.setState({ isClicked: false });
+      }, 1500);
+
+    }, 100);
   }
 
   componentDidMount() {
@@ -102,7 +111,7 @@ class projectCard extends React.Component {
       <div className="card-container" id={this.props.repo.name + "-container"}>
         <motion.div className="card" id={this.props.repo.name + "-card"} animate={this.state.styles} transition={{ duration: 0.3, ease: "circOut" }}>
           <div className="title-container" onClick={() => this.onClick()}>
-            <motion.img style={this.state.stylesBrightness} id={this.props.repo.name + "-img"} className="title-img" alt="Project" src={this.props.image} ref={this.image}/>
+            <motion.img style={this.state.isClicked ? {opacity: 0} : this.state.stylesBrightness} id={this.props.repo.name + "-img"} className="title-img" alt="Project" src={this.props.image} ref={this.image}/>
             <div className="card-title">{this.props.repo.name}</div>
           </div>
           <div className="bottom-bar">

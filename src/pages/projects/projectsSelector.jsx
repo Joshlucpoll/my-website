@@ -16,7 +16,7 @@ function ProjectSelector(props) {
       case "my-website":
         return (
           <MyWebsite 
-            scroll={props.scroll}
+            // scroll={props.scroll}
             image={image}
             imageLocation={imageLocation}
             repo={repo}
@@ -25,7 +25,7 @@ function ProjectSelector(props) {
       case "name-that-colour":
         return (
           <NameThatColour 
-            scroll={props.scroll}
+            // scroll={props.scroll}
             image={image}
             imageLocation={imageLocation}
             repo={repo}
