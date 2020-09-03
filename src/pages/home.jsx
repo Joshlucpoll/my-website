@@ -8,21 +8,25 @@ import longShadow from "../components/longShadow";
 import "../styles/home.scss";
 
 const pageVariants = {
-  initial: window => ({
+  initial: (window) => ({
     opacity: 0.99,
     position: "fixed",
-    clipPath: `circle(0px at ${window.innerWidth / 2}px ${window.innerHeight / 2}px)`,
+    clipPath: `circle(0px at ${window.innerWidth / 2}px ${
+      window.innerHeight / 2
+    }px)`,
   }),
-  animate: window => ({
+  animate: (window) => ({
     opacity: 1,
-    clipPath: `circle(${Math.max(window.innerWidth, window.innerHeight) * 4}px at ${window.innerWidth / 2}px ${window.innerHeight / 2}px)`,
+    clipPath: `circle(${
+      Math.max(window.innerWidth, window.innerHeight) * 4
+    }px at ${window.innerWidth / 2}px ${window.innerHeight / 2}px)`,
     position: "absolute",
   }),
   exit: {
     opacity: 0.99,
     display: "fixed",
-  }
-}
+  },
+};
 
 class Stars {
   constructor(c) {
@@ -31,24 +35,68 @@ class Stars {
 
     this.spaceColour = "rgb(0,10,20)";
     this.numStars = window.innerWidth;
-    this.starSpeed = 0.5;
+    this.starSpeed = 1;
     this.radius = "0." + Math.floor(Math.random() * 9) + 1;
     this.focalLength = this.c.width * 2;
-    this.centerX = this.c.width/2;
-    this.centerY = this.c.height/2;
+    this.centerX = this.c.width / 2;
+    this.centerY = this.c.height / 2;
     this.stars = [];
+    this.starPositions = [];
 
-    document.addEventListener("mousemove", (e) => this.updateStarSpeed(e), false);
+    this.warp = false;
+    this.unmounting = false;
+
+    document.addEventListener(
+      "mousemove",
+      (e) => this.updateStarSpeed(e),
+      false
+    );
+    document.getElementById("warp").onclick = () => this.toggleWarp();
 
     this.initializeStars();
     this.executeFrame();
+  }
 
+  enableWarp() {
+    if (!this.unmounting) {
+      this.unmounting = true;
+      if (!this.warp) {
+        this.toggleWarp();
+      } else {
+        this.toggleWarp();
+        this.toggleWarp();
+      }
+    }
+  }
+
+  toggleWarp() {
+    this.warp = !this.warp;
+    if (this.warp) {
+      this.starPositions = [];
+
+      for (let i = 0; i < this.numStars; i++) {
+        const star = this.stars[i];
+
+        const x =
+          (star.x - this.centerX) * ((this.c.width * 0.5) / star.z) +
+          this.centerX;
+        const y =
+          (star.y - this.centerY) * ((this.c.width * 0.5) / star.z) +
+          this.centerY;
+
+        this.starPositions.push({ x: x, y: y });
+      }
+      this.increaseStarSpeed();
+    } else {
+      this.initializeStars();
+      this.starSpeed = 1;
+    }
   }
 
   initializeStars() {
     this.centerX = this.c.width / 2;
     this.centerY = this.c.height / 2;
-  
+
     this.stars = [];
     for (let i = 0; i < this.numStars; i++) {
       const star = {
@@ -61,51 +109,86 @@ class Stars {
     }
   }
 
+  increaseStarSpeed() {
+    if (this.warp) {
+      this.starSpeed = this.starSpeed * 1.4;
+
+      if (this.starSpeed < 100) {
+        setTimeout(() => this.increaseStarSpeed(), 100);
+      }
+    }
+  }
+
   updateStarSpeed(e) {
-    const speed = Math.round(Math.sqrt(Math.sqrt(e.movementX**2 + e.movementY**2)));
-    
-    // Minimum speed is 0.1
-    this.starSpeed = speed < 0.1 ?  0.1 : speed;
+    if (!this.warp) {
+      const speed = Math.round(
+        Math.sqrt(Math.sqrt(e.movementX ** 2 + e.movementY ** 2))
+      );
+      // Minimum speed is 0.1
+      this.starSpeed = speed < 1 ? 1 : speed;
+    }
   }
 
   moveStars() {
     for (let i = 0; i < this.numStars; i++) {
       const star = this.stars[i];
       star.z -= this.starSpeed;
-  
+
       if (star.z <= 0) {
-        star.z = this.c.width;
+        if (this.warp) {
+          star.z = 0.1;
+        } else {
+          star.z = this.c.width;
+        }
       }
     }
   }
 
   drawStars() {
     // Resize to the screen
-    if (this.c.width !== window.innerWidth || this.c.height !== window.innerHeight) {
+    if (
+      this.c.width !== window.innerWidth ||
+      this.c.height !== window.innerHeight
+    ) {
       this.c.width = window.innerWidth;
       this.c.height = window.innerHeight;
       this.initializeStars();
     }
+
     this.ctx.fillStyle = this.spaceColour;
     this.ctx.fillRect(0, 0, this.c.width, this.c.height);
     this.ctx.fillStyle = `rgba(209, 255, 255, ${this.radius})`;
+
     for (let i = 0; i < this.numStars; i++) {
       const star = this.stars[i];
-  
-      let pixelX = (star.x - this.centerX) * (this.focalLength / star.z);
+
+      let pixelX = (star.x - this.centerX) * ((this.c.width * 0.5) / star.z);
       pixelX += this.centerX;
-      let pixelY = (star.y - this.centerY) * (this.focalLength / star.z);
+      let pixelY = (star.y - this.centerY) * ((this.c.width * 0.5) / star.z);
       pixelY += this.centerY;
-      let pixelRadius = 1 * (this.focalLength / star.z);
-  
-      this.ctx.beginPath()
-      this.ctx.arc(pixelX, pixelY, pixelRadius, 0, Math.PI * 2)
+      let pixelRadius = Math.abs(1 * (this.focalLength / star.z));
+
       this.ctx.fillStyle = `rgba(209, 255, 255, ${star.o})`;
+
+      if (this.warp) {
+        this.ctx.fillStyle = `rgba(154, 206, 253, ${star.o})`;
+        this.ctx.beginPath();
+        this.ctx.moveTo(pixelX - pixelRadius, pixelY - pixelRadius);
+        this.ctx.lineTo(pixelX + pixelRadius, pixelY + pixelRadius);
+        this.ctx.lineTo(this.starPositions[i].x, this.starPositions[i].y);
+        this.ctx.fill();
+      }
+
+      this.ctx.beginPath();
+      this.ctx.arc(pixelX, pixelY, pixelRadius, 0, Math.PI * 2);
       this.ctx.fill();
     }
   }
 
   executeFrame() {
+    if (window.location.pathname !== "/") {
+      this.enableWarp()
+    }
     this.moveStars();
     this.drawStars();
     setTimeout(() => {
@@ -124,24 +207,23 @@ class Home extends React.Component {
       yMouse: -50,
       xMiddle: 0,
       yMiddle: 0,
-    }
+    };
     this._isMounted = false;
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.string = "<software-developer/>";
-    this.i = 0
+    this.i = 0;
     this.howManyTimes = this.string.length;
 
     this.scrollStyle = { top: this.props.scroll + "px" };
   }
-  
+
   typeSubTitle() {
     if (this._isMounted === true) {
-      
       this.setState({
-        subTitle: this.state.subTitle + this.string.split("")[this.i] 
-      })
+        subTitle: this.state.subTitle + this.string.split("")[this.i],
+      });
       this.i++;
-      if( this.i < this.howManyTimes ){
+      if (this.i < this.howManyTimes) {
         setTimeout(() => {
           this.typeSubTitle();
         }, 100);
@@ -151,7 +233,6 @@ class Home extends React.Component {
 
   subTitleCursor() {
     if (this._isMounted === true) {
-      
       if (this.state.cursor === " ") {
         this.setState({
           cursor: "|",
@@ -170,7 +251,7 @@ class Home extends React.Component {
   updateWindowDimensions() {
     this.setState({
       xMiddle: window.innerWidth / 2,
-      yMiddle: window.innerHeight / 2
+      yMiddle: window.innerHeight / 2,
     });
   }
 
@@ -186,14 +267,14 @@ class Home extends React.Component {
 
     this.setState({
       xMouse: xPosition,
-      yMouse: yPosition
+      yMouse: yPosition,
     });
   }
 
   componentDidMount() {
     this._isMounted = true;
     document.title = "Josh Pollard | 🏠";
-    
+
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions);
 
@@ -209,9 +290,9 @@ class Home extends React.Component {
       this.typeSubTitle();
     }, 4000);
 
-    new Stars(document.getElementById("space"));
+    this.setState({ stars: new Stars(document.getElementById("space")) });
   }
-  
+
   componentWillUnmount() {
     this._isMounted = false;
     window.removeEventListener("resize", this.updateWindowDimensions);
@@ -221,14 +302,17 @@ class Home extends React.Component {
     let xVector = this.state.xMiddle - this.state.xMouse;
     let yVector = this.state.yMiddle - this.state.yMouse;
 
-    const longShadowStyle = longShadow(xVector, yVector, ("#"+((1<<24)*Math.random()|0).toString(16)));
+    const longShadowStyle = longShadow(
+      xVector,
+      yVector,
+      "#" + (((1 << 24) * Math.random()) | 0).toString(16)
+    );
 
     return (
-      <motion.div 
+      <motion.div
         className="home-body"
-        onMouseMove={e => this.handleMouseMove(e)}
-        onTouchMove={e => this.handleMouseMove(e)}
-
+        onMouseMove={(e) => this.handleMouseMove(e)}
+        onTouchMove={(e) => this.handleMouseMove(e)}
         style={this.scrollStyle}
         initial="initial"
         animate="animate"
@@ -236,27 +320,49 @@ class Home extends React.Component {
         custom={window}
         variants={pageVariants}
         transition={pageTransition}
-        >
+      >
         <canvas id="space"></canvas>
 
         <div className="title-container">
-          <motion.div 
+          <motion.div
             className="headline-title"
-            style={longShadowStyle} 
-            data-text="JOSH" 
+            style={longShadowStyle}
+            data-text="JOSH"
             initial={{ scale: 0, rotate: 180 }}
             animate={{ rotate: 0, scale: 1 }}
-            transition={{ 
-              delay: 2.5, 
+            transition={{
+              delay: 2.5,
               duration: 1,
               type: "spring",
               stiffness: 260,
-              damping: 25
+              damping: 25,
             }}
-            >JOSH
-            <span style={longShadowStyle} data-text=" POLLARD"> POLLARD</span>
+          >
+            JOSH
+            <span style={longShadowStyle} data-text=" POLLARD">
+              {" "}
+              POLLARD
+            </span>
           </motion.div>
-          <div className="sub-title">{this.state.subTitle}{this.state.cursor}</div>
+          <div className="sub-title">
+            {this.state.subTitle}
+            {this.state.cursor}
+          </div>
+          <motion.div
+            className="warp-button"
+            id="warp"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              delay: 2.5,
+              duration: 2,
+              type: "spring",
+              stiffness: 150,
+              damping: 15,
+            }}
+          >
+            Warp
+          </motion.div>
         </div>
       </motion.div>
     );

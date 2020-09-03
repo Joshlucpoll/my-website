@@ -82,3 +82,49 @@
     }
   }
 }
+
+.warp-button {
+  width: 124px;
+  height: 44px;
+  position: fixed;
+  top: 80%;
+  left: 50%;
+  margin-top: -22px;
+  margin-left: -62px;
+  
+  font-size: 22px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  line-height: 44px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  text-shadow: 0 -1px -1px #0f864a;
+  
+  background-color: rgba(49, 61, 83, 0.75);
+  border-radius: 4px;
+  box-shadow: 0 4px 0 rgba(31, 39, 53, 0.75), 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  -ms-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.warp-button:hover {
+  text-shadow: 0 -1px -1px #119d57;
+  background-color: rgba(49, 61, 83, 1);
+  box-shadow: 0 4px 0 rgba(31, 39, 53, 1), 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+}
+  
+.warp-button:active {
+	margin-top: -18px;
+	box-shadow: none;
+}

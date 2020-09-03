@@ -4,6 +4,8 @@
 
 # Portfolio for Josh Pollard *(WIP)*
 
+![](https://res.cloudinary.com/dy1xy7vkf/image/upload/my-website.png)
+
 This repository contains all the code used to produce [https://joshlucpoll.com](https://joshlucpoll.com).  
 It was created using [React JS](https://reactjs.org) and hosted with [Firebase](https://firebase.google.com)
 
