@@ -42,9 +42,9 @@ const button = {
 };
 
 const sort = {
-  pushed: "Updated",
-  full_name: "Alphabetical",
-  created: "Created",
+  "pushed_at": "Updated",
+  "name": "Alphabetical",
+  "created_at": "Created",
 };
 
 const list = {
@@ -168,7 +168,10 @@ class Projects extends React.Component {
   }
 
   componentDidMount() {
-    document.title = "Josh Pollard | 🚀";
+    document.title = window.location.pathname === "/projects" ?
+    "Josh Pollard | 🚀" 
+    : 
+    `Josh Pollard | ${window.location.pathname.split("/").slice(-1)[0]}`;
     this.getRepos("pushed_at");
   }
 
@@ -180,32 +183,50 @@ class Projects extends React.Component {
 
   onItemClick(path, el) {
 
+    console.dir(el.current)
     const width = el.current.clientWidth;
     const height = el.current.clientHeight;
     const x = el.current.getBoundingClientRect().left;
     const y = el.current.getBoundingClientRect().top + window.scrollY;
     const brightness = el.current.style.filter
     const transform = el.current.parentElement.parentElement.style.transform;
-    
+    console.log(transform)
+    const rotateY = transform.split(" ")[0].split("(")[1].split(")")[0]
+    const rotateX = transform.split(" ")[1].split("(")[1].split(")")[0]
+
+    const titleEl = el.current.nextSibling;
+    const titleWidth = titleEl.clientWidth;
+    const titleHeight = titleEl.clientHeight;
+    const titleX = titleEl.getBoundingClientRect().left;
+    const titleY = titleEl.getBoundingClientRect().top + window.scrollY;
+
     const state = {
       width: width, 
       height: height,
       x: x,
       y: y,
       brightness: brightness,
-      transform: transform,
+      rotateX: rotateX,
+      rotateY: rotateY,
+
+      titleWidth: titleWidth,
+      titleHeight: titleHeight,
+      titleX: titleX,
+      titleY: titleY,
     };
     
     this.props.changeDirectory(path, state);
   }
 
   render() {
+    const sortMethod = this.state.sortMethod
+
     const updated = () =>
-      this.state.sortMethod === "pushed_at" ? "bold" : "normal";
+      sortMethod === "pushed_at" ? "bold" : "normal";
     const full_name = () =>
-      this.state.sortMethod === "name" ? "bold" : "normal";
+      sortMethod === "name" ? "bold" : "normal";
     const created = () =>
-      this.state.sortMethod === "created_at" ? "bold" : "normal";
+      sortMethod === "created_at" ? "bold" : "normal";
 
     return (
       <Switch>
@@ -241,7 +262,7 @@ class Projects extends React.Component {
                   whileTap="pressed"
                 >
                   <div className="sort-text">
-                    Sort: {sort[this.state.sortMethod]}
+                    Sort: {sort[sortMethod]}
                   </div>
                   <img
                     className="down-arrow"

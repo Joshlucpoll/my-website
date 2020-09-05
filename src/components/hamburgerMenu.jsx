@@ -26,7 +26,6 @@ class HamburgerMenu extends React.Component {
   closeMenu() {
     if (this.state.isMenuOpen === true) {
       this.setState({ isMenuOpen: false }, this.forceUpdate())
-      console.log("hello")
     }
   }
 

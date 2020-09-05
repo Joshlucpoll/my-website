@@ -1,41 +1,49 @@
-import MyWebsite from "./my-website";
-import NameThatColour from "./name-that-colour";
-
 import React from "react";
 import { withRouter, useParams } from "react-router-dom";
+import Project from "./project";
+import LostPage from "../404";
 
 function ProjectSelector(props) {
     let { projectName } = useParams();
+    
+    try {
+      let imageLocation;
+      if (props.location.state === undefined) {
+        imageLocation = {
+          width: 210,
+          height: 90,
+          x: "calc(50vw - 50%)",
+          y: 0,
+          brightness: "none",
+          rotateX: "none",
+          rotateY: "none",
+        }
+      }
+      else {
+        imageLocation = props.location.state;
+      }
+      
+      const repos = JSON.parse(localStorage.getItem("repos"));
+      const repo = repos.find(repo => repo.name === projectName);
+      const image = props.images[repo.name];
 
-    const imageLocation = props.location.state;
-    const repos = JSON.parse(localStorage.getItem("repos"));
-    const repo = repos.find(repo => repo.name === projectName);
-    const image = props.images[repo.name];
-  
-    switch (projectName) {
-      case "my-website":
+      if (repo === undefined) {
+        return <LostPage/>
+      }
+      else {
         return (
-          <MyWebsite 
-            // scroll={props.scroll}
-            image={image}
-            imageLocation={imageLocation}
+          <Project
             repo={repo}
-          />
-        );
-      case "name-that-colour":
-        return (
-          <NameThatColour 
-            // scroll={props.scroll}
-            image={image}
             imageLocation={imageLocation}
-            repo={repo}
+            image={image}
           />
-        );
-
-      default:
-        window.location.replace(`https://github.com/joshlucpoll/${projectName}`);
-        return(<div/>)
+        )
+      }
     }
+    catch {
+      return null;
+    }
+  
 }
 
 

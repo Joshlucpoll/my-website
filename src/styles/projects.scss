@@ -42,7 +42,7 @@
       font-size: 18px;
       float: right;
       margin-top: 3rem;
-
+      
       .sort-button {
         height: 1.7rem;
         align-items: center;
@@ -70,6 +70,7 @@
       
       .sort-menu-container {
         position: absolute;
+        z-index: 1;
         
         ul {
           position: relative;

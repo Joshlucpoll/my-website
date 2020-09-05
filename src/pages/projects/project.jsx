@@ -21,37 +21,52 @@ const pageVariants = {
 }
 
 
-class NameThatColour extends React.Component {
+class Project extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      repo: props.repo,
     };
-    const styles = this.props.imageLocation;
 
-    this.initialStyles = {
+    this.styles = this.props.imageLocation;
+
+    this.initialStylesImage = {
       opacity: 1,
       borderRadius: "10px",
-      width: styles.width,
-      height: styles.height,
-      y: styles.y,
-      x: styles.x,
-      filter: styles.brightness,
-      transform: styles.transform,
+      width: this.styles.width,
+      height: this.styles.height,
+      y: this.styles.y,
+      x: this.styles.x,
+      filter: this.styles.brightness,
+      transform: this.styles.transform,
+      rotateX: this.styles.rotateX,
+      rotateY: this.styles.rotateY,
     }
-    this.finalStyles = {
+    this.finalStylesImage = {
       opacity: 1,
       borderRadius: 0,
       width: "100vw",
-      height: `${100/styles.width * styles.height}vw`,
+      height: `${100/this.styles.width * this.styles.height}vw`,
       y: 0,
       x: 0,
-      filter: "brightness(1)",
-      transform: "rotateY(0deg) rotateX(0deg)",
+      filter: "brightness(0.5)",
+      rotateX: 0,
+      rotateY: 0,
     }
-  }
 
-  componentDidMount() {
-    document.title = "Josh Pollard | My-Website";
+    this.initialStylesTitle = {
+      y: this.styles.titleY,
+      x: this.styles.titleX,
+      rotateX: this.styles.rotateX,
+      rotateY: this.styles.rotateY,
+    }
+    this.finalStylesTitle = {
+      y: this.styles.height / this.styles.width * window.innerWidth  * .8,
+      x: "calc(50vw - 50%)",
+      scale: window.innerWidth / this.styles.width * .7,
+      rotateX: 0,
+      rotateY: 0,
+    }
   }
 
   render() {
@@ -59,13 +74,12 @@ class NameThatColour extends React.Component {
       <>
         <motion.div
           className="project-body"
-
-          style={{marginTop: `${100/this.props.imageLocation.width * this.props.imageLocation.height}vw`}}
+          style={{marginTop: `${100/this.styles.width * this.styles.height}vw`}}
           initial="initial"
           animate="animate"
           exit="exit"
           custom={window}
-          variants={pageVariants}
+          variants={pageVariants} 
           transition={{ ease: [0.94, 0.06, 0.88, 0.45], duration: 0.5 }}
         >
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris placerat vehicula ligula et feugiat. Donec metus dui, dignissim id mollis nec, suscipit quis sapien. Nam pellentesque bibendum neque vitae ullamcorper. Quisque at elit aliquam, imperdiet nunc et, auctor enim. Fusce elementum accumsan magna, ut aliquam tellus scelerisque vel. Sed fermentum sollicitudin lorem quis rutrum. Maecenas et pellentesque turpis. Praesent vestibulum nunc ut imperdiet tincidunt. Aliquam in purus vitae elit tristique bibendum. Pellentesque mattis ullamcorper urna, non interdum est condimentum id.
@@ -80,19 +94,25 @@ class NameThatColour extends React.Component {
         </motion.div>
         <motion.img
           style={{opacity: 1}}
-          initial={this.initialStyles}
-          animate={this.finalStyles}
+          initial={this.initialStylesImage}
+          animate={this.finalStylesImage}
           exit={{opacity: 0}}
-          transition={{duration: 0.5, ease: [0.94, 0.06, 0.88, 0.45]}}
-          layout
+          transition={{duration: .5, ease: [0.94, 0.06, 0.88, 0.45]}}
           className="title-img-project" 
           alt="Project" 
           src={this.props.image}
         />
-        <motion.div className="project-title">{this.props.repo.name}</motion.div>
+        <motion.div
+          style={{opacity: 1}}
+          className="project-title"
+          initial={this.initialStylesTitle}
+          animate={this.finalStylesTitle}
+          exit={{opacity: 0}}
+          transition={{duration: .5, ease: [0.94, 0.06, 0.88, 0.45]}}
+        >{this.state.repo.name}</motion.div>
       </>
     );
   }
 }
 
-export default NameThatColour;
+export default Project;

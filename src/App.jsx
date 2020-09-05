@@ -29,14 +29,6 @@ class App extends React.Component {
   }
   
   componentDidMount() {
-    setTimeout(() => {
-      if (isMobile) {
-        this.setState({ easyNav: true });
-      } else {
-        this.setState({ easyNav: false });
-      }
-    }, 2500);
-    
     // Updated lastTime if it's invalid
     const lastTime = new Date(localStorage.getItem("lastTime"));
     if (Object.prototype.toString.call(lastTime) === "[object Date]") {
@@ -48,6 +40,15 @@ class App extends React.Component {
       localStorage.setItem("lastTime", new Date());
     }
     this.fetchRepos();
+
+    setTimeout(() => {
+      if (isMobile) {
+        this.setState({ easyNav: true });
+      } else {
+        this.setState({ easyNav: false });
+      }
+    }, 2500);
+    
   }
 
   fetchRepos() {
