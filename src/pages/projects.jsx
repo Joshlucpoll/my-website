@@ -183,14 +183,12 @@ class Projects extends React.Component {
 
   onItemClick(path, el) {
 
-    console.dir(el.current)
     const width = el.current.clientWidth;
     const height = el.current.clientHeight;
     const x = el.current.getBoundingClientRect().left;
     const y = el.current.getBoundingClientRect().top + window.scrollY;
     const brightness = el.current.style.filter
     const transform = el.current.parentElement.parentElement.style.transform;
-    console.log(transform)
     const rotateY = transform.split(" ")[0].split("(")[1].split(")")[0]
     const rotateX = transform.split(" ")[1].split("(")[1].split(")")[0]
 
@@ -311,13 +309,14 @@ class Projects extends React.Component {
               </motion.div>
             </div>
 
-            {this.state.isLoaded &&
-              <motion.section
-                className="projects-container"
-                animate={this.state.isLoaded ? "visible" : "hidden"}
-                variants={list}
-              >
-                {this.state.repos.map((repo) =>
+            <motion.section
+              className="projects-container"
+              initial="hidden"
+              animate={this.state.isLoaded ? "visible" : "hidden"}
+              variants={list}
+            >
+              {this.state.isLoaded &&
+                this.state.repos.map((repo) =>
                   // Excludes repos in 'blacklist' array
                   !this.blackList.includes(repo.name.toLowerCase()) &&
                     <motion.div
@@ -339,7 +338,6 @@ class Projects extends React.Component {
                     </motion.div>
                 )}
               </motion.section>
-            }
           </motion.div>
         </Route>
         <Route path={"/projects/:projectName"}>
