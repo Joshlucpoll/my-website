@@ -68,10 +68,10 @@ $font-size: 10vh;
   }
 
   .sub-title {
-    height: calc($font-size/4);
+    height: $font-size/4;
     text-align: right;
 
-    font-size: calc($font-size/4);
+    font-size: $font-size/4;
     color: white;
     text-shadow: 2px 2px 1px black;
     font-family: 'Ubuntu Mono', monospace;
