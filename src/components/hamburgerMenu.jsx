@@ -3,12 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import "../styles/hamburgerMenu.scss";
 
-const button = {
-  rest: { scale: 1 },
-  hover: { scale: 1.1 },
-  pressed: { scale: 0.95 }
-};
-
 class HamburgerMenu extends React.Component {
   constructor(props) {
     super(props);
@@ -78,18 +72,14 @@ class HamburgerMenu extends React.Component {
         <motion.div 
           className="hamburger-container" 
           onClick={() => this.toggleMenu()}
-          variants={button}
-          initial="rest"
-          whileHover="hover"
-          whileTap="pressed"
         >
-          <motion.div className="lines-container" initial={{ opacity: 0 }} animate={{ opacity: 0.5 }}>
-            <motion.div animate={ this.state.isMenuOpen ? {y: 0, rotate: 45} : {y: "1.3vh", rotate: 180} } transition={linesTransition} className="line"/>
-            <motion.div animate={ this.state.isMenuOpen ? {y: 0, rotate: -45} : {y: 0, rotate: 0} } transition={linesTransition} className="line"/>
-            <motion.div animate={ this.state.isMenuOpen ? {y: 0, rotate: 45} : {y: "-1.3vh", rotate: 180} } transition={linesTransition} className="line"/> 
+          <motion.div className="lines-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <motion.div animate={ this.state.isMenuOpen ? {y: 0, rotate: -135} : {y: "10px", rotate: 0} } transition={linesTransition} className="line"/>
+            <motion.div animate={ this.state.isMenuOpen ? {y: 0, rotate: 135} : {y: 0, rotate: 0} } transition={linesTransition} className="line"/>
+            <motion.div animate={ this.state.isMenuOpen ? {y: 0, rotate: -135} : {y: "-10px", rotate: 0} } transition={linesTransition} className="line"/> 
           </motion.div>
           <motion.div
-            className="easy-mode-button"
+            className="easy-mode-button no-select"
             animate={this.state.isMenuOpen ? {y: 0, opacity: 1} : {y: "100%", opacity: 0}}
             transition={{ ease: "easeOut" }}
             style={{ originX: 1 }}

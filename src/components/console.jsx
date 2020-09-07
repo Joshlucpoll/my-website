@@ -7,12 +7,6 @@ import "../styles/console.scss";
 
 import Dir from "./dir";
 
-const button = {
-  rest: { scale: 1 },
-  hover: { scale: 1.1 },
-  pressed: { scale: 0.95 },
-};
-
 class Console extends React.Component {
   constructor(props) {
     super(props);
@@ -30,8 +24,16 @@ class Console extends React.Component {
   }
 
   addToConsole(string) {
+    let outputString;
+    if (string.charAt(0) !== ">") {
+      outputString = " " + string;
+    }
+    else {
+      outputString = string;
+    }
+
     let newOutputList = this.state.outputList;
-    newOutputList.unshift(string);
+    newOutputList.unshift(outputString);
 
     this.setState({ outputList: newOutputList });
   }
@@ -88,17 +90,31 @@ class Console extends React.Component {
         break;
 
       case "ls":
-        this.addToConsole("");
         this.addToConsole(".");
+
+        // Add 'up a dir' if your not at root: "/"
         if (window.location.pathname !== "/") {
           this.addToConsole("..");
         }
+        
         try {
-          let listDirectory = value;
+          let listDirectory;
 
-          if (value.charAt(0) !== "/") {
-            listDirectory = "/" + listDirectory;
+          if (value === undefined) {
+            listDirectory = window.location.pathname;
           }
+          else {
+            listDirectory = value;
+
+            if (listDirectory.charAt(0) !== "/") {
+              listDirectory = "/" + listDirectory;
+            }
+            
+            if (window.location.pathname !== "/") {
+              listDirectory = window.location.pathname + listDirectory;
+            }
+          }
+
           const currentDir = listDirectory;
 
           const currentId = this.dir.getId(currentDir);
@@ -118,12 +134,10 @@ class Console extends React.Component {
         break;
 
       case "pwd":
-        this.addToConsole("");
         this.addToConsole(window.location.pathname);
         break;
 
       case "history":
-        this.addToConsole("");
         let history = this.state.commandList;
         let count = 1;
         for (let i = history.length; i > 0; i--) {
@@ -325,21 +339,17 @@ class Console extends React.Component {
         <SimpleStorage parent={this} />
         <motion.div
           className="console-tab-container"
-          variants={button}
-          initial="rest"
-          whileHover="hover"
-          whileTap="pressed"
         >
           <div className="console-tab" onClick={(e) => this.handleClick(e)}>
             <motion.img
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
+              animate={{ opacity: 1 }}
               src={ConsoleIcon}
               alt="Terminal"
             />
           </div>
           <motion.div
-            className="easy-mode-button"
+            className="easy-mode-button no-select"
             animate={
               this.state.consoleOpen
                 ? { y: 0, opacity: 1 }

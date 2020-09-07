@@ -1,3 +1,5 @@
+@import "./colours.scss";
+
 .console-container {
   width: 100%;
   text-align: center;
@@ -18,13 +20,19 @@
     .console-tab {
       height: 6vh;
       width: 6vh;
-      background-color: rgba(49, 61, 83, 0.75);
+      background-color: $accent-colour;
       border-radius: 50%;
       cursor: pointer;
+
+      &:hover {
+        background-color: darken($accent-colour, 5%);
+      }
+      &:active {
+        background-color: darken($accent-colour, 10%);
+      }
           
       img {
         transition: opacity 200ms ease-in;
-        opacity: 0.5;
         padding: 10% 0;
         width: 80%;
       }
@@ -32,16 +40,23 @@
     }
     .easy-mode-button {
       position: absolute;
-      top: 2vh;
+      top: calc(2vh - 7px);
       right: 120%;
       font-family: 'Ubuntu Mono', monospace;
       white-space: nowrap;
-      color: white;
-      background-color: rgba(49, 61, 83, 0.75);
-      padding: 4px;
+      color: $text-colour;
+      background-color: $accent-colour;
+      padding: 10px;
       border-radius: 4px;
       cursor: pointer;
       opacity: 0;
+
+      &:hover {
+        background-color: darken($accent-colour, 5%);
+      }
+      &:active {
+        background-color: darken($accent-colour, 10%);
+      }
     }
   }
 
@@ -60,7 +75,7 @@
       border-bottom-right-radius: 2vh;
       line-height: 7vh;
       text-align: left;
-      background-color: rgba(49, 61, 83, 0.75);
+      background-color: $accent-colour;
 
       
       .console-text-short {
@@ -85,6 +100,11 @@
           background-color: rgba(0, 0, 0, 0);
           border: none;
           outline: none;
+
+          &::placeholder {
+            opacity: 0.5;
+            color: $text-colour
+          }
         }
       }
     }
@@ -98,7 +118,7 @@
       padding: 20px;
       border-top-left-radius: 2vh;
       border-top-right-radius: 2vh;
-      background-color: rgba(49, 61, 83, 0.75);
+      background-color: $accent-colour;
       
       .output-list-container {
         display: flex;

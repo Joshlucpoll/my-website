@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import ProjectCard from "../components/projectCard";
 import ProjectSelector from "./projects/projectsSelector";
-import Emoji from "../components/emoji";
 import "../styles/projects.scss";
 import DownArrow from "../assets/down_arrow.svg";
 
@@ -34,12 +33,6 @@ const projectImages = {
   "tabletime-website": ttwIMG,
   "text-adventure": taIMG,
 }
-
-const button = {
-  rest: { scale: 1 },
-  hover: { scale: 1.1 },
-  pressed: { scale: 0.95 },
-};
 
 const sort = {
   "pushed_at": "Updated",
@@ -243,21 +236,16 @@ class Projects extends React.Component {
                 <div className="title">Projects</div>
                 <div className="subtitle">
                   From Python to HTML to Dart, this page displays all my past
-                  projects with details on how I built them.{" "}
-                  <Emoji label="builder" emoji="👷🏻‍♂️" />
+                  projects with details on how I built them.
                 </div>
               </div>
               <motion.div
-                className="sort-container"
+                className="sort-container no-select"
                 layoutTransition={{ type: "tween", duration: 0.1 }}
               >
                 <motion.div
                   className="sort-button"
                   onClick={() => this.sortButtonHandler()}
-                  variants={button}
-                  initial="rest"
-                  whileHover="hover"
-                  whileTap="pressed"
                 >
                   <div className="sort-text">
                     Sort: {sort[sortMethod]}

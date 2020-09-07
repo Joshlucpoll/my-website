@@ -2,7 +2,7 @@ import React from "react";
 
 import { motion } from "framer-motion";
 
-import "../../styles/projects/project.scss";
+import "../../styles/project.scss";
 
 
 const pageVariants = {

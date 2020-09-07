@@ -1,3 +1,5 @@
+@import "./colours.scss";
+
 .hamburger-container {
   margin: 2vh;
   position: fixed;
@@ -5,10 +7,8 @@
   bottom: 0;
   height: 6vh;
   width: 6vh;
-  background-color: rgba(49, 61, 83, 0.75);
-  border-radius: 50%;
-  cursor: pointer;
   z-index: 100;
+  
   
   .lines-container {
     position: relative;
@@ -17,13 +17,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: $accent-colour;
+    border-radius: 50%;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: darken($accent-colour, 5%);
+    }
+    &:active {
+      background-color: darken($accent-colour, 10%);
+    }
 
     .line {
       width: 4vh;
       height: 3px;
       border-radius: 1px;
       background-color: white;
-      opacity: 0.5;
       position: absolute;
       transition: opacity ease 0.2s;
     }
@@ -32,23 +41,30 @@
 
   .easy-mode-button {
     position: absolute;
-    top: 2vh;
+    top: calc(2vh - 7px);
     right: 120%;
     font-family: 'Ubuntu Mono', monospace;
     white-space: nowrap;
-    color: white;
-    padding: 4px;
-    background-color: rgba(49, 61, 83, 0.75);
+    color: $text-colour;
+    padding: 10px;
+    background-color: $accent-colour;
     border-radius: 4px;
     cursor: pointer;
     opacity: 0;
+
+    &:hover {
+      background-color: darken($accent-colour, 5%);
+    }
+    &:active {
+      background-color: darken($accent-colour, 10%);
+    }
   }
 }
 
 .backdrop-filter {
   position: fixed;
   width: 100vw;
-  background-color: rgba(49, 61, 83, 0.95);
+  background-color: darken($accent-colour, 20%);
   z-index: 15;
 }
 
@@ -67,7 +83,7 @@
     
     .link {
       color: white;
-      background-color: rgba(54, 54, 54, 0.75);
+      background-color: $background-colour;
       border-radius: 10px;
       padding: 10px;
       margin: 10px;

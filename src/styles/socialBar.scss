@@ -1,3 +1,5 @@
+@import "./colours.scss";
+
 @media only screen and (max-width: 600px) {
   .social-bar-container {
     position: fixed;
@@ -43,7 +45,7 @@
       z-index: 10;
       height: 4vh;
 
-      background-color: rgba(49, 61, 83, 0.75);
+      background-color: $accent-colour;
       border-radius: 0 50% 50% 0;
     }
   }

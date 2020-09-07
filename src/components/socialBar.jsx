@@ -12,12 +12,6 @@ import Email from "../assets/social_icons/gmail.svg";
 
 import "../styles/socialBar.scss";
 
-const button = {
-  rest: { scale: 1 },
-  hover: { scale: 1.1 },
-  pressed: { scale: 0.95 }
-};
-
 class SocialBar extends React.Component {
   constructor(props) {
     super(props);
@@ -152,10 +146,6 @@ class SocialBar extends React.Component {
           <motion.svg 
             className="share-button"
             onClick={() => this.switchBar()}
-            variants={button}
-            initial="rest"
-            whileHover="hover"
-            whileTap="pressed"
             style={{ originX: 0 }}
             fill="#939393"
             xmlns="http://www.w3.org/2000/svg"
