@@ -94,7 +94,12 @@ class Console extends React.Component {
           this.addToConsole("..");
         }
         try {
-          const currentDir = window.location.pathname;
+          let listDirectory = value;
+
+          if (value.charAt(0) !== "/") {
+            listDirectory = "/" + listDirectory;
+          }
+          const currentDir = listDirectory;
 
           const currentId = this.dir.getId(currentDir);
 
