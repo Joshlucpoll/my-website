@@ -371,7 +371,7 @@ class Console extends React.Component {
         >
           <div className="console">
             <div className="console-body">
-              <div className="console-text-short">></div>
+              <div className="console-text-short">{'>'}</div>
               <form
                 className="console-input"
                 onSubmit={(e) => this.handleSubmit(e)}

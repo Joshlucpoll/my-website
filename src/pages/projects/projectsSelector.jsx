@@ -36,6 +36,7 @@ function ProjectSelector(props) {
             repo={repo}
             imageLocation={imageLocation}
             image={image}
+            changeDirectory={props.changeDirectory}
           />
         )
       }

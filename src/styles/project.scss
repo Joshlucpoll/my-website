@@ -4,12 +4,34 @@
   width: 100vw;
   min-height: 100vh;
   background-color: $background-colour;
+
+  .back-button {
+    height: 6vh;
+    width: 6vh;
+    margin: 2vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: $accent-colour;
+    border-radius: 3vh;
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bi-arrow-left-short {
+    height: 100%;
+    width: 100%;
+    filter: invert(1);
+  }
 }
 
 .title-img-project {
   opacity: 1;
   position: absolute;
-  z-index: 1;
+  z-index: 5;
   transform-style: preserve-3d;
   transform: translateZ(50px)
 }
@@ -24,7 +46,7 @@
   text-transform: capitalize;
   font-family: 'IBM Plex Sans', sans-serif;
   transform-style: preserve-3d;
-  z-index: 1;
+  z-index: 6;
 
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;

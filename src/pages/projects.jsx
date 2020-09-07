@@ -333,6 +333,7 @@ class Projects extends React.Component {
             images={projectImages}
             imageLocation={this.state.imageLocation}
             getRepos={() => this.getRepos()}
+            changeDirectory={this.props.changeDirectory}
           />
         </Route>
       </Switch>
