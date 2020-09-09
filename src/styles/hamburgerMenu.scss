@@ -66,6 +66,7 @@
   width: 100vw;
   background-color: darken($accent-colour, 20%);
   z-index: 15;
+  overflow: hidden;
 }
 
 .nav-container {
@@ -96,4 +97,8 @@
       cursor: pointer;
     }
   }
+}
+
+.body-noscroll {
+  overflow: hidden;
 }

@@ -16,7 +16,7 @@ const list = {
       delay: 0.3,
       when: "beforeChildren",
       staggerChildren: 0.15,
-      delayChildren: 0.3,
+      delayChildren: 0.5,
     },
   },
 };
@@ -41,19 +41,24 @@ class HamburgerMenu extends React.Component {
   }
 
   toggleMenu() {
-    this.setState((state) => {
-      return {isMenuOpen: !state.isMenuOpen};
-    });
+    if (this.state.isMenuOpen === false) {
+      this.openMenu();
+    }
+    else {
+      this.closeMenu();
+    }
   }
 
   closeMenu() {
     if (this.state.isMenuOpen === true) {
+      document.body.classList.remove("body-noscroll");
       this.setState({ isMenuOpen: false }, this.forceUpdate())
     }
   }
-
+  
   openMenu() {
     if (this.state.isMenuOpen === false) {
+      document.body.classList.add("body-noscroll");
       this.setState({ isMenuOpen: true }, this.forceUpdate())
     }
   }

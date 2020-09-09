@@ -65,7 +65,7 @@ class Project extends React.Component {
     this.finalStylesTitle = {
       y: `${80/this.styles.width * this.styles.height}vw`,
       x: "calc(50vw - 50%)",
-      scale: window.innerHeight / window.innerWidth * 2,
+      scale: 2,
       rotateX: 0,
       rotateY: 0,
     }
