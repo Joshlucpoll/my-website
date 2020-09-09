@@ -3,6 +3,35 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import "../styles/hamburgerMenu.scss";
 
+
+const list = {
+  hidden: {
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.15,
+    },
+  },
+  visible: {
+    transition: {
+      delay: 0.3,
+      when: "beforeChildren",
+      staggerChildren: 0.15,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const item = {
+  hidden: {
+    opacity: 0,
+    y: -100,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+};
+
 class HamburgerMenu extends React.Component {
   constructor(props) {
     super(props);
@@ -91,23 +120,29 @@ class HamburgerMenu extends React.Component {
 
         <motion.div
           className="backdrop-filter"
+          onClick={() => this.closeMenu()}
           animate={
             this.state.isMenuOpen ? {height: "100vh", opacity: 0.95} : {height: 0, opacity: 0.95}
           }
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
         >
         </motion.div>
         <AnimatePresence>
           {this.state.isMenuOpen &&
           <motion.div className="nav-container" initial={{height: 0, opacity: 1}} animate={{height: "100vh", opacity: 1}} exit={{height: 0, opacity: -1}} transition={{type: "tween"}}>
-            <ul className="nav">
-              <li>
+            <motion.ul
+              className="nav"
+              initial="hidden"
+              animate={this.state.isMenuOpen ? "visible" : "hidden"}
+              variants={list}
+            >
+              <motion.li variants={item}>
                 <div className="link" onClick={() => this.changePage("/")}>Home</div>
-              </li>
-              <li>
+              </motion.li>
+              <motion.li variants={item}>
                 <div className="link" onClick={() => this.changePage("/projects")}>Projects</div>
-              </li>
-            </ul>
+              </motion.li>
+            </motion.ul>
           </motion.div>
           }
         </AnimatePresence>

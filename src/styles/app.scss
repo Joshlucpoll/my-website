@@ -1,8 +1,8 @@
 @import "./colours.scss";
 
 ::-webkit-scrollbar {
-  background-color: $background-colour;
-  border-color: $background-colour;
+  background-color: $accent-colour;
+  border-color: $accent-colour ;
   border-style: solid;
   width: 10px;
 }

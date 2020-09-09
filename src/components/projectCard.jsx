@@ -175,7 +175,7 @@ class projectCard extends React.Component {
               src={GithubIcon}
               alt="Github"
               className="github-icon"
-              onClick={() => (window.location.href = this.props.repo.html_url)}
+              onClick={() => window.open(this.props.repo.html_url)}
             />
             <div className="date" title="Date">
               {this.getDate()}

@@ -4,7 +4,6 @@ import {
   Route,
   withRouter,
 } from "react-router-dom";
-import { isMobile } from "react-device-detect";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Pages
@@ -42,11 +41,7 @@ class App extends React.Component {
     this.fetchRepos();
 
     setTimeout(() => {
-      if (isMobile) {
-        this.setState({ easyNav: true });
-      } else {
-        this.setState({ easyNav: false });
-      }
+      this.setState({ easyNav: true });
     }, 2500);
     
   }
@@ -65,7 +60,7 @@ class App extends React.Component {
               localStorage.setItem("lastTime", new Date());
             }
             else {
-              throw Error("Reach API Limit")
+              throw Error("Reached API Limit")
             }
           },
           (error) => {
@@ -105,18 +100,19 @@ class App extends React.Component {
     return (
       <div className="app">
         <Route
+          ignoreScrollBehavior
           render={({ location }) => (
             <AnimatePresence>
               <Switch location={location} key={location.pathname}>
-                <Route exact path="/">
+                <Route exact path="/" ignoreScrollBehavior>
                   <Home/>
                 </Route>
-                <Route path="/projects">
+                <Route path="/projects" ignoreScrollBehavior>
                   <Projects
                     changeDirectory={(path, state) => this.changeDirectory(path, state)}
                   />
                 </Route>
-                <Route>
+                <Route ignoreScrollBehavior>
                   <LostPage />
                 </Route>
               </Switch>

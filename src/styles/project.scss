@@ -27,6 +27,53 @@
     width: 100%;
     filter: invert(1);
   }
+
+  .project-wrapper {
+    padding: 40px;
+
+    .project-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: left;
+
+      .project-icon-container {
+        height: 30px;
+        width: 30px;
+        flex-basis: 30px;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 50%;
+        background-color: $accent-colour;
+        transition: box-shadow 300ms ease;
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.75);
+        }
+
+        .project-icon {
+          height: 30px;
+          width: 30px;
+          filter: invert(1);
+        }
+      }
+
+      .project-spacer {
+        height: 30px;
+        width: 30px;
+        flex-basis: 30px;
+      }
+
+      .project-description {
+        color: $text-colour;
+        font-size: 20px;
+        margin-left: auto;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 3px 3px 5px 5px rgba(0, 0, 0, 0.301), -3px -3px 5px 5px lighten($background-colour, 5%);
+      }
+    }
+  }
 }
 
 .title-img-project {

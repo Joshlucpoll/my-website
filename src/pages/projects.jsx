@@ -221,7 +221,7 @@ class Projects extends React.Component {
 
     return (
       <Switch>
-        <Route exact path="/projects">
+        <Route exact path="/projects" ignoreScrollBehavior>
           <motion.div
             className="projects-body"
             initial="initial"
@@ -328,7 +328,7 @@ class Projects extends React.Component {
               </motion.section>
           </motion.div>
         </Route>
-        <Route path={"/projects/:projectName"}>
+        <Route path={"/projects/:projectName"} ignoreScrollBehavior>
           <ProjectSelector
             images={projectImages}
             imageLocation={this.state.imageLocation}
