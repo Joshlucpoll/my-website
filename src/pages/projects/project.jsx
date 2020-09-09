@@ -104,7 +104,7 @@ class Project extends React.Component {
               >
                 <img src={GithubIcon} alt="Github Icon" className="project-icon"/>
               </div>
-              {this.props.repo.homepage !== null &&
+              {[null, ""].indexOf(this.props.repo.homepage) === -1 &&
                 <div
                   className="project-icon-container"
                   onClick={() => window.open(this.props.repo.homepage)}

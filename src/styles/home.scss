@@ -5,9 +5,8 @@ $font-size: 10vh;
 .home-body {
   height: 100vh;
   width: 100vw;
-  position: absolute;
+  position: fixed;
   background-color: black;
-  
   
   display: inline-flex;
   flex-direction: column;
@@ -29,7 +28,6 @@ $font-size: 10vh;
 
   .headline-title {
     z-index: 10;
-    // text-align: right;
     line-height: $font-size;
     font-size: $font-size;
     color: white;
