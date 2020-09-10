@@ -106,6 +106,7 @@ class HamburgerMenu extends React.Component {
         <motion.div 
           className="hamburger-container" 
           onClick={() => this.toggleMenu()}
+          style={this.state.isMenuOpen ? {marginRight: "calc(10px + 2vh)"} : {marginRight: "2vh"}}
         >
           <motion.div className="lines-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <motion.div animate={ this.state.isMenuOpen ? {y: 0, rotate: -135} : {y: "10px", rotate: 0} } transition={linesTransition} className="line"/>

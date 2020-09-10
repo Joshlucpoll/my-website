@@ -51,7 +51,7 @@ class Project extends React.Component {
       height: `${100/this.styles.width * this.styles.height}vw`,
       y: 0,
       x: 0,
-      filter: "brightness(0.5)",
+      filter: "brightness(1)",
       rotateX: 0,
       rotateY: 0,
     }

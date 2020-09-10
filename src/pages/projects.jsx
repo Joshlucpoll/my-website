@@ -185,7 +185,7 @@ class Projects extends React.Component {
     const rotateY = transform.split(" ")[0].split("(")[1].split(")")[0]
     const rotateX = transform.split(" ")[1].split("(")[1].split(")")[0]
 
-    const titleEl = el.current.nextSibling;
+    const titleEl = el.current.nextSibling.firstChild;
     const titleWidth = titleEl.clientWidth;
     const titleHeight = titleEl.clientHeight;
     const titleX = titleEl.getBoundingClientRect().left;
@@ -232,13 +232,7 @@ class Projects extends React.Component {
             transition={pageTransition}
           >
             <div className="title-container">
-              <div className="overlay">
-                <div className="title">Projects</div>
-                <div className="subtitle">
-                  From Python to HTML to Dart, this page displays all my past
-                  projects with details on how I built them.
-                </div>
-              </div>
+              <div className="title">Projects</div>
               <motion.div
                 className="sort-container no-select"
                 layoutTransition={{ type: "tween", duration: 0.1 }}

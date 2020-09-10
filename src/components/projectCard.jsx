@@ -1,8 +1,8 @@
 import React from "react";
+import { isMobile } from "react-device-detect";
 import { motion } from "framer-motion";
 import moment from "moment";
 import "../styles/projectCard.scss";
-import GithubIcon from "../assets/social_icons/github.svg";
 
 class projectCard extends React.Component {
   constructor(props) {
@@ -11,6 +11,7 @@ class projectCard extends React.Component {
       styles: {transform: "rotateY(0deg) rotateX(0deg)"},
       stylesBrightness: {},
       isClicked: false,
+      isHovering: false,
       _isMounted: false,
     };
     this.image = React.createRef();
@@ -83,7 +84,11 @@ class projectCard extends React.Component {
       filter: `brightness(${-rX / 40 + 1})`,
     };
     if (this.state._isMounted) {
-      this.setState({ styles: styles, stylesBrightness: stylesBrightness });
+      this.setState({
+        styles: styles,
+        stylesBrightness: stylesBrightness,
+        isHovering: true,
+      });
     }
   }
 
@@ -97,7 +102,11 @@ class projectCard extends React.Component {
       };
 
       if (this.state._isMounted) {
-        this.setState({ styles: styles, stylesBrightness: stylesBrightness });
+        this.setState({
+          styles: styles, 
+          stylesBrightness: stylesBrightness,
+          isHovering: isMobile ? true : false,
+        });
       }
     }
   }
@@ -119,10 +128,15 @@ class projectCard extends React.Component {
 
   componentDidMount() {
     this.setState({ _isMounted: true });
+    if (isMobile) {
+      this.setState({ isHovering: true });
+    }
+    
     const card = document.getElementById(this.props.repo.name + "-card");
     const container = document.getElementById(
       this.props.repo.name + "-container"
     );
+
     card.addEventListener("mousemove", (e) => this.updatePerspective(e));
     container.addEventListener("mouseleave", (e) => this.resetPerspective(e));
   }
@@ -148,7 +162,7 @@ class projectCard extends React.Component {
           animate={this.state.styles}
           transition={{ duration: 0.3, ease: "circOut" }}
         >
-          <div className="title-container" onClick={() => this.onClick()}>
+          <div className="image-container" onClick={() => this.onClick()}>
             <motion.img
               style={
                 this.state.isClicked
@@ -161,25 +175,28 @@ class projectCard extends React.Component {
               src={this.props.image}
               ref={this.image}
             />
-            <div
-              className="card-title"
-              style={
-                this.state.isClicked
-                  ? { opacity: 0 }
-                  : this.state.stylesBrightness
+            <motion.div
+              className="info-cover"
+              initial={{ opacity: 0 }}
+              animate={this.state.isHovering ? {opacity: 1} : {opacity: 0}}
+            >
+              <div
+                className="card-title"
+                style={
+                  this.state.isClicked
+                    ? { opacity: 0 }
+                    : this.state.stylesBrightness
+                }
+              >
+                {this.props.repo.name}
+              </div> 
+
+              {this.props.sortMethod !== "name" &&
+                <div className="date no-select" title="Date">
+                  {this.getDate()}
+                </div>
               }
-            >{this.props.repo.name}</div>
-          </div>
-          <div className="bottom-bar">
-            <img
-              src={GithubIcon}
-              alt="Github"
-              className="github-icon"
-              onClick={() => window.open(this.props.repo.html_url)}
-            />
-            <div className="date" title="Date">
-              {this.getDate()}
-            </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>

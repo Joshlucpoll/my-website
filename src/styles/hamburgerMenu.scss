@@ -31,8 +31,8 @@
     .line {
       width: 4vh;
       height: 3px;
-      border-radius: 1px;
-      background-color: white;
+      border-radius: 3px;
+      background-color: invert($text-colour);
       position: absolute;
       transition: opacity ease 0.2s;
     }
@@ -45,7 +45,7 @@
     right: 120%;
     font-family: 'Ubuntu Mono', monospace;
     white-space: nowrap;
-    color: $text-colour;
+    color: invert($text-colour);
     padding: 10px;
     background-color: $accent-colour;
     border-radius: 4px;
@@ -85,13 +85,13 @@
     
     
     .link {
-      color: white;
+      color: $text-colour;
       background-color: $background-colour;
       border-radius: 10px;
       padding: 20px;
       margin: 20px;
       text-align: center;
-      font-family: 'Ubuntu Mono', monospace;
+      font-family: 'IBM Plex Sans', monospace;
       font-size: 50px;
       pointer-events: all;
       cursor: pointer;

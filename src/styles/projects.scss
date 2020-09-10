@@ -10,45 +10,30 @@
     position: relative;
     padding: 10vh;
     
-    .overlay {
-      border-radius: 10px;
-      height: 100%;
-      width: 100%;
-      padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 
-      .title {
-        position: relative;
-        font-family: 'IBM Plex Sans', sans-serif;
-        font-weight: 400;
-        font-size: 40px;
-        line-height: 40px;
-        color: $text-colour;
-      }
-      
-      .subtitle {
-        position: relative;
-        font-family: 'IBM Plex Sans', sans-serif;
-        font-weight: 200;
-        font-size: 18px;
-        line-height: 20px;
-        color: $text-colour;
-        margin-top: 10px;
-      }
+    .title {
+      position: relative;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 500;
+      font-size: 50px;
+      line-height: 40px;
+      color: $text-colour;
     }
 
     .sort-container {
       font-size: 18px;
-      float: right;
-      margin-top: 3rem;
-      
+      margin-top: 40px;
+        
       .sort-button {
         height: 1.7rem;
-        align-items: center;
-        justify-content: center;
         cursor: pointer;
         background-color: $accent-colour;
         padding: 10px;
-        border-radius: 10px;
+        border-radius: 1.7rem;
         transition: background-color 100ms;
 
         &:hover {
@@ -59,8 +44,8 @@
         }
         
         .sort-text {
-          color: $text-colour;
-          font-weight: 300;
+          color: invert($text-colour);
+          font-weight: 500;
           display: inline;
           font-family: 'IBM Plex Sans', sans-serif;
         }
@@ -91,8 +76,8 @@
           
           div {
             padding: 5px;
-            color: $text-colour;
-            font-weight: 300;
+            color: invert($text-colour);
+            font-weight: 500;
             font-family: 'IBM Plex Sans', sans-serif;
             cursor: pointer;
           }
@@ -110,12 +95,13 @@
   
   .projects-container {
     position: relative;
-    width: calc(100vw - 20vh);
-    padding: 4vh 10vh 10vh 10vh; 
+    width: calc(100vw - 80px);
+    padding: 40px;
+    padding-top: 0;
     
     display: grid;
     gap: 5vh;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     
     a {
       text-decoration: none;
