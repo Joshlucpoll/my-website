@@ -44,7 +44,7 @@
       right: 120%;
       font-family: 'Ubuntu Mono', monospace;
       white-space: nowrap;
-      color: $text-colour;
+      color: invert($text-colour);
       background-color: $accent-colour;
       padding: 10px;
       border-radius: 4px;
@@ -103,7 +103,7 @@
 
           &::placeholder {
             opacity: 0.5;
-            color: $text-colour
+            color: invert($text-colour)
           }
         }
       }

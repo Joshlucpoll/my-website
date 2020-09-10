@@ -147,14 +147,14 @@ class SocialBar extends React.Component {
             className="share-button"
             onClick={() => this.switchBar()}
             style={{ originX: 0 }}
-            fill="#939393"
+            fill="#fff"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             width="4vh"
             height="4vh"
           >
             <motion.path opacity={this.state.isOpen ? "0" : "1"} d="M18 2A3 3 0 1 0 18 8 3 3 0 1 0 18 2zM18 16A3 3 0 1 0 18 22 3 3 0 1 0 18 16zM6 9A3 3 0 1 0 6 15 3 3 0 1 0 6 9z" />
-            <path fill="none" stroke="#939393" strokeMiterlimit="10" strokeWidth="2" d="M18 19L6 12 18 5"/>
+            <path fill="none" stroke="#fff" strokeMiterlimit="10" strokeWidth="2" d="M18 19L6 12 18 5"/>
           </motion.svg>
         </motion.div>
       );
