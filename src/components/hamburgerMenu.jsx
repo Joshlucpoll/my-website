@@ -100,7 +100,6 @@ class HamburgerMenu extends React.Component {
   }
 
   render() {
-    console.log(window.innerWidth > document.documentElement.clientWidth)
     return (
       <div>
         <motion.div

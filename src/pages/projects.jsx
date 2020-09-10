@@ -1,11 +1,10 @@
 import React from "react";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 import ProjectCard from "../components/projectCard";
 import ProjectSelector from "./projects/projectsSelector";
 import "../styles/projects.scss";
-import DownArrow from "../assets/down_arrow.svg";
 
 import { pageTransition } from "../styles/pageTransition";
 import { Switch, Route } from "react-router-dom";
@@ -154,7 +153,7 @@ class Projects extends React.Component {
     }
     if (repos === null) {
       setTimeout(() => {
-        this.getRepos()
+        this.getRepos(sort)
       }, 100);
     }
 
@@ -169,9 +168,13 @@ class Projects extends React.Component {
   }
 
   sortButtonHandler() {
-    this.setState((state) => ({
-      isSortOpen: !state.isSortOpen,
-    }));
+    const nextSort = {
+      "pushed_at": "name",
+      "name": "created_at",
+      "created_at": "pushed_at",
+    }
+
+    this.getRepos(nextSort[this.state.sortMethod]);
   }
 
   onItemClick(path, el) {
@@ -211,14 +214,6 @@ class Projects extends React.Component {
 
   render() {
     const sortMethod = this.state.sortMethod
-
-    const updated = () =>
-      sortMethod === "pushed_at" ? "bold" : "normal";
-    const full_name = () =>
-      sortMethod === "name" ? "bold" : "normal";
-    const created = () =>
-      sortMethod === "created_at" ? "bold" : "normal";
-
     return (
       <Switch>
         <Route exact path="/projects" ignoreScrollBehavior>
@@ -242,52 +237,9 @@ class Projects extends React.Component {
                   onClick={() => this.sortButtonHandler()}
                 >
                   <div className="sort-text">
-                    Sort: {sort[sortMethod]}
+                    Sorting By {sort[sortMethod]}
                   </div>
-                  <img
-                    className="down-arrow"
-                    alt="down-arrow"
-                    src={DownArrow}
-                  ></img>
                 </motion.div>
-                <AnimatePresence>
-                  {this.state.isSortOpen && (
-                    <motion.div
-                      className="sort-menu-container"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ ease: "circOut", duration: 0.3 }}
-                    >
-                      <ul>
-                        <li>
-                          <div
-                            style={{ fontWeight: updated() }}
-                            onClick={() => this.getRepos("pushed_at")}
-                          >
-                            Updated
-                          </div>
-                        </li>
-                        <li>
-                          <div
-                            style={{ fontWeight: full_name() }}
-                            onClick={() => this.getRepos("name")}
-                          >
-                            Alphabetical
-                          </div>
-                        </li>
-                        <li>
-                          <div
-                            style={{ fontWeight: created() }}
-                            onClick={() => this.getRepos("created_at")}
-                          >
-                            Created
-                          </div>
-                        </li>
-                      </ul>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </motion.div>
             </div>
 
@@ -312,7 +264,7 @@ class Projects extends React.Component {
                       <ProjectCard
                         repo={repo}
                         image={projectImages[repo.name]}
-                        sortMethod={this.state.sortMethod}
+                        sortMethod={sortMethod}
                         onClick={(path, el) =>
                           this.onItemClick(path, el)
                         }
