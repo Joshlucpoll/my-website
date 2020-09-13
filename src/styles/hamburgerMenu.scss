@@ -95,6 +95,10 @@
       font-size: 50px;
       pointer-events: all;
       cursor: pointer;
+
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 }

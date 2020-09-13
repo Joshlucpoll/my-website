@@ -57,15 +57,20 @@ class Project extends React.Component {
     }
 
     this.initialStylesTitle = {
+      color: "#fff",
+      fontSize: "15px",
+      fontWeight: 300,
       y: this.styles.titleY,
       x: this.styles.titleX,
       rotateX: this.styles.rotateX,
       rotateY: this.styles.rotateY,
     }
     this.finalStylesTitle = {
-      y: `${80/this.styles.width * this.styles.height}vw`,
+      color: "#000",
+      fontSize: "40px",
+      fontWeight: 500,
+      y: `${110/this.styles.width * this.styles.height}vw`,
       x: "calc(50vw - 50%)",
-      scale: 2,
       rotateX: 0,
       rotateY: 0,
     }
@@ -88,6 +93,7 @@ class Project extends React.Component {
           variants={pageVariants} 
           transition={{ ease: [0.94, 0.06, 0.88, 0.45], duration: 0.5 }}
         >
+          
           <div
             className="back-button"
             onClick={() => this.backButton()}
@@ -96,6 +102,7 @@ class Project extends React.Component {
               <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
             </svg>
           </div>
+
           <div className="project-wrapper">
             <div className="project-topbar">
               <div
@@ -113,9 +120,9 @@ class Project extends React.Component {
                 </div>
               }
               <div className="project-spacer"></div>
-              <div className="project-description">
-                {this.props.repo.description}
-              </div>
+            </div>
+            <div className="project-description">
+              {this.props.repo.description}
             </div>
           </div>
         </motion.div>

@@ -29,6 +29,7 @@
   }
 
   .project-wrapper {
+    margin-top: 80px;
     padding: 40px;
 
     .project-topbar {
@@ -63,15 +64,14 @@
         width: 30px;
         flex-basis: 30px;
       }
+    }
 
-      .project-description {
-        color: $text-colour;
-        font-size: 20px;
-        margin-left: auto;
-        padding: 10px;
-        border-radius: 10px;
-        // box-shadow: 3px 3px 5px 5px rgba(0, 0, 0, 0.301), -3px -3px 5px 5px darken($background-colour, 5%);
-      }
+    .project-description {
+      color: $text-colour;
+      float: right;
+      font-size: 20px;
+      padding: 10px;
+      border-radius: 10px;
     }
   }
 }
@@ -88,8 +88,7 @@
   position: absolute;
   padding: 5px;
   border-radius: 10px;
-  color: white;
-  background-color: rgba(29, 29, 29, 0.7);
+  color: $text-colour;
   text-decoration: none;
   text-transform: capitalize;
   font-family: 'IBM Plex Sans', sans-serif;
