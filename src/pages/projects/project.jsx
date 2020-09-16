@@ -1,6 +1,7 @@
 import React from "react";
 
 import { motion } from "framer-motion";
+import ReactMarkdown from "react-markdown";
 import GithubIcon from "../../assets/social_icons/github.svg";
 import ExternalLink from "../../assets/external-link.svg";
 
@@ -28,6 +29,7 @@ class Project extends React.Component {
     super(props);
     this.state = {
       repo: props.repo,
+      readme: "",
     };
 
     this.styles = this.props.imageLocation;
@@ -80,6 +82,23 @@ class Project extends React.Component {
     this.props.changeDirectory("/projects");
   }
 
+  getReadme() {
+    fetch(`https://raw.githubusercontent.com/Joshlucpoll/${this.state.repo.name}/master/README.md`)
+    .then((res) => res.text())
+    .then(
+      (result) => {
+        this.setState({ readme: result });
+      },
+      (error) => {
+        throw error;
+      }
+    );
+  }
+
+  componentDidMount() {
+    this.getReadme();
+  }
+
   render() {
     return (
       <>
@@ -121,9 +140,12 @@ class Project extends React.Component {
               }
               <div className="project-spacer"></div>
             </div>
+            <div className="project-description-title">Description:</div>
             <div className="project-description">
               {this.props.repo.description}
             </div>
+
+            <ReactMarkdown className="readme-markdown" disallowedTypes={["image"]} source={this.state.readme}></ReactMarkdown>
           </div>
         </motion.div>
         <motion.img

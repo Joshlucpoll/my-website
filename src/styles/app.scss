@@ -39,6 +39,19 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+p {
+  color: $text-colour;
+  padding: 0;
+}
+
+code {
+  font-family: 'Ubuntu Mono', monospace;
+  background-color: #e7e7e7;
+  color: lighten($text-colour, 20%);
+  border-radius: .25rem;
+  padding: .125rem;
+}
+
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */

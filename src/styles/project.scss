@@ -30,7 +30,7 @@
 
   .project-wrapper {
     margin-top: 80px;
-    padding: 40px;
+    padding: 50px;
 
     .project-topbar {
       display: flex;
@@ -42,7 +42,6 @@
         width: 30px;
         flex-basis: 30px;
         padding: 10px;
-        margin: 10px;
         border-radius: 50%;
         background-color: $accent-colour;
         transition: box-shadow 300ms ease;
@@ -66,12 +65,21 @@
       }
     }
 
+    .project-description-title {
+      margin-top: 40px;
+      color: $text-colour;
+      font-size: 25px;
+    }
+
     .project-description {
       color: $text-colour;
-      float: right;
+      opacity: 0.6;
       font-size: 20px;
-      padding: 10px;
-      border-radius: 10px;
+    }
+
+    .readme-markdown {
+      width: calc(100vw - 80px);
+      color: $text-colour;
     }
   }
 }
@@ -87,6 +95,7 @@
 .project-title {
   position: absolute;
   padding: 5px;
+  font-weight: 900;
   border-radius: 10px;
   color: $text-colour;
   text-decoration: none;
