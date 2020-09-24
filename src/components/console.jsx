@@ -38,6 +38,15 @@ class Console extends React.Component {
     this.setState({ outputList: newOutputList });
   }
 
+  greetingMessage() {
+    this.addToConsole("‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎__‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎_‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎_‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‏‏‎ ‎‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎_‏‏‎ ‎_‏‏‎ ‎");
+    this.addToConsole("‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎\\‏‏‎ ‎\\‏‏‎ ‎‏‏‎ ‎___‏‏‎ ‎‏‏‎ ‎___|‏‏‎ ‎|__‏‏‎ ‎|‏‏‎ ‎|_‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎_‏‏‎ ‎‏‏‎ ‎___‏‏‎ ‎_‏‏‎ ‎__‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎___‏‏‎ ‎|‏‏‎ ‎|‏‏‎ ‎|");
+    this.addToConsole("‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎\\‏‏‎ ‎\\/‏‏‎ ‎_‏‏‎ ‎\\/‏‏‎ ‎__|‏‏‎ ‎'_‏‏‎ ‎\\|‏‏‎ ‎|‏‏‎ ‎|‏‏‎ ‎|‏‏‎ ‎|/‏‏‎ ‎__|‏‏‎ ‎'_‏‏‎ ‎\\‏‏‎ ‎/‏‏‎ ‎_‏‏‎ ‎\\|‏‏‎ ‎|‏‏‎ ‎|");
+    this.addToConsole("‏‏‎ ‎/\\_/‏‏‎ ‎/‏‏‎ ‎(_)‏‏‎ ‎\\__‏‏‎ ‎\\‏‏‎ ‎|‏‏‎ ‎|‏‏‎ ‎|‏‏‎ ‎|‏‏‎ ‎|_|‏‏‎ ‎|‏‏‎ ‎(__|‏‏‎ ‎|_)‏‏‎ ‎|‏‏‎ ‎(_)‏‏‎ ‎|‏‏‎ ‎|‏‏‎ ‎|");
+    this.addToConsole("‏‏‎ ‎\\___/‏‏‎ ‎\\___/|___/_|‏‏‎ ‎|_|_|\\__,_|\\___|‏‏‎ ‎.__/‏‏‎ ‎\\___/|_|_|");
+    this.addToConsole("‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎|_|‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎");
+  }
+
   commandProcessor(commandLineRaw) {
     const commandLine = commandLineRaw.toLowerCase();
 
@@ -319,6 +328,7 @@ class Console extends React.Component {
   render() {
     if (this.state.outputList.length === 0) {
       this.outputItems = null;
+      this.greetingMessage();
     } else {
       this.outputItems = this.state.outputList.map(function (item, index) {
         return (
