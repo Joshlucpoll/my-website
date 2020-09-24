@@ -59,7 +59,6 @@ class Project extends React.Component {
     }
 
     this.initialStylesTitle = {
-      color: "#fff",
       fontSize: "15px",
       fontWeight: 300,
       y: this.styles.titleY,
@@ -68,11 +67,10 @@ class Project extends React.Component {
       rotateY: this.styles.rotateY,
     }
     this.finalStylesTitle = {
-      color: "#000",
       fontSize: "40px",
       fontWeight: 500,
       y: `${110/this.styles.width * this.styles.height}vw`,
-      x: "calc(50vw - 50%)",
+      x: window.innerWidth/2 - this.styles.titleWidth,
       rotateX: 0,
       rotateY: 0,
     }

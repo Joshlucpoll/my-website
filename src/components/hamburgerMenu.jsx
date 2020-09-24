@@ -164,8 +164,8 @@ class HamburgerMenu extends React.Component {
           onClick={() => this.closeMenu()}
           animate={
             this.state.isMenuOpen
-              ? { height: "100vh", opacity: 0.95 }
-              : { height: 0, opacity: 0.95 }
+              ? { opacity: 0.95, pointerEvents: "all" }
+              : { opacity: 0, pointerEvents: "none" }
           }
           transition={{ duration: 0.3, delay: 0.2 }}
         ></motion.div>

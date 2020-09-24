@@ -44,7 +44,7 @@
         }
         
         .sort-text {
-          color: invert($text-colour);
+          color: $text-colour;
           font-weight: 500;
           display: inline;
           font-family: 'IBM Plex Sans', sans-serif;
