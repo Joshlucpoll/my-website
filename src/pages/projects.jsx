@@ -19,6 +19,7 @@ import ntcIMG from "../assets/projects/name-that-colour.png";
 import rdwfIMG from "../assets/projects/rotating-dials-watchface.png";
 import ttwIMG from "../assets/projects/tabletime-website.png";
 import taIMG from "../assets/projects/text-adventure.png";
+import awIMG from "../assets/projects/alfred-website.png";
 
 const projectImages = {
   "battleships-game": bsgIMG,
@@ -31,6 +32,7 @@ const projectImages = {
   "rotating-dials-watchface": rdwfIMG,
   "tabletime-website": ttwIMG,
   "text-adventure": taIMG,
+  "alfred-website": awIMG,
 }
 
 const sort = {
@@ -108,7 +110,6 @@ class Projects extends React.Component {
       "joshlucpoll",
       "rotating-dials-watchface",
       "joshlucpoll.github.io",
-      "alfred-website",
     ];
   }
 
