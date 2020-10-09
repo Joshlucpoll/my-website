@@ -34,13 +34,13 @@
         background-color: $accent-colour;
         padding: 13px;
         border-radius: 1.7rem;
-        transition: background-color 100ms;
+        transition: background-color 300ms ease;
 
         &:hover {
-          background-color: darken($accent-colour, 5%);
+          background-color: lighten($accent-colour, 5%);
         }
         &:active {
-          background-color: darken($accent-colour, 10%);
+          background-color: lighten($accent-colour, 10%);
         }
         
         .sort-text {

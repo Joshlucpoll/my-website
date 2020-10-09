@@ -19,16 +19,18 @@
     align-items: center;
     background-color: $accent-colour;
     border-radius: 50%;
+    transition: background-color 300ms ease;
     cursor: pointer;
     
     &:hover {
-      background-color: darken($accent-colour, 5%);
+      background-color: lighten($accent-colour, 5%);
     }
     &:active {
-      background-color: darken($accent-colour, 10%);
+      background-color: lighten($accent-colour, 10%);
     }
 
     .line {
+      opacity: 0.6;
       width: 4vh;
       height: 3px;
       border-radius: 3px;
@@ -48,15 +50,16 @@
     color: $text-colour;
     padding: 10px;
     background-color: $accent-colour;
+    transition: background-color 300ms ease;
     border-radius: 4px;
     cursor: pointer;
     opacity: 0;
 
     &:hover {
-      background-color: darken($accent-colour, 5%);
+      background-color: lighten($accent-colour, 5%);
     }
     &:active {
-      background-color: darken($accent-colour, 10%);
+      background-color: lighten($accent-colour, 10%);
     }
   }
 }

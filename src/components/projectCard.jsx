@@ -45,7 +45,7 @@ class projectCard extends React.Component {
     } else if (now.diff(repoTime, "days") < 7) {
       return repoTime.format("dddd");
     } else {
-      return repoTime.format("ddd[,] Q[-]MMM[-]YY");
+      return repoTime.format("D[-]MMM[-]Y [(]N[)]");
     }
   }
 

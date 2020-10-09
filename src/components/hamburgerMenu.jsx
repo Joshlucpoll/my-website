@@ -107,14 +107,12 @@ class HamburgerMenu extends React.Component {
           onClick={() => this.toggleMenu()}
           style={
             window.innerWidth > document.documentElement.clientWidth
-            ? { marginRight: "2vh" }
-            : {marginRight: "calc(10px + 2vh)"}
-              }
+            ? { marginRight: "calc(2vh - 10px)"}
+            : {marginRight: "2vh"}
+          }
         >
           <motion.div
             className="lines-container"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
           >
             <motion.div
               animate={

@@ -41,7 +41,7 @@ class Project extends React.Component {
       height: this.styles.height,
       y: this.styles.y,
       x: this.styles.x,
-      filter: this.styles.brightness,
+      filter: "blur(0px)",
       transform: this.styles.transform,
       rotateX: this.styles.rotateX,
       rotateY: this.styles.rotateY,
@@ -53,26 +53,30 @@ class Project extends React.Component {
       height: `${100/this.styles.width * this.styles.height}vw`,
       y: 0,
       x: 0,
-      filter: "brightness(1)",
+      filter: "blur(2px)",
       rotateX: 0,
       rotateY: 0,
     }
 
     this.initialStylesTitle = {
-      fontSize: "15px",
+      fontSize: "25px",
       fontWeight: 300,
       y: this.styles.titleY,
       x: this.styles.titleX,
       rotateX: this.styles.rotateX,
       rotateY: this.styles.rotateY,
+      backgroundColor: "rgba(255, 255, 255, 0)",
+      color: "rgb(255, 255, 255)",
     }
     this.finalStylesTitle = {
       fontSize: "40px",
       fontWeight: 500,
-      y: `${110/this.styles.width * this.styles.height}vw`,
-      x: window.innerWidth/2 - this.styles.titleWidth,
+      y: `calc(${50/this.styles.width * this.styles.height}vw - ${this.styles.titleHeight}px)`,
+      x: `calc(50vw - ${this.styles.titleWidth}px)`,
       rotateX: 0,
       rotateY: 0,
+      backgroundColor: "rgba(255, 255, 255, 1)",
+      color: "rgb(0, 0, 0)",
     }
   }
 

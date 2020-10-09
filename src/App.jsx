@@ -24,6 +24,7 @@ class App extends React.Component {
     this.state = {
       changePage: null,
       easyNav: null,
+      isSocialBarVisible: this.socialBarVisible(),
     };
   }
   
@@ -73,6 +74,19 @@ class App extends React.Component {
       }
     }
   }
+
+  socialBarVisible() {
+    const paths = [
+      "/",
+    ]
+
+    if (paths.includes(window.location.pathname)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
   
   changeDirectory(path, state={}) {
     window.scroll({
@@ -85,6 +99,7 @@ class App extends React.Component {
       state: state,
     };
     this.props.history.push(location);
+    this.setState({ isSocialBarVisible: this.socialBarVisible() })
   }
 
   changeNav(nav) {
@@ -119,7 +134,9 @@ class App extends React.Component {
             </AnimatePresence>
           )}
           />
-        <SocialBar/>
+        {this.state.isSocialBarVisible &&
+          <SocialBar/>
+        }
         {this.state.easyNav === null && (
           <motion.div
             className="nav-button-fake"

@@ -51,7 +51,6 @@ class Stars {
       (e) => this.updateStarSpeed(e),
       false
     );
-    document.getElementById("warp").onclick = () => this.toggleWarp();
 
     this.initializeStars();
     this.executeFrame();
@@ -269,6 +268,10 @@ class Home extends React.Component {
     });
   }
 
+  warpButtonOnClick() {
+    this.state.stars.toggleWarp();
+  }
+
   componentDidMount() {
     this._isMounted = true;
     document.title = "Josh Pollard | 🏠";
@@ -344,6 +347,7 @@ class Home extends React.Component {
           <motion.div
             className="warp-button"
             id="warp"
+            onClick={() => this.warpButtonOnClick()}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{

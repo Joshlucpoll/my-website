@@ -21,14 +21,15 @@
       height: 6vh;
       width: 6vh;
       background-color: $accent-colour;
+      transition: background-color 300ms ease;
       border-radius: 50%;
       cursor: pointer;
 
       &:hover {
-        background-color: darken($accent-colour, 5%);
+        background-color: lighten($accent-colour, 5%);
       }
       &:active {
-        background-color: darken($accent-colour, 10%);
+        background-color: lighten($accent-colour, 10%);
       }
           
       img {
@@ -46,16 +47,17 @@
       white-space: nowrap;
       color: $text-colour;
       background-color: $accent-colour;
+      transition: background-color 300ms ease;
       padding: 10px;
       border-radius: 4px;
       cursor: pointer;
       opacity: 0;
 
       &:hover {
-        background-color: darken($accent-colour, 5%);
+        background-color: lighten($accent-colour, 5%);
       }
       &:active {
-        background-color: darken($accent-colour, 10%);
+        background-color: lighten($accent-colour, 10%);
       }
     }
   }

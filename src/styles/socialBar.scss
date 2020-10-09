@@ -61,7 +61,7 @@
     text-align: center;
     
     height: 48vh;
-    width: 0vh;
+    width: 8vh;
     z-index: 10;
     
     &:hover div {
@@ -71,6 +71,8 @@
 
     &:hover div img {
       width: 4vh;
+      opacity: 0.8;
+      transform: translateX(0);
     }
     
     div {
@@ -82,7 +84,9 @@
       z-index: 10;
       width: 1vh;
       height: 4vh;
-      transition: width $animation-dur $timing-func, box-shadow $animation-dur $timing-func, border-radius $animation-dur $timing-func;
+      transition: width $animation-dur $timing-func,
+        box-shadow $animation-dur $timing-func,
+        border-radius $animation-dur $timing-func;
       
       &:hover {
         width: 8vh;
@@ -97,10 +101,13 @@
       }
       
       img {
-        opacity: 0.8;
-        transition: width $animation-dur $timing-func;
+        opacity: 0;
         height: 4vh;
-        width: 0;
+        width: 4vh;
+        transform: translateX(-100%);
+        transition: width $animation-dur $timing-func, 
+          opacity $animation-dur $timing-func,
+          transform $animation-dur $timing-func;
       }
     }
   }
