@@ -34,7 +34,7 @@ class Stars {
     this.ctx = this.c.getContext("2d");
 
     this.spaceColour = "rgb(0,10,20)";
-    this.numStars = window.innerWidth;
+    this.numStars = window.innerWidth * 1.5;
     this.starSpeed = 1;
     this.radius = "0." + Math.floor(Math.random() * 9) + 1;
     this.focalLength = this.c.width * 2;
@@ -77,10 +77,10 @@ class Stars {
         const star = this.stars[i];
 
         const x =
-          (star.x - this.centerX) * ((this.c.width * 0.5) / star.z) +
+          (star.x - this.centerX) * (this.c.width / star.z) +
           this.centerX;
         const y =
-          (star.y - this.centerY) * ((this.c.width * 0.5) / star.z) +
+          (star.y - this.centerY) * (this.c.width / star.z) +
           this.centerY;
 
         this.starPositions.push({ x: x, y: y });
@@ -95,7 +95,7 @@ class Stars {
   initializeStars() {
     this.centerX = this.c.width / 2;
     this.centerY = this.c.height / 2;
-
+    
     this.stars = [];
     for (let i = 0; i < this.numStars; i++) {
       const star = {
@@ -161,11 +161,11 @@ class Stars {
     for (let i = 0; i < this.numStars; i++) {
       const star = this.stars[i];
 
-      let pixelX = (star.x - this.centerX) * ((this.c.width * 0.5) / star.z);
+      let pixelX = (star.x - this.centerX) * (this.c.width / star.z);
       pixelX += this.centerX;
-      let pixelY = (star.y - this.centerY) * ((this.c.width * 0.5) / star.z);
+      let pixelY = (star.y - this.centerY) * (this.c.width / star.z);
       pixelY += this.centerY;
-      let pixelRadius = Math.abs(1 * (this.focalLength / star.z));
+      let pixelRadius = Math.abs(.5 * (this.focalLength / star.z * window.innerWidth / window.innerHeight));
 
       this.ctx.fillStyle = `rgba(209, 255, 255, ${star.o})`;
 
