@@ -34,7 +34,7 @@ class Stars {
     this.ctx = this.c.getContext("2d");
 
     this.spaceColour = "rgb(0,10,20)";
-    this.numStars = window.innerWidth * 1.5;
+    this.numStars = window.innerWidth * 2;
     this.starSpeed = 1;
     this.radius = "0." + Math.floor(Math.random() * 9) + 1;
     this.focalLength = this.c.width * 2;
@@ -42,8 +42,10 @@ class Stars {
     this.centerY = this.c.height / 2;
     this.stars = [];
     this.starPositions = [];
+    this.zPositionDifference = [];
 
     this.warp = false;
+    this.decelerating = false;
     this.unmounting = false;
 
     document.addEventListener(
@@ -69,8 +71,8 @@ class Stars {
   }
 
   toggleWarp() {
-    this.warp = !this.warp;
-    if (this.warp) {
+    if (!this.warp) {
+      this.warp = !this.warp;
       this.starPositions = [];
 
       for (let i = 0; i < this.numStars; i++) {
@@ -82,13 +84,25 @@ class Stars {
         const y =
           (star.y - this.centerY) * (this.c.width / star.z) +
           this.centerY;
+        const z = star.z;
 
-        this.starPositions.push({ x: x, y: y });
+        this.starPositions.push({
+          x: x,
+          y: y,
+          z: z
+        });
       }
       this.increaseStarSpeed();
+
     } else {
-      this.initializeStars();
-      this.starSpeed = 1;
+      const zPositions = this.starPositions.map(star => star.z);
+      const maxZPosition = zPositions.reduce((a, b) => Math.max(a, b));
+
+      this.minIndex = Math.max.apply(Math, zPositions);
+      this.zPositionDifference = zPositions.map(element => element - maxZPosition);
+
+      this.decelerating = true;
+      this.starSpeed = -40;
     }
   }
 
@@ -105,6 +119,46 @@ class Stars {
         o: "0." + Math.floor(Math.random() * 99) + 1,
       };
       this.stars.push(star);
+    }
+  }
+
+  decreaseStarSpeed() {
+
+    let inPlaceStars = 0;
+
+    for (let i = 0; i < this.numStars; i++) {
+      const star = this.stars[i];
+
+      if (star.z >= this.starPositions[i].z) {
+        star.z = this.starPositions[i].z;
+        inPlaceStars++;
+      }
+      else {
+
+        if (this.zPositionDifference[i] !== null) {
+          const diff = this.zPositionDifference[i] - this.starSpeed;
+          if (diff >= 0) {
+            star.z += diff - this.starSpeed;
+            this.zPositionDifference[i] = null;
+          }
+          else {
+            this.zPositionDifference[i] = diff;
+          }
+        }
+        else {
+          star.z -= this.starSpeed;
+        }
+      }
+    }
+
+    const zDiff = this.starPositions[this.minIndex].z - this.stars[this.minIndex].z;
+    const speed = zDiff > 40 ? -40 : -(zDiff/10 + 5);
+    this.starSpeed = speed;
+
+    if (inPlaceStars === this.numStars) {
+      this.decelerating = false;
+      this.warp = false;
+      this.starSpeed = 1;
     }
   }
 
@@ -188,7 +242,14 @@ class Stars {
     if (window.location.pathname !== "/") {
       this.enableWarp()
     }
-    this.moveStars();
+
+    if (this.decelerating) {
+      this.decreaseStarSpeed()
+    }
+    else {
+      this.moveStars();
+    }
+
     this.drawStars();
     setTimeout(() => {
       this.executeFrame();
