@@ -12,11 +12,15 @@ function ProjectSelector(props) {
         imageLocation = {
           width: 210,
           height: 90,
-          x: "calc(50vw - 50%)",
-          y: 0,
+          x: "50vw",
+          y: "100vh",
           brightness: "none",
           rotateX: "none",
           rotateY: "none",
+          titleX: "50vw",
+          titleY: "50vh",
+          titleWidth: (projectName.length + 1) * 10,
+          titleHeight: 30,
         }
       }
       else {
