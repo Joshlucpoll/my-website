@@ -1,0 +1,23 @@
+@import "./colours.scss";
+
+
+.skills-body {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: $background-colour;
+
+  .sphere-container {
+    position: absolute;
+    perspective: 1000px;
+    top: calc(50vh);
+    left: calc(50vw);
+
+    .sphere-item {
+      color: white;
+      position: absolute;
+      white-space: nowrap;
+      offset-anchor: center;
+    }
+  }
+}

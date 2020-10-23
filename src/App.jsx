@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 // Pages
 import Home from "./pages/home";
 import Projects from "./pages/projects";
+import Skills from "./pages/skills";
 import LostPage from "./pages/404";
 
 // Components
@@ -126,6 +127,9 @@ class App extends React.Component {
                   <Projects
                     changeDirectory={(path, state) => this.changeDirectory(path, state)}
                   />
+                </Route>
+                <Route path="/skills" ignoreScrollBehavior>
+                  <Skills/>
                 </Route>
                 <Route ignoreScrollBehavior>
                   <LostPage />
