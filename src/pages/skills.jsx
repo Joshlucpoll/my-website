@@ -51,7 +51,7 @@ class Skills extends React.Component {
       "Google Cloud",
     ];
     this.state = {
-      skills: skills,
+      skills: skills.sort(() => .5 - Math.random()),
       points: new Array(skills.length).fill([[0], [0], [-200]]),
       windowLimit: Math.min(window.innerHeight, window.innerWidth) / 2,
       xRatio: Math.random() / 2,
