@@ -6,7 +6,14 @@ class Directory {
         path: "/",
         id: 1,
         parentId: null,
-        children: [2]
+        children: [2, 12]
+      },
+      {
+        name: "skills",
+        path: "/skills",
+        id: 12,
+        parentId: 1,
+        children: [null]
       },
       {
         name: "projects",

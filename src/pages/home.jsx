@@ -363,7 +363,8 @@ class Home extends React.Component {
     const longShadowStyle = longShadow(
       xVector,
       yVector,
-      "#" + (((1 << 24) * Math.random()) | 0).toString(16)
+      // "#" + (((1 << 24) * Math.random()) | 0).toString(16)
+      "#313D53"
     );
 
     return (

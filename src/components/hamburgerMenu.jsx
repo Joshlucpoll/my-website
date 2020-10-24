@@ -200,6 +200,15 @@ class HamburgerMenu extends React.Component {
                     Projects
                   </div>
                 </motion.li>
+                <motion.li variants={item}>
+                  <div
+                    className="link no-select"
+                    style={window.location.pathname === "/skills" ? {opacity: 1} : {opacity: 0.6}}
+                    onClick={() => this.changePage("/skills")}
+                  >
+                    Skills
+                  </div>
+                </motion.li>
               </motion.ul>
             </motion.div>
           )}
