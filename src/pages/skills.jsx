@@ -53,6 +53,7 @@ class Skills extends React.Component {
     this.state = {
       skills: skills.sort(() => .5 - Math.random()),
       points: new Array(skills.length).fill([[0], [0], [-200]]),
+      offsets: new Array(skills.length).fill(0),
       windowLimit: Math.min(window.innerHeight, window.innerWidth) / 2,
       xRatio: Math.random() / 2,
       yRatio: Math.random() / 2,
@@ -66,20 +67,20 @@ class Skills extends React.Component {
 
     for (let i = 0; i < samples; i++) {
       const y = (i * 2 / samples) - 1;
-      const radius = sqrt(1 - y * y)
+      const radius = sqrt(1 - y * y);
 
       const theta = phi * i;
 
       const x = cos(theta) * radius;
       const z = sin(theta) * radius;
 
-      const windowLimit = this.state.windowLimit * 0.8
+      const windowLimit = this.state.windowLimit * 0.8;
 
       points.push([
         [x * windowLimit],
         [y * windowLimit],
         [z * windowLimit]
-      ])
+      ]);
     }
     this.setState({ points: points });
   }
@@ -107,18 +108,18 @@ class Skills extends React.Component {
         [sin(thetaZ), cos(thetaZ), 0],
         [0, 0, 1]
       ]),
-    )
+    );
 
     for (let i = 0; i < samples; i++) {
       const currentPoint = this.state.points[i];
-
       const newPoint = multiply(rotationMatrix, currentPoint)._data;
+
       newPoints.push(newPoint);
     }
 
-    this.setState({points: newPoints})
+    this.setState({points: newPoints});
     setTimeout(() => {
-      this.rotateSphere()
+      this.rotateSphere();
     }, 100);
   }
 
@@ -155,7 +156,7 @@ class Skills extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       this.fibSphere();
-      this.rotateSphere()
+      this.rotateSphere();
     }, 1500);
 
     window.addEventListener("resize", () => this.updateWindowDimensions());
@@ -185,7 +186,7 @@ class Skills extends React.Component {
               key={index}
               initial={{ opacity: 0 }}
               animate={{
-                x: this.state.points[index][0][0] - skill.length * 2,
+                x: this.state.points[index][0][0] - this.state.offsets[index],
                 y: this.state.points[index][1][0] - 20,
                 z: this.state.points[index][2][0],
                 opacity: Math.max(((this.state.points[index][2][0] / this.state.windowLimit) + 1) / 2, 0.1)
