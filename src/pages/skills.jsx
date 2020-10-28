@@ -52,8 +52,8 @@ class Skills extends React.Component {
     ];
     this.state = {
       skills: skills.sort(() => .5 - Math.random()),
+      isLoaded: false,
       points: new Array(skills.length).fill([[0], [0], [-200]]),
-      offsets: new Array(skills.length).fill(0),
       windowLimit: Math.min(window.innerHeight, window.innerWidth) / 2,
       xRatio: Math.random() / 2,
       yRatio: Math.random() / 2,
@@ -82,7 +82,10 @@ class Skills extends React.Component {
         [z * windowLimit]
       ]);
     }
-    this.setState({ points: points });
+    this.setState({
+      points: points,
+      isLoaded: true,
+    });
   }
 
   rotateSphere(samples=this.state.skills.length) {
@@ -167,6 +170,16 @@ class Skills extends React.Component {
   }
 
   render() {
+    let offsets;
+
+    if (this.state.isLoaded) {
+      offsets = [...document.getElementsByClassName("sphere-item")].map(element => element.clientWidth/2);
+    }
+    else {
+      offsets = new Array(this.state.skills.length).fill(0);
+    }
+
+
     return (
       <motion.div
         className="skills-body"
@@ -180,13 +193,13 @@ class Skills extends React.Component {
         onTouchMove={(e) => this.handleMouseMove(e)}
       >
         <div className="sphere-container" id="sphere">
-          {this.state.skills.map((skill, index) =>
+          {this.state.isLoaded && this.state.skills.map((skill, index) =>
             <motion.div
               className="sphere-item"
               key={index}
               initial={{ opacity: 0 }}
               animate={{
-                x: this.state.points[index][0][0] - this.state.offsets[index],
+                x: this.state.points[index][0][0] - offsets[index],
                 y: this.state.points[index][1][0] - 20,
                 z: this.state.points[index][2][0],
                 opacity: Math.max(((this.state.points[index][2][0] / this.state.windowLimit) + 1) / 2, 0.1)
