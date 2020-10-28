@@ -54,7 +54,7 @@ class Skills extends React.Component {
       skills: skills.sort(() => .5 - Math.random()),
       isLoaded: false,
       points: new Array(skills.length).fill([[0], [0], [-200]]),
-      windowLimit: Math.min(window.innerHeight, window.innerWidth) / 2,
+      sphereLimit: 0,
       xRatio: Math.random() / 2,
       yRatio: Math.random() / 2,
     };
@@ -74,12 +74,12 @@ class Skills extends React.Component {
       const x = cos(theta) * radius;
       const z = sin(theta) * radius;
 
-      const windowLimit = this.state.windowLimit * 0.8;
+      const itemLimit = this.state.sphereLimit * 0.75;
 
       points.push([
-        [x * windowLimit],
-        [y * windowLimit],
-        [z * windowLimit]
+        [x * itemLimit],
+        [y * itemLimit],
+        [z * itemLimit]
       ]);
     }
     this.setState({
@@ -137,11 +137,11 @@ class Skills extends React.Component {
 
     const spherePosition = document.getElementById("sphere").getBoundingClientRect();
 
-    const xDistance = xPosition - spherePosition.left;
-    const yDistance = yPosition - spherePosition.top;
+    const xDistance = xPosition - spherePosition.width/2;
+    const yDistance = yPosition - spherePosition.height/2;
 
-    const xRatio = xDistance / this.state.windowLimit;
-    const yRatio = yDistance / this.state.windowLimit;
+    const xRatio = xDistance / this.state.sphereLimit;
+    const yRatio = yDistance / this.state.sphereLimit;
 
     this.setState({
       xRatio: xRatio,
@@ -150,8 +150,10 @@ class Skills extends React.Component {
   }
 
   updateWindowDimensions() {
-    if (this.state.windowLimit !== Math.min(window.innerHeight, window.innerWidth) / 2) {
-      this.setState({ windowLimit: Math.min(window.innerHeight, window.innerWidth) / 2 });
+    const sphere = document.getElementById("sphere");
+
+    if (this.state.sphereLimit !== Math.min(sphere.clientHeight, sphere.clientWidth) / 2) {
+      this.setState({ sphereLimit: Math.min(sphere.clientHeight, sphere.clientWidth) / 2 });
       this.fibSphere();
     }
   }
@@ -159,6 +161,7 @@ class Skills extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       this.fibSphere();
+      this.updateWindowDimensions();
       this.rotateSphere();
     }, 1500);
 
@@ -178,7 +181,6 @@ class Skills extends React.Component {
     else {
       offsets = new Array(this.state.skills.length).fill(0);
     }
-
 
     return (
       <motion.div
@@ -202,7 +204,7 @@ class Skills extends React.Component {
                 x: this.state.points[index][0][0] - offsets[index],
                 y: this.state.points[index][1][0] - 20,
                 z: this.state.points[index][2][0],
-                opacity: Math.max(((this.state.points[index][2][0] / this.state.windowLimit) + 1) / 2, 0.1)
+                opacity: Math.max(((this.state.points[index][2][0] / this.state.sphereLimit) + 1) / 2, 0.1)
               }}
               transition={{
                 duration: 0.1,
