@@ -118,7 +118,7 @@ class HamburgerMenu extends React.Component {
               animate={
                 this.state.isMenuOpen
                   ? { y: 0, rotate: -135 }
-                  : { y: "10px", rotate: 0 }
+                  : { y: `${window.innerHeight * 0.012}px`, rotate: 0 }
               }
               transition={linesTransition}
               className="line"
@@ -136,7 +136,7 @@ class HamburgerMenu extends React.Component {
               animate={
                 this.state.isMenuOpen
                   ? { y: 0, rotate: -135 }
-                  : { y: "-10px", rotate: 0 }
+                  : { y: `-${window.innerHeight * 0.012}px`, rotate: 0 }
               }
               transition={linesTransition}
               className="line"
