@@ -3,6 +3,31 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import "../styles/hamburgerMenu.scss";
 
+// Variants
+const backdropFilter = {
+  open: {
+    clipPath: `circle(${
+      window.innerWidth + window.innerHeight * 2
+    }px at calc(100vw - 5vh) 95vh`,
+    transition: {
+      duration: 0.3,
+      type: "spring",
+      stiffness: 20,
+      restDelta: 2,
+    },
+  },
+  closed: {
+    clipPath: "circle(1px at calc(100vw - 5vh) 95vh)",
+    transition: {
+      duration: 0.3,
+      delay: 0.2,
+      type: "spring",
+      stiffness: 400,
+      damping: 40,
+    },
+  },
+};
+
 const list = {
   hidden: {
     transition: {
@@ -160,12 +185,14 @@ class HamburgerMenu extends React.Component {
         <motion.div
           className="backdrop-filter"
           onClick={() => this.closeMenu()}
-          animate={
-            this.state.isMenuOpen
-              ? { opacity: 0.95, pointerEvents: "all" }
-              : { opacity: 0, pointerEvents: "none" }
+          initial={"closed"}
+          animate={this.state.isMenuOpen ? "open" : "closed"}
+          variants={backdropFilter}
+          style={
+            this.state.isMenuOpen ? 
+            {pointerEvents: "all"} :
+            {pointerEvents: "none"}
           }
-          transition={{ duration: 0.3, delay: 0.2 }}
         ></motion.div>
         <AnimatePresence>
           {this.state.isMenuOpen && (
