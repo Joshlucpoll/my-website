@@ -7,7 +7,7 @@ import "../styles/hamburgerMenu.scss";
 const backdropFilter = {
   open: {
     clipPath: `circle(${
-      window.innerWidth + window.innerHeight * 2
+      Math.max(window.innerWidth, window.innerHeight) * 2
     }px at calc(100vw - 5vh) 95vh`,
     transition: {
       duration: 0.3,

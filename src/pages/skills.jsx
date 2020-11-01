@@ -54,9 +54,10 @@ class Skills extends React.Component {
       skills: skills.sort(() => .5 - Math.random()),
       isLoaded: false,
       points: new Array(skills.length).fill([[0], [0], [-200]]),
-      sphereLimit: 0,
+      sphereLimit: 1,
       xRatio: Math.random() / 2,
       yRatio: Math.random() / 2,
+      isMounted: true,
     };
   }
 
@@ -120,10 +121,14 @@ class Skills extends React.Component {
       newPoints.push(newPoint);
     }
 
-    this.setState({points: newPoints});
-    setTimeout(() => {
-      this.rotateSphere();
-    }, 100);
+    if (this.state.isMounted) {
+    
+      this.setState({points: newPoints});
+      setTimeout(() => {
+        this.rotateSphere();
+      }, 100);
+      
+    }
   }
 
   handleMouseMove(e) {
@@ -150,11 +155,16 @@ class Skills extends React.Component {
   }
 
   updateWindowDimensions() {
-    const sphere = document.getElementById("sphere");
-
-    if (this.state.sphereLimit !== Math.min(sphere.clientHeight, sphere.clientWidth) / 2) {
-      this.setState({ sphereLimit: Math.min(sphere.clientHeight, sphere.clientWidth) / 2 });
-      this.fibSphere();
+    try {
+      const sphere = document.getElementById("sphere");
+  
+      if (this.state.sphereLimit !== Math.min(sphere.clientHeight, sphere.clientWidth) / 2) {
+        this.setState({ sphereLimit: Math.min(sphere.clientHeight, sphere.clientWidth) / 2 });
+        this.fibSphere();
+      }
+    }
+    catch(error) {
+      console.error(error);
     }
   }
 
@@ -169,6 +179,7 @@ class Skills extends React.Component {
   }
 
   componentWillUnmount() {
+    this.setState({isMounted: false});
     window.removeEventListener("resize", () => this.updateWindowDimensions());
   }
 
