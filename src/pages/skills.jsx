@@ -142,8 +142,8 @@ class Skills extends React.Component {
 
     const spherePosition = document.getElementById("sphere").getBoundingClientRect();
 
-    const xDistance = xPosition - spherePosition.width/2;
-    const yDistance = yPosition - spherePosition.height/2;
+    const xDistance = xPosition - spherePosition.width/2 - spherePosition.x;
+    const yDistance = yPosition - spherePosition.height/2 - spherePosition.y;
 
     const xRatio = xDistance / this.state.sphereLimit;
     const yRatio = yDistance / this.state.sphereLimit;
@@ -205,6 +205,12 @@ class Skills extends React.Component {
         onMouseMove={(e) => this.handleMouseMove(e)}
         onTouchMove={(e) => this.handleMouseMove(e)}
       >
+        <div className="skills-info-container">
+          <div className="skills-title">Skills</div>
+          <div className="skills-description">
+            With over 4 years of programming experience, I have learnt many techniques and technologies.
+          </div>
+        </div>
         <div className="sphere-container" id="sphere">
           {this.state.isLoaded && this.state.skills.map((skill, index) =>
             <motion.div
