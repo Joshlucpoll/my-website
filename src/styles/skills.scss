@@ -7,12 +7,10 @@
   background-color: $background-colour;
   display: flex;
   justify-content: center;
-  flex-flow: wrap;
-  // overflow: hidden;
+  flex-flow: no-wrap;
 
   .skills-info-container {
-    width: 40%;
-    height: 100vh;
+    flex-basis: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,6 +26,7 @@
     }
 
     .skills-description {
+      text-align: center;
       padding: 20px;
       color: $text-colour;
       opacity: 0.8;
@@ -35,12 +34,11 @@
     }
   }
   .sphere-container {
-    height: 100%;
-    width: 60%;
-    min-width: 500px;
+    flex-basis: 60%;
     perspective: calc(min(100vh, 100vw));
 
     .sphere-item {
+      overflow: hidden;
       color: white;
       position: absolute;
       top: 50%;
@@ -52,11 +50,14 @@
   }
 }
 
-@media screen and (max-width: 999px) {
+@media screen and (max-width: 800px) {
+  .skills-body {
+    flex-direction: column;
+  }
   .skills-info-container {
-    width: 100%;
+    flex-basis: 40%;
   }
   .sphere-container {
-    width: 100%;
+    flex-basis: 60%;
   }
 }

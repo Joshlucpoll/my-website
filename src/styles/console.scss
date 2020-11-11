@@ -40,18 +40,19 @@
 
     }
     .easy-mode-button {
-      position: absolute;
-      top: calc(2vh - 7px);
-      right: 120%;
-      font-family: 'Ubuntu Mono', monospace;
-      white-space: nowrap;
-      color: $text-colour;
-      background-color: $accent-colour;
-      transition: background-color 300ms ease;
+      position: fixed;
+      bottom: 2.5vh;
+      right: 9vh;
       padding: 10px;
       border-radius: 4px;
-      cursor: pointer;
+      font-family: 'Ubuntu Mono', monospace;
       opacity: 0;
+      white-space: nowrap;
+      background-color: $accent-colour;
+      color: $text-colour;
+
+      transition: background-color 300ms ease;
+      cursor: pointer;
 
       &:hover {
         background-color: lighten($accent-colour, 5%);

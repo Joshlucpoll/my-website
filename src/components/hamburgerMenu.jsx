@@ -5,9 +5,9 @@ import "../styles/hamburgerMenu.scss";
 
 // Variants
 const backdropFilter = {
-  open: {
+  open: win => ({
     clipPath: `circle(${
-      Math.max(window.innerWidth, window.innerHeight) * 2
+      Math.max(win.innerWidth, win.innerHeight) * 2
     }px at calc(100vw - 5vh) 95vh`,
     transition: {
       duration: 0.3,
@@ -15,7 +15,7 @@ const backdropFilter = {
       stiffness: 20,
       restDelta: 2,
     },
-  },
+  }),
   closed: {
     clipPath: "circle(1px at calc(100vw - 5vh) 95vh)",
     transition: {
@@ -130,11 +130,6 @@ class HamburgerMenu extends React.Component {
         <motion.div
           className="hamburger-container"
           onClick={() => this.toggleMenu()}
-          style={
-            window.innerWidth > document.documentElement.clientWidth
-            ? { marginRight: "calc(2vh - 10px)"}
-            : {marginRight: "2vh"}
-          }
         >
           <motion.div
             className="lines-container"
@@ -171,8 +166,8 @@ class HamburgerMenu extends React.Component {
             className="easy-mode-button no-select"
             animate={
               this.state.isMenuOpen
-                ? { y: 0, opacity: 1 }
-                : { y: "100%", opacity: 0 }
+                ? { x: 0, opacity: 1 }
+                : { x: "-50%", opacity: 0 }
             }
             transition={{ ease: "easeOut" }}
             style={{ originX: 1 }}
@@ -187,6 +182,7 @@ class HamburgerMenu extends React.Component {
           onClick={() => this.closeMenu()}
           initial={"closed"}
           animate={this.state.isMenuOpen ? "open" : "closed"}
+          custom={window}
           variants={backdropFilter}
           style={
             this.state.isMenuOpen ? 

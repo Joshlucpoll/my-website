@@ -362,8 +362,8 @@ class Console extends React.Component {
             className="easy-mode-button no-select"
             animate={
               this.state.consoleOpen
-                ? { y: 0, opacity: 1 }
-                : { y: "100%", opacity: 0 }
+                ? { x: 0, opacity: 1 }
+                : { x: "-50%", opacity: 0 }
             }
             transition={{ ease: "easeOut" }}
             style={{ originX: 1 }}
