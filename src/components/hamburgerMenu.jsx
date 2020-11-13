@@ -170,7 +170,7 @@ class HamburgerMenu extends React.Component {
                 : { x: "-50%", opacity: 0 }
             }
             transition={{ ease: "easeOut" }}
-            style={{ originX: 1 }}
+            style={this.state.isMenuOpen ? {pointerEvents: "all"} : {pointerEvents: "none"}}
             onClick={() => this.changeNav()}
           >
             Terminal

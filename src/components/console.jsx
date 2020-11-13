@@ -366,7 +366,7 @@ class Console extends React.Component {
                 : { x: "-50%", opacity: 0 }
             }
             transition={{ ease: "easeOut" }}
-            style={{ originX: 1 }}
+            style={this.state.consoleOpen ? {pointerEvents: "all"} : {pointerEvents: "none"}}
             onClick={() => this.changeNav()}
           >
             Normal
