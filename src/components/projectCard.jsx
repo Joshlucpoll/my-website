@@ -2,6 +2,7 @@ import React from "react";
 import { isMobile } from "react-device-detect";
 import { motion } from "framer-motion";
 import moment from "moment";
+import trianglify from 'trianglify';
 import "../styles/projectCard.scss";
 
 class projectCard extends React.Component {
@@ -10,12 +11,24 @@ class projectCard extends React.Component {
     this.state = {
       styles: {transform: "rotateY(0deg) rotateX(0deg)"},
       stylesBrightness: {},
+      image: props.image === undefined ? this.generateRanImage() : props.image,
       isClicked: false,
       isHovering: false,
       _isMounted: false,
     };
+
     this.image = React.createRef();
     this.link = "/projects/" + props.repo.name;
+  }
+
+  async generateRanImage() {
+    const pattern = trianglify();
+    await const img = pattern.toCanvas().toBlob(blob => {
+      console.log(blob)
+      return URL.createObjectURL(blob);
+    });
+    console.log(img);
+    return img;
   }
 
   getDate() {
@@ -172,7 +185,7 @@ class projectCard extends React.Component {
               id={this.props.repo.name + "-img"}
               className="title-img"
               alt="Project"
-              src={this.props.image}
+              src={this.state.image}
               ref={this.image}
             />
             <motion.div
