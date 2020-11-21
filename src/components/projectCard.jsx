@@ -23,7 +23,7 @@ class projectCard extends React.Component {
 
   async generateRanImage() {
     const pattern = trianglify();
-    await const img = pattern.toCanvas().toBlob(blob => {
+    let img = await pattern.toCanvas().toBlob(blob => {
       console.log(blob)
       return URL.createObjectURL(blob);
     });
