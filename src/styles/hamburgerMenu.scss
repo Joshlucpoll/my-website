@@ -92,6 +92,7 @@
     
     .link {
       color: $text-colour;
+      opacity: 0.6;
       padding: 10px;
       margin: 20px 0;
       text-align: center;
@@ -99,9 +100,12 @@
       font-size: 50px;
       font-weight: 700;
       pointer-events: all;
+
+      transition: opacity ease 500ms, transform ease 200ms;
       cursor: pointer;
 
       &:hover {
+        transform: scale(1.1);
         opacity: 1;
       }
     }

@@ -58,8 +58,8 @@ const item = {
 
 const linesTransition = {
   type: "spring",
-  stiffness: 200,
-  damping: 40,
+  stiffness: 700,
+  damping: 30
 };
 
 class HamburgerMenu extends React.Component {
@@ -137,25 +137,25 @@ class HamburgerMenu extends React.Component {
             <motion.div
               animate={
                 this.state.isMenuOpen
-                  ? { y: 0, rotate: -135 }
+                  ? { y: 0, rotate: -45 }
                   : { y: `${window.innerHeight * 0.012}px`, rotate: 0 }
               }
               transition={linesTransition}
               className="line"
             />
             <motion.div
-              animate={
-                this.state.isMenuOpen
-                  ? { y: 0, rotate: 135 }
-                  : { y: 0, rotate: 0 }
-              }
-              transition={linesTransition}
+              animate={this.state.isMenuOpen ? "open" : "closed"}
+              variants={{
+                "open": {opacity: 0},
+                "closed": {opacity: 0.6}
+              }}
+              transition={{duration: 0}}
               className="line"
             />
             <motion.div
               animate={
                 this.state.isMenuOpen
-                  ? { y: 0, rotate: -135 }
+                  ? { y: 0, rotate: 45 }
                   : { y: `-${window.innerHeight * 0.012}px`, rotate: 0 }
               }
               transition={linesTransition}
@@ -208,7 +208,7 @@ class HamburgerMenu extends React.Component {
                 <motion.li variants={item}>
                   <div
                     className="link no-select"
-                    style={window.location.pathname === "/" ? {opacity: 1} : {opacity: 0.6}}
+                    style={window.location.pathname === "/" ? {opacity: 1, transform: "scale(1)"} : {}}
                     onClick={() => this.changePage("/")}
                   >
                     Home
@@ -217,7 +217,7 @@ class HamburgerMenu extends React.Component {
                 <motion.li variants={item}>
                   <div
                     className="link no-select"
-                    style={window.location.pathname === "/projects" ? {opacity: 1} : {opacity: 0.6}}
+                    style={window.location.pathname === "/projects" ? {opacity: 1, transform: "scale(1)"} : {}}
                     onClick={() => this.changePage("/projects")}
                   >
                     Projects
@@ -226,10 +226,19 @@ class HamburgerMenu extends React.Component {
                 <motion.li variants={item}>
                   <div
                     className="link no-select"
-                    style={window.location.pathname === "/skills" ? {opacity: 1} : {opacity: 0.6}}
+                    style={window.location.pathname === "/skills" ? {opacity: 1, transform: "scale(1)"} : {}}
                     onClick={() => this.changePage("/skills")}
                   >
                     Skills
+                  </div>
+                </motion.li>
+                <motion.li variants={item}>
+                  <div
+                    className="link no-select"
+                    style={window.location.pathname === "/cv" ? {opacity: 1, transform: "scale(1)"} : {}}
+                    onClick={() => this.changePage("/cv")}
+                  >
+                    CV
                   </div>
                 </motion.li>
               </motion.ul>
