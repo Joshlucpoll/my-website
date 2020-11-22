@@ -208,7 +208,7 @@ class Skills extends React.Component {
         <div className="skills-info-container">
           <div className="skills-title">Skills</div>
           <div className="skills-description">
-            With over 4 years of programming experience, I have learnt many techniques and technologies.
+          I am a driven and passionate aspiring software engineer. I have invested a significant amount of time and effort in self-teaching, developing my knowledge and supporting others in the field of digital technology. I thrive on the challenge of finding intelligent solutions to complex problems and I am keen to apply and grow my skills in the workplace. 
           </div>
         </div>
         <div className="sphere-container" id="sphere">
