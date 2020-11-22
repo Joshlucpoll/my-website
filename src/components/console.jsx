@@ -88,7 +88,7 @@ class Console extends React.Component {
             if (currentDir !== "/") {
               this.props.changeDirectory(currentDir + "/" + value);
             } else {
-              this.props.changeDirectory(value);
+              this.props.changeDirectory("/" + value);
             }
           } else {
             this.props.changeDirectory(value);

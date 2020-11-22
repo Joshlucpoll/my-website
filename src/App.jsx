@@ -17,6 +17,7 @@ import Console from "./components/console";
 import HamburgerMenu from "./components/hamburgerMenu";
 import SocialBar from "./components/socialBar";
 
+import cv from "./assets/Joshua Pollard CV.pdf"
 import "./styles/app.scss";
 
 class App extends React.Component {
@@ -90,17 +91,22 @@ class App extends React.Component {
   }
   
   changeDirectory(path, state={}) {
-    window.scroll({
-      top: 0, 
-      left: 0, 
-      behavior: 'smooth'
-    });
-    const location = {
-      pathname: path,
-      state: state,
-    };
-    this.props.history.push(location);
-    this.setState({ isSocialBarVisible: this.socialBarVisible() })
+    if (path === "/cv") {
+      window.open(cv)
+    }
+    else {
+      window.scroll({
+        top: 0, 
+        left: 0, 
+        behavior: 'smooth'
+      });
+      const location = {
+        pathname: path,
+        state: state,
+      };
+      this.props.history.push(location);
+      this.setState({ isSocialBarVisible: this.socialBarVisible() })
+    }
   }
 
   changeNav(nav) {
