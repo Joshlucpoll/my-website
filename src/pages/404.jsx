@@ -8,12 +8,10 @@ import { pageStyle, pageTransition } from "../styles/pageTransition";
 
 const pageVariants = {
   initial: window => ({
-    opacity: 0.99,
     position: "fixed",
     clipPath: `circle(0px at ${window.innerWidth / 2}px ${window.innerHeight / 2}px)`,
   }),
   animate: window => ({
-    opacity: 1,
     clipPath: `circle(${Math.max(window.innerWidth, window.innerHeight)}px at ${window.innerWidth / 2}px ${window.innerHeight / 2}px)`,
     position: "absolute",
     transitionEnd: {
@@ -21,7 +19,7 @@ const pageVariants = {
     }
   }),
   exit: {
-    opacity: 0.99
+    display: "fixed"
   }
 }
 

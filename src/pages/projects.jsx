@@ -90,7 +90,6 @@ const pageVariants = {
     },
   }),
   exit: {
-    opacity: 0.99,
     display: "fixed",
   },
 };

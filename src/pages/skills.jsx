@@ -8,21 +8,18 @@ import '../styles/skills.scss';
 
 const pageVariants = {
   initial: (window) => ({
-    opacity: 0.99,
     position: "fixed",
     clipPath: `circle(0px at ${window.innerWidth / 2}px ${
       window.innerHeight / 2
     }px)`,
   }),
   animate: (window) => ({
-    opacity: 1,
     clipPath: `circle(${
       Math.max(window.innerWidth, window.innerHeight) * 4
     }px at ${window.innerWidth / 2}px ${window.innerHeight / 2}px)`,
     position: "absolute",
   }),
   exit: {
-    opacity: 0.99,
     display: "fixed",
   },
 };
@@ -169,6 +166,9 @@ class Skills extends React.Component {
   }
 
   componentDidMount() {
+    document.title = window.location.pathname === "/skills" ?
+    "Josh Pollard | ⚙️" : document.title;
+
     setTimeout(() => {
       this.fibSphere();
       this.updateWindowDimensions();

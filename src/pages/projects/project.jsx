@@ -18,7 +18,6 @@ const pageVariants = {
     opacity: 1
   }),
   exit: {
-    opacity: 0.99,
     display: "fixed",
   }
 }
