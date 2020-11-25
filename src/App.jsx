@@ -47,6 +47,13 @@ class App extends React.Component {
       this.setState({ easyNav: true });
     }, 2500);
     
+    this.unListen = this.props.history.listen(() => {
+      this.setState({ isSocialBarVisible: this.socialBarVisible() })
+    });
+  }
+
+  componentWillUnmount() {
+    this.unListen();
   }
 
   fetchRepos() {
@@ -105,7 +112,6 @@ class App extends React.Component {
         state: state,
       };
       this.props.history.push(location);
-      this.setState({ isSocialBarVisible: this.socialBarVisible() })
     }
   }
 
