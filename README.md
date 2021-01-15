@@ -1,8 +1,8 @@
+# Portfolio for Josh Pollard *(WIP)*
 
 [![](https://github.com/joshlucpoll/my-website/workflows/build/badge.svg)](https://github.com/Joshlucpoll/my-website/actions?query=workflow%3Abuild)
 [![time tracker](https://wakatime.com/badge/github/Joshlucpoll/my-website.svg)](https://wakatime.com/badge/github/Joshlucpoll/my-website)
 
-# Portfolio for Josh Pollard *(WIP)*
 
 ![](https://res.cloudinary.com/dy1xy7vkf/image/upload/my-website.png)
 
