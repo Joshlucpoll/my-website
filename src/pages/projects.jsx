@@ -34,13 +34,13 @@ const projectImages = {
   "tabletime-website": ttwIMG,
   "text-adventure": taIMG,
   "alfred-website": awIMG,
-  "tabletime": ttIMG,
-}
+  tabletime: ttIMG,
+};
 
 const sort = {
-  "pushed_at": "Updated",
-  "name": "Alphabetical",
-  "created_at": "Created",
+  pushed_at: "Updated",
+  name: "Alphabetical",
+  created_at: "Created",
 };
 
 const list = {
@@ -114,81 +114,76 @@ class Projects extends React.Component {
     ];
   }
 
-  getRepos(sort="pushed_at") {
+  getRepos(sort = "pushed_at") {
     // sort types: created, updated, pushed, full_name
 
-    function compareValues(key, direction="desc") {
+    function compareValues(key, direction = "desc") {
       return function innerSort(a, b) {
         if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
           // property doesn't exist on either object
           return 0;
         }
-    
-        const varA = (key === "full_name")
-          ? a[key].toUpperCase() : new Date(a[key]);
-        const varB = (key === "full_name")
-          ? b[key].toUpperCase() : new Date(b[key]);
-    
+
+        const varA =
+          key === "full_name" ? a[key].toUpperCase() : new Date(a[key]);
+        const varB =
+          key === "full_name" ? b[key].toUpperCase() : new Date(b[key]);
+
         let comparison = 0;
         if (varA > varB) {
           comparison = 1;
         } else if (varA < varB) {
           comparison = -1;
         }
-        
-        return (
-          (direction === 'desc') ? (comparison * -1) : comparison
-        );
+
+        return direction === "desc" ? comparison * -1 : comparison;
       };
     }
-
 
     const repos = JSON.parse(localStorage.getItem("repos"));
 
     if (repos instanceof Array) {
       const sortedRepos = repos.sort(compareValues(sort));
-      this.setState({ 
+      this.setState({
         repos: sortedRepos,
         sortMethod: sort,
-        isLoaded: true
+        isLoaded: true,
       });
     }
     if (repos === null) {
       setTimeout(() => {
-        this.getRepos(sort)
+        this.getRepos(sort);
       }, 100);
     }
-
   }
 
   componentDidMount() {
-    document.title = window.location.pathname === "/projects" ?
-    "Josh Pollard | 🚀" 
-    : 
-    `Josh Pollard | ${window.location.pathname.split("/").slice(-1)[0]}`;
+    document.title =
+      window.location.pathname === "/projects"
+        ? "Josh Pollard | 🚀"
+        : `Josh Pollard | ${window.location.pathname.split("/").slice(-1)[0]}`;
     this.getRepos("pushed_at");
   }
 
   sortButtonHandler() {
     const nextSort = {
-      "pushed_at": "name",
-      "name": "created_at",
-      "created_at": "pushed_at",
-    }
+      pushed_at: "name",
+      name: "created_at",
+      created_at: "pushed_at",
+    };
 
     this.getRepos(nextSort[this.state.sortMethod]);
   }
 
   onItemClick(path, el) {
-
     const width = el.current.clientWidth;
     const height = el.current.clientHeight;
     const x = el.current.getBoundingClientRect().left;
     const y = el.current.getBoundingClientRect().top + window.scrollY;
-    const brightness = el.current.style.filter
+    const brightness = el.current.style.filter;
     const transform = el.current.parentElement.parentElement.style.transform;
-    const rotateY = transform.split(" ")[0].split("(")[1].split(")")[0]
-    const rotateX = transform.split(" ")[1].split("(")[1].split(")")[0]
+    const rotateY = transform.split(" ")[0].split("(")[1].split(")")[0];
+    const rotateX = transform.split(" ")[1].split("(")[1].split(")")[0];
 
     const titleEl = el.current.nextSibling.firstChild;
     const titleWidth = titleEl.clientWidth;
@@ -197,7 +192,7 @@ class Projects extends React.Component {
     const titleY = titleEl.getBoundingClientRect().top + window.scrollY;
 
     const state = {
-      width: width, 
+      width: width,
       height: height,
       x: x,
       y: y,
@@ -210,12 +205,12 @@ class Projects extends React.Component {
       titleX: titleX,
       titleY: titleY,
     };
-    
+
     this.props.changeDirectory(path, state);
   }
 
   render() {
-    const sortMethod = this.state.sortMethod
+    const sortMethod = this.state.sortMethod;
     return (
       <Switch>
         <Route exact path="/projects" ignoreScrollBehavior>
@@ -238,9 +233,7 @@ class Projects extends React.Component {
                   className="sort-button"
                   onClick={() => this.sortButtonHandler()}
                 >
-                  <div className="sort-text">
-                    Sorting By {sort[sortMethod]}
-                  </div>
+                  <div className="sort-text">Sorting By {sort[sortMethod]}</div>
                 </motion.div>
               </motion.div>
             </div>
@@ -252,28 +245,30 @@ class Projects extends React.Component {
               variants={list}
             >
               {this.state.isLoaded &&
-                this.state.repos.map((repo) =>
-                  // Excludes repos in 'blacklist' array
-                  !this.blackList.includes(repo.name.toLowerCase()) &&
-                    <motion.div
-                      key={repo.name}
-                      variants={item}
-                      positionTransition={{
-                        duration: 0.5,
-                        ease: "backInOut",
-                      }}
-                    >
-                      <ProjectCard
-                        repo={repo}
-                        image={projectImages[repo.name]}
-                        sortMethod={sortMethod}
-                        onClick={(path, el) =>
-                          this.onItemClick(path, el)
-                        }
-                      />
-                    </motion.div>
+                this.state.repos.map(
+                  (repo) =>
+                    // Excludes repos in 'blacklist' array
+                    !this.blackList.includes(repo.name.toLowerCase()) && (
+                      <motion.div
+                        key={repo.name}
+                        variants={item}
+                        initial={{ scale: 0.8 }}
+                        whileHover={{ scale: 1 }}
+                        positionTransition={{
+                          duration: 0.5,
+                          ease: "backInOut",
+                        }}
+                      >
+                        <ProjectCard
+                          repo={repo}
+                          image={projectImages[repo.name]}
+                          sortMethod={sortMethod}
+                          onClick={(path, el) => this.onItemClick(path, el)}
+                        />
+                      </motion.div>
+                    )
                 )}
-              </motion.section>
+            </motion.section>
           </motion.div>
         </Route>
         <Route path={"/projects/:projectName"} ignoreScrollBehavior>

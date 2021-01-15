@@ -108,10 +108,10 @@
 
 .project-title {
   position: absolute;
-  padding: 10px;
+  padding: 2px;
   font-weight: 900;
-  border-radius: 10px;
-  color: invert($text-colour);
+  background-color: invert($text-colour);
+  color: $text-colour;
   text-decoration: none;
   text-transform: capitalize;
   font-family: 'Ubuntu Mono', monospace;

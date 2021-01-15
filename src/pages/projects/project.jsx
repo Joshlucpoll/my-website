@@ -7,21 +7,19 @@ import ExternalLink from "../../assets/external-link.svg";
 
 import "../../styles/project.scss";
 
-
 const pageVariants = {
-  initial: window => ({
+  initial: (window) => ({
     position: "fixed",
     opacity: 0,
   }),
-  animate: window => ({
+  animate: (window) => ({
     position: "absolute",
-    opacity: 1
+    opacity: 1,
   }),
   exit: {
     display: "fixed",
-  }
-}
-
+  },
+};
 
 class Project extends React.Component {
   constructor(props) {
@@ -44,18 +42,18 @@ class Project extends React.Component {
       transform: this.styles.transform,
       rotateX: this.styles.rotateX,
       rotateY: this.styles.rotateY,
-    }
+    };
     this.finalStylesImage = {
       opacity: 1,
       borderRadius: 0,
       width: "100vw",
-      height: `${100/this.styles.width * this.styles.height}vw`,
+      height: `${(100 / this.styles.width) * this.styles.height}vw`,
       y: 0,
       x: 0,
       filter: "blur(2px)",
       rotateX: 0,
       rotateY: 0,
-    }
+    };
 
     this.initialStylesTitle = {
       fontSize: "25px",
@@ -64,19 +62,17 @@ class Project extends React.Component {
       x: this.styles.titleX,
       rotateX: this.styles.rotateX,
       rotateY: this.styles.rotateY,
-      backgroundColor: "rgba(255, 255, 255, 0)",
-      color: "rgb(255, 255, 255)",
-    }
+    };
     this.finalStylesTitle = {
       fontSize: "40px",
       fontWeight: 500,
-      y: `calc(${50/this.styles.width * this.styles.height}vw - ${this.styles.titleHeight}px)`,
+      y: `calc(${(50 / this.styles.width) * this.styles.height}vw - ${
+        this.styles.titleHeight
+      }px)`,
       x: `calc(50vw - ${this.styles.titleWidth}px)`,
       rotateX: 0,
       rotateY: 0,
-      backgroundColor: "rgba(255, 255, 255, 1)",
-      color: "rgb(0, 0, 0)",
-    }
+    };
   }
 
   backButton() {
@@ -84,16 +80,18 @@ class Project extends React.Component {
   }
 
   getReadme() {
-    fetch(`https://raw.githubusercontent.com/Joshlucpoll/${this.state.repo.name}/master/README.md`)
-    .then((res) => res.text())
-    .then(
-      (result) => {
-        this.setState({ readme: result });
-      },
-      (error) => {
-        throw error;
-      }
-    );
+    fetch(
+      `https://raw.githubusercontent.com/Joshlucpoll/${this.state.repo.name}/master/README.md`
+    )
+      .then((res) => res.text())
+      .then(
+        (result) => {
+          this.setState({ readme: result });
+        },
+        (error) => {
+          throw error;
+        }
+      );
   }
 
   componentDidMount() {
@@ -105,21 +103,29 @@ class Project extends React.Component {
       <>
         <motion.div
           className="project-body"
-          style={{paddingTop: `${100/this.styles.width * this.styles.height}vw`}}
+          style={{
+            paddingTop: `${(100 / this.styles.width) * this.styles.height}vw`,
+          }}
           initial="initial"
           animate="animate"
           exit="exit"
           custom={window}
-          variants={pageVariants} 
+          variants={pageVariants}
           transition={{ ease: [0.94, 0.06, 0.88, 0.45], duration: 0.5 }}
         >
-          
-          <div
-            className="back-button"
-            onClick={() => this.backButton()}
-          >
-            <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-arrow-left-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+          <div className="back-button" onClick={() => this.backButton()}>
+            <svg
+              width="1em"
+              height="1em"
+              viewBox="0 0 16 16"
+              className="bi bi-arrow-left-short"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"
+              />
             </svg>
           </div>
 
@@ -129,16 +135,24 @@ class Project extends React.Component {
                 className="project-icon-container"
                 onClick={() => window.open(this.props.repo.html_url)}
               >
-                <img src={GithubIcon} alt="Github Icon" className="project-icon"/>
+                <img
+                  src={GithubIcon}
+                  alt="Github Icon"
+                  className="project-icon"
+                />
               </div>
-              {[null, ""].indexOf(this.props.repo.homepage) === -1 &&
+              {[null, ""].indexOf(this.props.repo.homepage) === -1 && (
                 <div
                   className="project-icon-container"
                   onClick={() => window.open(this.props.repo.homepage)}
                 >
-                  <img src={ExternalLink} alt="Website" className="project-icon"/>
+                  <img
+                    src={ExternalLink}
+                    alt="Website"
+                    className="project-icon"
+                  />
                 </div>
-              }
+              )}
               <div className="project-spacer"></div>
             </div>
             <div className="project-description-title">Description:</div>
@@ -146,27 +160,33 @@ class Project extends React.Component {
               {this.props.repo.description}
             </div>
 
-            <ReactMarkdown className="readme-markdown" disallowedTypes={["image"]} source={this.state.readme}></ReactMarkdown>
+            <ReactMarkdown
+              className="readme-markdown"
+              disallowedTypes={["image"]}
+              source={this.state.readme}
+            ></ReactMarkdown>
           </div>
         </motion.div>
         <motion.img
-          style={{opacity: 1}}
+          style={{ opacity: 1 }}
           initial={this.initialStylesImage}
           animate={this.finalStylesImage}
-          exit={{opacity: 0}}
-          transition={{duration: .5, ease: [0.94, 0.06, 0.88, 0.45]}}
-          className="title-img-project" 
-          alt="Project" 
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5, ease: "anticipate" }}
+          className="title-img-project"
+          alt="Project"
           src={this.props.image}
         />
         <motion.div
-          style={{opacity: 1}}
+          style={{ opacity: 1 }}
           className="project-title"
           initial={this.initialStylesTitle}
           animate={this.finalStylesTitle}
-          exit={{opacity: 0}}
-          transition={{duration: .5, ease: [0.94, 0.06, 0.88, 0.45]}}
-        >{this.state.repo.name}</motion.div>
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5, ease: "backIn" }}
+        >
+          {this.state.repo.name}
+        </motion.div>
       </>
     );
   }

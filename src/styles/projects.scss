@@ -67,8 +67,7 @@
     padding-top: 0;
     
     display: grid;
-    gap: 5vh;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     
     a {
       text-decoration: none;
