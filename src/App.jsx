@@ -143,6 +143,9 @@ class App extends React.Component {
                 <Route path="/skills" ignoreScrollBehavior>
                   <Skills/>
                 </Route>
+                <Route path={["/admin", "/dashboard", "/login", "/wp-admin"]} ignoreScrollBehavior>
+                  <RickRoll/>
+                </Route>
                 <Route ignoreScrollBehavior>
                   <LostPage />
                 </Route>
@@ -181,6 +184,16 @@ class App extends React.Component {
         )}
       </div>
     );
+  }
+}
+
+class RickRoll extends React.Component {
+  componentDidMount() {
+    window.location.assign('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+  }
+
+  render() {
+    return <div></div>;
   }
 }
 
