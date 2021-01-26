@@ -327,7 +327,7 @@ class Home extends React.Component {
   }
 
   warpButtonOnClick() {
-    this.state.stars.toggleWarp();
+    this.stars.toggleWarp();
   }
 
   componentDidMount() {
@@ -345,11 +345,13 @@ class Home extends React.Component {
       this.typeSubTitle();
     }, 4000);
 
-    this.setState({ stars: new Stars(document.getElementById("space")) });
+
+    this.stars = new Stars(document.getElementById("space"));
   }
 
   componentWillUnmount() {
     this._isMounted = false;
+    this.stars = null;
     window.removeEventListener("resize", this.updateWindowDimensions);
   }
 
