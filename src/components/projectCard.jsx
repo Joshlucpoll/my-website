@@ -2,16 +2,24 @@ import React from "react";
 import { isMobile } from "react-device-detect";
 import { motion } from "framer-motion";
 import moment from "moment";
-import trianglify from 'trianglify';
+import trianglify from "trianglify";
 import "../styles/projectCard.scss";
 
 class projectCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      styles: {transform: "rotateY(0deg) rotateX(0deg)"},
+      styles: { transform: "rotateY(0deg) rotateX(0deg)" },
       stylesBrightness: {},
-      image: props.image === undefined ? this.generateRanImage() : props.image,
+      image: props.image,
+      altImage:
+        props.image === undefined
+          ? trianglify({
+              width: 840,
+              height: 360,
+              seed: this.props.repo.name,
+            }).toSVG()
+          : null,
       isClicked: false,
       isHovering: false,
       _isMounted: false,
@@ -19,16 +27,6 @@ class projectCard extends React.Component {
 
     this.image = React.createRef();
     this.link = "/projects/" + props.repo.name;
-  }
-
-  async generateRanImage() {
-    const pattern = trianglify();
-    let img = await pattern.toCanvas().toBlob(blob => {
-      console.log(blob)
-      return URL.createObjectURL(blob);
-    });
-    console.log(img);
-    return img;
   }
 
   getDate() {
@@ -116,7 +114,7 @@ class projectCard extends React.Component {
 
       if (this.state._isMounted) {
         this.setState({
-          styles: styles, 
+          styles: styles,
           stylesBrightness: stylesBrightness,
           isHovering: isMobile ? true : false,
         });
@@ -144,7 +142,7 @@ class projectCard extends React.Component {
     if (isMobile) {
       this.setState({ isHovering: true });
     }
-    
+
     const card = document.getElementById(this.props.repo.name + "-card");
     const container = document.getElementById(
       this.props.repo.name + "-container"
@@ -176,22 +174,39 @@ class projectCard extends React.Component {
           transition={{ duration: 0.3, ease: "circOut" }}
         >
           <div className="image-container" onClick={() => this.onClick()}>
-            <motion.img
-              style={
-                this.state.isClicked
-                  ? { opacity: 0 }
-                  : this.state.stylesBrightness
-              }
-              id={this.props.repo.name + "-img"}
-              className="title-img"
-              alt="Project"
-              src={this.state.image}
-              ref={this.image}
-            />
+            {this.state.image === undefined ? (
+              <motion.div
+                style={
+                  this.state.isClicked
+                    ? { opacity: 0 }
+                    : this.state.stylesBrightness
+                }
+                id={this.props.repo.name + "-img"}
+                className="title-img"
+                alt="Project"
+                ref={this.image}
+                dangerouslySetInnerHTML={{
+                  __html: this.state.altImage.outerHTML,
+                }}
+              ></motion.div>
+            ) : (
+              <motion.img
+                style={
+                  this.state.isClicked
+                    ? { opacity: 0 }
+                    : this.state.stylesBrightness
+                }
+                id={this.props.repo.name + "-img"}
+                className="title-img"
+                alt="Project"
+                src={this.state.image}
+                ref={this.image}
+              />
+            )}
             <motion.div
               className="info-cover"
               initial={{ opacity: 0 }}
-              animate={this.state.isHovering ? {opacity: 1} : {opacity: 0}}
+              animate={this.state.isHovering ? { opacity: 1 } : { opacity: 0 }}
             >
               <div
                 className="card-title"
@@ -202,13 +217,13 @@ class projectCard extends React.Component {
                 }
               >
                 {this.props.repo.name}
-              </div> 
+              </div>
 
-              {this.props.sortMethod !== "name" &&
+              {this.props.sortMethod !== "name" && (
                 <div className="date no-select" title="Date">
                   {this.getDate()}
                 </div>
-              }
+              )}
             </motion.div>
           </div>
         </motion.div>
