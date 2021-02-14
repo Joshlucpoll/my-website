@@ -159,12 +159,17 @@ class Project extends React.Component {
             <div className="project-description">
               {this.props.repo.description}
             </div>
-
-            <ReactMarkdown
-              className="readme-markdown"
-              disallowedTypes={["image"]}
-              source={this.state.readme}
-            ></ReactMarkdown>
+            <div className="readme-container">
+              <a className="readme-title" href={this.state.repo.html_url + "/blob/master/readme.md"}>
+                README.md
+              </a>
+              <ReactMarkdown
+                className="readme-markdown"
+                disallowedTypes={["image"]}
+                source={this.state.readme}
+                skipHtml={true}
+              ></ReactMarkdown>
+            </div>
           </div>
         </motion.div>
         <motion.img

@@ -38,7 +38,11 @@
   }
 
   .project-wrapper {
-    padding: 50px;
+    max-width: 1000px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 30px;
+    padding-bottom: 0;
 
     .project-topbar {
       display: flex;
@@ -57,7 +61,7 @@
         cursor: pointer;
 
         &:hover {
-          box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 1);
+          box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, .1);
           background-color: lighten($accent-colour, 5%);
         }
         &:active {
@@ -81,18 +85,34 @@
     .project-description-title {
       margin-top: 40px;
       color: $text-colour;
-      font-size: 25px;
+      font-size: 20px;
     }
 
     .project-description {
       color: $text-colour;
       opacity: 0.6;
-      font-size: 20px;
+      font-size: 18px;
     }
 
-    .readme-markdown {
-      width: calc(100vw - 80px);
-      color: $text-colour;
+    .readme-container {
+      background-color: lighten($background-colour, 5);
+      box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, .5);
+      margin: 40px 0 40px 0;
+      padding: 40px;
+      border-radius: 10px;
+      height: 100%;
+
+      .readme-title {
+        font-family: 'Ubuntu Mono', monospace;
+        float: right;
+        color: rgba($text-colour, 0.5);
+      }
+  
+      .readme-markdown {
+        width: 100%;
+        color: $text-colour;
+        word-break: keep-all;
+      }
     }
   }
 }
@@ -125,7 +145,5 @@
 }
 
 p {
-  color: white;
-  font-size: 18px;
-  padding: 40px;
+  font-size: 16px;
 }

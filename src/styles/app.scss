@@ -40,12 +40,11 @@ body {
 p {
   color: $text-colour;
   padding: 0;
-  word-break: break-all;
 }
 
 code {
   font-family: 'Ubuntu Mono', monospace;
-  background-color: #e7e7e7;
+  background-color: invert(lighten($text-colour, 20%));
   color: lighten($text-colour, 20%);
   border-radius: .25rem;
   padding: .125rem;
