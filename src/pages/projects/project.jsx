@@ -160,7 +160,7 @@ class Project extends React.Component {
               {this.props.repo.description}
             </div>
             <div className="readme-container">
-              <a className="readme-title" href={this.state.repo.html_url + "/blob/master/readme.md"}>
+              <a className="readme-title" href={this.state.repo.html_url + "/blob/master/README.md"}>
                 README.md
               </a>
               <ReactMarkdown
