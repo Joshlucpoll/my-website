@@ -27,7 +27,7 @@ class Directory {
         path: "/projects",
         id: 2,
         parentId: 1,
-        children: [3, 4, 5, 6, 7, 8, 9, 10, 11]
+        children: [3, 4, 5, 6, 7, 8, 9, 10, 11, 14]
       },
       {
         name: "battleships-game",
@@ -89,6 +89,13 @@ class Directory {
         name: "text-adventure",
         path: "/projects/text-adventure",
         id: 11,
+        parentId: 2,
+        children: [null]
+      },
+      {
+        name: "tabletime",
+        path: "/projects/tabletime",
+        id: 14,
         parentId: 2,
         children: [null]
       },

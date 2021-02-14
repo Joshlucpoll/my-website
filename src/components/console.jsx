@@ -133,7 +133,8 @@ class Console extends React.Component {
           childrenIds.forEach((childId) => {
             childrenNames.push(this.dir.getName(childId));
           });
-
+          // Sort alphabetically
+          childrenNames.sort();
           childrenNames.forEach((element) => {
             this.addToConsole(element);
           });
