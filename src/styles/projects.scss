@@ -62,6 +62,7 @@
   
   .projects-container {
     position: relative;
+    padding-bottom: 40px;
     
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
