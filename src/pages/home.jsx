@@ -281,7 +281,7 @@ class Home extends React.Component {
       if (this.i < this.howManyTimes) {
         setTimeout(() => {
           this.typeSubTitle();
-        }, 100);
+        }, Math.random() * 100 + 50);
       }
     }
   }
