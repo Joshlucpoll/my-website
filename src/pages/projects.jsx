@@ -21,6 +21,7 @@ import ttwIMG from "../assets/projects/tabletime-website.png";
 import taIMG from "../assets/projects/text-adventure.png";
 import awIMG from "../assets/projects/alfred-website.png";
 import ttIMG from "../assets/projects/tabletime.png";
+import numIMG from "../assets/projects/nicehash-uptime-monitor.png";
 
 const projectImages = {
   "battleships-game": bsgIMG,
@@ -34,7 +35,8 @@ const projectImages = {
   "tabletime-website": ttwIMG,
   "text-adventure": taIMG,
   "alfred-website": awIMG,
-  tabletime: ttIMG,
+  "tabletime": ttIMG,
+  "nicehash-uptime-monitor": numIMG,
 };
 
 const sort = {

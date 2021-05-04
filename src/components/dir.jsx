@@ -27,7 +27,7 @@ class Directory {
         path: "/projects",
         id: 2,
         parentId: 1,
-        children: [3, 4, 5, 6, 7, 8, 9, 10, 11, 14]
+        children: [3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15]
       },
       {
         name: "battleships-game",
@@ -96,6 +96,13 @@ class Directory {
         name: "tabletime",
         path: "/projects/tabletime",
         id: 14,
+        parentId: 2,
+        children: [null]
+      },
+      {
+        name: "nicehash-uptime-monitor",
+        path: "/projects/nicehash-uptime-monitor",
+        id: 15,
         parentId: 2,
         children: [null]
       },
