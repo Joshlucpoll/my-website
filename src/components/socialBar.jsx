@@ -134,7 +134,7 @@ class SocialBar extends React.Component {
                     <img className="invert" src={LinkedIn} alt="LinkedIn"/>
                   </div>
                 </a>
-                <a href="mailto:info@joshlucpoll.com" target="_blank" rel="noopener noreferrer">
+                <a href="mailto:hello@joshlucpoll.com" target="_blank" rel="noopener noreferrer">
                   <div className="email">
                     <img className="invert" src={Email} alt="Email"/>
                   </div>
