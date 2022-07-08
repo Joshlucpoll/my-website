@@ -9,7 +9,7 @@
     "firebase": "^7.19.1",
     "framer-motion": "^1.11.1",
     "mathjs": "^7.5.1",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-device-detect": "^1.13.1",
